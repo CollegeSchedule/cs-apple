@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 enum NavigationItem: CaseIterable {
     case news
@@ -24,6 +25,16 @@ enum NavigationItem: CaseIterable {
         case .schedule: return "alarm"
         case .search: return "magnifyingglass"
         case .settings: return "gear"
+        }
+    }
+    
+    var view: AnyView {
+        switch self {
+        case .news: return AnyView(NewsView())
+        case .marks: return AnyView(Text("Marks"))
+        case .schedule: return AnyView(Text("Schedule"))
+        case .search: return AnyView(Text("Search"))
+        case .settings: return AnyView(Text("Settings"))
         }
     }
 }

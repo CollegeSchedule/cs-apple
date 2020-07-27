@@ -2,43 +2,64 @@ import SwiftUI
 
 struct AppSidebarNavigation: View {
     @State
-    private var selection: Set<NavigationItem> = [.news]
+    var selection: NavigationItem? = .settings
     
     #if os(macOS)
-    private let items: [NavigationItem] = [.news, .marks, .schedule, .search]
+    private let items: [NavigationItem] = [.news, .marks, .schedule]
     #else
-    private let items: [NavigationItem] = NavigationItem.allCases
+    private let items: [NavigationItem] = [.news, .marks, .schedule, .search, .settings]
     #endif
     
     var body: some View {
         NavigationView {
-            #if os(macOS)
-            self.sidebar.frame(minWidth: 100, idealWidth: 150, maxWidth: 200, maxHeight: .infinity)
-            #else
             self.sidebar
-            #endif
-            
-            Text("Content List: \(self.selection.first)").frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            if self.selection.first == .news {
-                Text("Select a Smoothie")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbar { Spacer() }
-            }
+                                    
+            Text("Content List: \(self.selection?.title ?? "HUI")")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .onAppear(perform: self.toggleSidebar)
     }
     
     var sidebar: some View {
-        List(self.items, id: \.self, selection: self.$selection) { item in
-            NavigationLink(destination: Text(item.title)) {
-                Label(item.title, systemImage: item.icon)
-            }.accessibility(label: Text(item.title)).tag(item)
+        List {
+            #if os(macOS)
+            Section(header: Text("CollegeSchedule")) {
+                self.mainSection
+                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+            }
+            #else
+            self.mainSection
+            #endif
         }.listStyle(SidebarListStyle()).navigationTitle(Text("CollegeSchedule"))
+    }
+    
+    var mainSection: some View {
+        ForEach(self.items, id: \.self) { item in
+            NavigationLink(destination: item.view) {
+                Label(
+                    item.title,
+                    systemImage: item.icon
+                )
+            }.tag(item).accessibility(label: Text(item.title))
+        }
     }
     
     struct Pocket: View {
         var body: some View {
             Text("Test")
         }
+    }
+    
+    private func toggleSidebar() {
+        #if os(iOS)
+        #else
+        NSApp
+            .keyWindow?
+            .firstResponder?
+            .tryToPerform(
+                #selector(NSSplitViewController.toggleSidebar(_:)),
+                with: nil
+            )
+        #endif
     }
 }

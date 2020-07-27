@@ -12,11 +12,9 @@ struct ContentView: View {
             AppTabNavigation()
         } else {
             AppSidebarNavigation()
-                .frame(minWidth: 900, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         }
         #else
         AppSidebarNavigation()
-            .frame(minWidth: 900, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         #endif
     }
 }

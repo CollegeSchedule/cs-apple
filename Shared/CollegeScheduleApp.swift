@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CollegeSchedule: App {
+struct CollegeSchedule: App {    
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
@@ -11,5 +11,17 @@ struct CollegeSchedule: App {
             ContentView()
             #endif
         }
+        
+        #if os(macOS)
+        Settings {
+            SettingsView()
+        }
+        #endif
+    }
+}
+
+struct SettingsView: View {
+    var body: some View {
+        Text("Hello")
     }
 }
