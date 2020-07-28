@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AppSidebarNavigation: View {
     @State
-    var selection: NavigationItem? = .settings
+    var selection: NavigationItem? = .news
     
     #if os(macOS)
     private let items: [NavigationItem] = [.news, .marks, .schedule]
@@ -14,10 +14,9 @@ struct AppSidebarNavigation: View {
         NavigationView {
             self.sidebar
                                     
-            Text("Content List: \(self.selection?.title ?? "HUI")")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            NewsView()
         }
-        .onAppear(perform: self.toggleSidebar)
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
     
     var sidebar: some View {
@@ -42,24 +41,5 @@ struct AppSidebarNavigation: View {
                 )
             }.tag(item).accessibility(label: Text(item.title))
         }
-    }
-    
-    struct Pocket: View {
-        var body: some View {
-            Text("Test")
-        }
-    }
-    
-    private func toggleSidebar() {
-        #if os(iOS)
-        #else
-        NSApp
-            .keyWindow?
-            .firstResponder?
-            .tryToPerform(
-                #selector(NSSplitViewController.toggleSidebar(_:)),
-                with: nil
-            )
-        #endif
     }
 }
