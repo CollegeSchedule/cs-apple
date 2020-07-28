@@ -17,7 +17,6 @@ struct AppSidebarNavigation: View {
             NewsView()
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
-//        .onAppear(perform: self.toggleSidebar)
     }
     
     var sidebar: some View {
@@ -42,24 +41,5 @@ struct AppSidebarNavigation: View {
                 )
             }.tag(item).accessibility(label: Text(item.title))
         }
-    }
-    
-    struct Pocket: View {
-        var body: some View {
-            Text("Test")
-        }
-    }
-    
-    private func toggleSidebar() {
-        #if os(iOS)
-        #else
-        NSApp
-            .keyWindow?
-            .firstResponder?
-            .tryToPerform(
-                #selector(NSSplitViewController.toggleSidebar(_:)),
-                with: nil
-            )
-        #endif
     }
 }
