@@ -54,7 +54,11 @@ struct OnBoardingView: View {
                 
                 Button(action: {}) {
                     Text("Get Started")
-                }.buttonStyle(RoundedDefaultButton()).padding(.horizontal, 20)
+                }
+                .buttonStyle(RoundedDefaultButton())
+                .padding(.horizontal, 40)
+                .padding(.bottom, 20)
+                .padding(.top, 10)
                 
                 HStack {
                     Text("Already have account?")
@@ -63,7 +67,7 @@ struct OnBoardingView: View {
                     Button(action: {}) {
                         Text("Sign in")
                     }
-                }.padding(.bottom, 20).padding(.horizontal)
+                }.padding([.bottom, .horizontal])
             }
         }
     }

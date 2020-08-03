@@ -15,15 +15,14 @@
 		653569E724D2EFEF00152E49 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569E624D2EFEF00152E49 /* OnBoardingView.swift */; };
 		653569EB24D2F06700152E49 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569EA24D2F06600152E49 /* Color.swift */; };
 		653569ED24D2F97700152E49 /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569EC24D2F97700152E49 /* OnBoardingPageView.swift */; };
-		653569EF24D2F9F400152E49 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569EE24D2F9F400152E49 /* Font.swift */; };
 		653569F624D3078B00152E49 /* SFCompactRounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 653569F524D3078A00152E49 /* SFCompactRounded-Regular.otf */; };
 		653569F824D307C100152E49 /* SFCompactRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 653569F724D307C100152E49 /* SFCompactRounded-Bold.otf */; };
 		653569FA24D30AE000152E49 /* OnBoardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569F924D30AE000152E49 /* OnBoardingItem.swift */; };
 		653569FD24D3F69500152E49 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653569FC24D3F69500152E49 /* AuthenticationView.swift */; };
 		65356A0024D4249000152E49 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 653569FF24D4249000152E49 /* CodeScanner */; };
 		65356A0324D4282800152E49 /* SPPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 65356A0224D4282800152E49 /* SPPermissions */; };
-		65356A0524D42A9000152E49 /* SPPermissionsConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 65356A0424D42A9000152E49 /* SPPermissionsConfiguration.xcconfig */; };
 		656ABDEC24CDB66100CFEBB9 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656ABDEB24CDB66100CFEBB9 /* NewsView.swift */; };
+		657D2EFF24D7D65900BEEB0B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D2EFE24D7D65900BEEB0B /* String.swift */; };
 		65EFD53624C96F9300CDAB49 /* CollegeScheduleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EFD52324C96F9200CDAB49 /* CollegeScheduleApp.swift */; };
 		65EFD53A24C96F9300CDAB49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EFD52524C96F9300CDAB49 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -50,13 +49,12 @@
 		653569E624D2EFEF00152E49 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		653569EA24D2F06600152E49 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		653569EC24D2F97700152E49 /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
-		653569EE24D2F9F400152E49 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Font.swift; path = ../../../../../../Font.swift; sourceTree = "<group>"; };
 		653569F524D3078A00152E49 /* SFCompactRounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFCompactRounded-Regular.otf"; sourceTree = "<group>"; };
 		653569F724D307C100152E49 /* SFCompactRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFCompactRounded-Bold.otf"; sourceTree = "<group>"; };
 		653569F924D30AE000152E49 /* OnBoardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingItem.swift; sourceTree = "<group>"; };
 		653569FC24D3F69500152E49 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
-		65356A0424D42A9000152E49 /* SPPermissionsConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SPPermissionsConfiguration.xcconfig; sourceTree = "<group>"; };
 		656ABDEB24CDB66100CFEBB9 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
+		657D2EFE24D7D65900BEEB0B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		65EFD52324C96F9200CDAB49 /* CollegeScheduleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegeScheduleApp.swift; sourceTree = "<group>"; };
 		65EFD52524C96F9300CDAB49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65EFD52A24C96F9300CDAB49 /* cs-apple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cs-apple.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				653569EA24D2F06600152E49 /* Color.swift */,
-				653569EE24D2F9F400152E49 /* Font.swift */,
+				657D2EFE24D7D65900BEEB0B /* String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -142,7 +140,6 @@
 		65EFD51D24C96F9200CDAB49 = {
 			isa = PBXGroup;
 			children = (
-				65356A0424D42A9000152E49 /* SPPermissionsConfiguration.xcconfig */,
 				65EFD52224C96F9200CDAB49 /* Shared */,
 				65EFD52C24C96F9300CDAB49 /* iOS */,
 				65EFD52B24C96F9300CDAB49 /* Products */,
@@ -251,7 +248,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65EFD53A24C96F9300CDAB49 /* Assets.xcassets in Resources */,
-				65356A0524D42A9000152E49 /* SPPermissionsConfiguration.xcconfig in Resources */,
 				653569F624D3078B00152E49 /* SFCompactRounded-Regular.otf in Resources */,
 				653569F824D307C100152E49 /* SFCompactRounded-Bold.otf in Resources */,
 			);
@@ -267,10 +263,10 @@
 				653569ED24D2F97700152E49 /* OnBoardingPageView.swift in Sources */,
 				65EFD53624C96F9300CDAB49 /* CollegeScheduleApp.swift in Sources */,
 				653569FD24D3F69500152E49 /* AuthenticationView.swift in Sources */,
-				653569EF24D2F9F400152E49 /* Font.swift in Sources */,
 				6532D97624CAD5C60014F807 /* NavigationItem.swift in Sources */,
 				653569E724D2EFEF00152E49 /* OnBoardingView.swift in Sources */,
 				6532D97224CAAECE0014F807 /* AppTabNavigation.swift in Sources */,
+				657D2EFF24D7D65900BEEB0B /* String.swift in Sources */,
 				656ABDEC24CDB66100CFEBB9 /* NewsView.swift in Sources */,
 				653569EB24D2F06700152E49 /* Color.swift in Sources */,
 				653569FA24D30AE000152E49 /* OnBoardingItem.swift in Sources */,
@@ -399,7 +395,6 @@
 		};
 		65EFD53F24C96F9300CDAB49 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65356A0424D42A9000152E49 /* SPPermissionsConfiguration.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -423,7 +418,6 @@
 		};
 		65EFD54024C96F9300CDAB49 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65356A0424D42A9000152E49 /* SPPermissionsConfiguration.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
