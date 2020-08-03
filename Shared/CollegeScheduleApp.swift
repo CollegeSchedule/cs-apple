@@ -1,27 +1,23 @@
 import SwiftUI
 
 @main
-struct CollegeSchedule: App {    
+struct CollegeSchedule: App {
+    @AppStorage("on_boarding")
+    var onBoarding: Bool = false
+    
+    @AppStorage("token")
+    var token: String = ""
+    
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-            #if APPCLIP
-            Text("APP CLIP")
-            #else
-            ContentView()
-            #endif
+            if !self.onBoarding && false {
+                OnBoardingView()
+            } else if self.token.isEmpty {
+                AuthenticationView()
+            } else {
+                ContentView()
+            }
         }
-        
-        #if os(macOS)
-        Settings {
-            SettingsView()
-        }
-        #endif
-    }
-}
-
-struct SettingsView: View {
-    var body: some View {
-        Text("Hello")
     }
 }
