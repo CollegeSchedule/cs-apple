@@ -11,7 +11,7 @@ struct CollegeSchedule: App {
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-            if !self.onBoarding && false {
+            if !self.onBoarding {
                 OnBoardingView()
             } else if self.token.isEmpty {
                 AuthenticationView()

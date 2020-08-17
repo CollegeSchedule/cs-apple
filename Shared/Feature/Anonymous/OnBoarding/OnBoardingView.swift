@@ -24,13 +24,16 @@ struct OnBoardingView: View {
         )
     ]
     
+    @AppStorage("on_boarding")
+    var onBoarding: Bool = false
+    
     @State
     var selection: Int = 1
     
     var body: some View {
         ZStack {
             Color
-                .onBoardingBackgroundColor
+                .backgroundColor
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -39,6 +42,8 @@ struct OnBoardingView: View {
                         OnBoardingPageView(item: item).tag(item.id)
                     }
                 }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+                Spacer()
                 
                 HStack(spacing: 8) {
                     ForEach(0..<3, id: \.self) { item in
@@ -50,62 +55,26 @@ struct OnBoardingView: View {
                             )
                             .frame(width: 8, height: 8)
                     }
-                }
+                }.padding(10)
+                
+                Button(action: {
+                    self.onBoarding = true
+                }) {
+                    Text("Get Started")
+                }.rounded().padding(.horizontal, 20)
                 
                 Button(action: {}) {
-                    Text("Get Started")
-                }.buttonStyle(RoundedDefaultButton()).padding(.horizontal, 20)
-                
-                HStack {
-                    Text("Already have account?")
-                        .foregroundColor(.gray)
-                    
-                    Button(action: {}) {
+                    HStack {
+                        Text("Already have account?")
+                            .foregroundColor(.gray)
+                        
                         Text("Sign in")
+                            .foregroundColor(.accentColor)
                     }
-                }.padding(.bottom, 20).padding(.horizontal)
+                }
+                .padding([.horizontal, .bottom], 20)
+                .padding(.top, 10)
             }
-        }
-    }
-}
-
-struct RoundedDefaultButton: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .font(.custom(.fontSFCompactRoundedBold, size: 18))
-            .padding(.vertical, 12)
-            .padding(.horizontal, 20)
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .foregroundColor(
-                configuration.isPressed
-                    ? Color.white.opacity(0.5)
-                    : Color.white
-            )
-            .listRowBackground(
-                configuration.isPressed
-                    ? Color.accentColor.opacity(0.5)
-                    : Color.accentColor
-            )
-            .background(
-                configuration.isPressed
-                    ? Color.accentColor.opacity(0.5)
-                    : Color.accentColor
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
-            
-    }
-}
-
-struct OnBoardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            OnBoardingView()
-            OnBoardingView()
-                .previewDevice("iPhone 11")
-            OnBoardingView()
-                .previewDevice("iPhone 8")
         }
     }
 }

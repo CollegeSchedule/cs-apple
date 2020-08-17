@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "undraw_profile_details_f8b7-2.svg",
-      "idiom" : "universal"
+      "filename" : "undraw_Portfolio_update_re_jqnp-2.svg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

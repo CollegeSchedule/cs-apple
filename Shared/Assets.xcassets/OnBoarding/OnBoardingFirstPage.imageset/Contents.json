@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "undraw_design_components_9vy6-2.svg",
-      "idiom" : "universal"
+      "filename" : "undraw_Personal_notebook_re_d7dc-2.svg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
