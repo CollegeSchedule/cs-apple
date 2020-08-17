@@ -23,8 +23,8 @@
 		6577237F24E4228400A9FB43 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6577237E24E4228400A9FB43 /* String.swift */; };
 		6577238124E428EC00A9FB43 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6577238024E428EC00A9FB43 /* AuthenticationService.swift */; };
 		6577238324E429A200A9FB43 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6577238224E429A200A9FB43 /* Authentication.swift */; };
-		6577238724E42B9A00A9FB43 /* CollectionMetaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6577238624E42B9A00A9FB43 /* CollectionMetaResponse.swift */; };
 		65AD9D7C24E40EBC0052BD4E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD9D7B24E40EBC0052BD4E /* View.swift */; };
+		65DA0EDD24EA76AE0064968F /* CollectionMetaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DA0EDC24EA76AE0064968F /* CollectionMetaResponse.swift */; };
 		65DBF95C24E3C92100B795AF /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBF95B24E3C92100B795AF /* Agent.swift */; };
 		65DBF95E24E3C95F00B795AF /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBF95D24E3C95F00B795AF /* HTTPMethod.swift */; };
 		65DBF96024E3C9A800B795AF /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBF95F24E3C9A800B795AF /* APIResult.swift */; };
@@ -68,8 +68,8 @@
 		6577237E24E4228400A9FB43 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		6577238024E428EC00A9FB43 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		6577238224E429A200A9FB43 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
-		6577238624E42B9A00A9FB43 /* CollectionMetaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionMetaResponse.swift; path = ../../../../../../../CollectionMetaResponse.swift; sourceTree = "<group>"; };
 		65AD9D7B24E40EBC0052BD4E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		65DA0EDC24EA76AE0064968F /* CollectionMetaResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionMetaResponse.swift; sourceTree = "<group>"; };
 		65DBF95B24E3C92100B795AF /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
 		65DBF95D24E3C95F00B795AF /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		65DBF95F24E3C9A800B795AF /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 		65DBF95424E3C87F00B795AF /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				65DA0EDC24EA76AE0064968F /* CollectionMetaResponse.swift */,
 				6577238224E429A200A9FB43 /* Authentication.swift */,
-				6577238624E42B9A00A9FB43 /* CollectionMetaResponse.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -381,7 +381,7 @@
 				65EFD53624C96F9300CDAB49 /* CollegeScheduleApp.swift in Sources */,
 				653569FD24D3F69500152E49 /* AuthenticationView.swift in Sources */,
 				65DBF95C24E3C92100B795AF /* Agent.swift in Sources */,
-				6577238724E42B9A00A9FB43 /* CollectionMetaResponse.swift in Sources */,
+				65DA0EDD24EA76AE0064968F /* CollectionMetaResponse.swift in Sources */,
 				6577237B24E41C3800A9FB43 /* AuthenticationViewModel.swift in Sources */,
 				65DBF97424E3E25E00B795AF /* RoundedDefaultButtonStyle.swift in Sources */,
 				6577237F24E4228400A9FB43 /* String.swift in Sources */,
