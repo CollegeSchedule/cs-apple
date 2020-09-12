@@ -1,4 +1,4 @@
-struct Authentication: Codable {
+struct AuthenticationEntity: Codable {
     let access: Token
     let refresh: Token
     
@@ -10,7 +10,7 @@ struct Authentication: Codable {
     }
     
     enum TokenType: String, Codable {
-        case access  = "access"
-        case refresh = "refresh"
+        case access  = "ACCESS"
+        case refresh = "REFRESH"
     }
 }

@@ -30,16 +30,16 @@ struct AuthenticationView: View {
                         .disableAutocorrection(true)
                 }
                 
-                Button(action: {}) {
+                Button(action: self.model.login) {
                     Text("Get Started")
                 }.rounded().padding(.horizontal, 20).disabled(!self.model.isValid)
                 
-                Button(action: {}) {
+                Button(action: self.model.me) {
                     HStack {
-                        Text("Already have account?")
+                        Text("Already have an account?")
                             .foregroundColor(.gray)
                         
-                        Text("Sign in")
+                        Text("Sign Up")
                             .foregroundColor(.accentColor)
                     }
                 }

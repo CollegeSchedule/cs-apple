@@ -7,9 +7,8 @@ extension URLRequest {
         params: [String: Any] = [:],
         headers: [String: Any] = [:]
     ) {
-        // params
         self.init(
-            url: url.appending(params.map { (key, value) in
+            url: (method != .get) ? url : url.appending(params.map { (key, value) in
                 URLQueryItem(name: key, value: String(describing: value))
             })!
         )
@@ -17,8 +16,25 @@ extension URLRequest {
         self.httpMethod = method.rawValue
         
         // headers
+        self.setValue(
+            "application/json; charset=utf-8",
+            forHTTPHeaderField: "Content-Type"
+        )
+        
         for (key, value) in headers {
             self.setValue(String(describing: value), forHTTPHeaderField: key)
         }
+    }
+    
+    func authenticate(token: String) -> URLRequest {
+        let request = (self as NSURLRequest)
+            .mutableCopy() as! NSMutableURLRequest
+        
+        request.setValue(
+            token,
+            forHTTPHeaderField: "accessToken"
+        )
+        
+        return request as URLRequest
     }
 }
