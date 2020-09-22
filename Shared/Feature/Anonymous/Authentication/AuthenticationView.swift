@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AuthenticationView: View {
     @ObservedObject
-    var model: AuthenticationViewModel = .init()
+    var model: AuthenticationView.ViewModel = .init()
     
     var body: some View {
         ZStack {
@@ -34,9 +34,11 @@ struct AuthenticationView: View {
                     Text("Get Started")
                 }.rounded().padding(.horizontal, 20).disabled(!self.model.isValid)
                 
-                Button(action: self.model.me) {
+                Button(action: {
+                    self.model.me()
+                }) {
                     HStack {
-                        Text("Already have an account?")
+                        Text("Doesn't have an account?")
                             .foregroundColor(.gray)
                         
                         Text("Sign Up")
@@ -45,6 +47,9 @@ struct AuthenticationView: View {
                 }
                 .padding([.horizontal, .bottom], 20)
                 .padding(.top, 10)
+                .sheet(isPresented: .constant(true)) {
+                    Text("Register")
+                }
             }
         }
     }

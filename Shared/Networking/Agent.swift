@@ -76,7 +76,7 @@ class Agent {
                         return AuthenticationService()
                             .refreshToken(token: self.refresh)
                             .flatMap { (
-                                result: APIResult<Authentication>
+                                result: APIResult<AuthenticationEntity>
                             ) -> AnyPublisher<APIResult<T>, Never> in
                                 if case let .success(authentication) = result {
                                     return self.request(
@@ -101,7 +101,7 @@ class Agent {
                 // if response succed and method is authentication
                 if result.status,
                    request.description.contains("/authentication/") {
-                    let authentication = result.data as! Authentication
+                    let authentication = result.data as! AuthenticationEntity
                     
                     self.access = authentication.access.token
                     self.refresh = authentication.refresh.token
