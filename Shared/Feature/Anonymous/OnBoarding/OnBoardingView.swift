@@ -1,80 +1,59 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    private var items: [OnBoardingItem] = [
-        OnBoardingItem(
-            id: 1,
-            title: "Welcome to Momotaro UI Kit",
-            description: "The best UI Kit for your next health and fitness project.",
-            image: "First"
+    @State
+    var isPresented: Bool = true
+    
+    private var items: [OnBoardingView.Item] = [
+        .init(
+            icon: "house",
+            title: "Found events",
+            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text.  Lorem Ipsum is simply dummy text."
         ),
-        
-        OnBoardingItem(
-            id: 2,
-            title: "Welcome to Momotaro UI Kit",
-            description: "The best UI Kit for your next health and fitness project.",
-            image: "Second"
+        .init(
+            icon: "house",
+            title: "Found events",
+            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum is simply dummy text.  Lorem Ipsum is simply dummy text."
         ),
-        
-        OnBoardingItem(
-            id: 3,
-            title: "Welcome to Momotaro UI Kit",
-            description: "The best UI Kit for your next health and fitness project.",
-            image: "Third"
+        .init(
+            icon: "house",
+            title: "Found events",
+            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum is simply dummy text.  Lorem Ipsum is simply dummy text."
         )
     ]
     
-    @AppStorage("on_boarding")
-    var onBoarding: Bool = false
-    
-    @State
-    var selection: Int = 1
-    
     var body: some View {
-        ZStack {
-            Color
-                .backgroundColor
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                TabView(selection: self.$selection) {
+        VStack {
+            ScrollView {
+                Text("Welcome to CollegeSchedule")
+                    .font(.largeTitle)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 40)
+                
+                VStack(alignment: .center, spacing: 36) {
                     ForEach(self.items, id: \.self) { item in
-                        OnBoardingPageView(item: item).tag(item.id)
+                        OnBoardingItemView(item: item)
                     }
-                }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                
-                Spacer()
-                
-                HStack(spacing: 8) {
-                    ForEach(0..<3, id: \.self) { item in
-                        Capsule()
-                            .foregroundColor(
-                                self.selection == item + 1
-                                    ? Color.onBoardingDotSelectedColor
-                                    : Color.onBoardingDotDefaultColor
-                            )
-                            .frame(width: 8, height: 8)
-                    }
-                }.padding(10)
-                
-                Button(action: {
-                    self.onBoarding = true
-                }) {
-                    Text("Get Started")
-                }.rounded().padding(.horizontal, 20)
-                
-                Button(action: {}) {
-                    HStack {
-                        Text("Already have account?")
-                            .foregroundColor(.gray)
-                        
-                        Text("Sign in")
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .padding([.horizontal, .bottom], 20)
-                .padding(.top, 10)
+                }.padding(.top, 64).padding(.horizontal, 32)
             }
+            
+            Spacer()
+            
+            Button(action: {
+                self.isPresented = false
+            }) {
+                Text("Continue")
+            }.rounded().padding(.bottom, 60).padding(.horizontal)
         }
     }
 }
+
+extension OnBoardingView {
+    struct Item: Hashable {
+        let icon: String
+        let title: String
+        let description: String
+    }
+}
+

@@ -1,23 +1,40 @@
 import SwiftUI
+import Combine
 
 @main
 struct CollegeSchedule: App {
-    @AppStorage("on_boarding")
-    var onBoarding: Bool = false
+    @ObservedObject
+    var model: CollegeSchedule.ViewModel = .init()
     
-    @AppStorage("token")
-    var token: String = ""
     
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-            if !self.onBoarding {
-                OnBoardingView()
-            } else if self.token.isEmpty {
-                AuthenticationView()
-            } else {
-                ContentView()
-            }
+            self.currentScene()
+                .sheet(isPresented: .constant(true)) {
+                    OnBoardingView()
+                }
+        }
+    }
+    
+    private func currentScene() -> AnyView {
+        if true {
+            return AnyView(AuthenticationView())
+        } else {
+            return AnyView(ContentView())
         }
     }
 }
+
+extension CollegeSchedule {
+    class ViewModel: ObservableObject {
+        @AppStorage("on_boarding_launch")
+        var onBoarding: Bool = true
+        
+        @AppStorage("token")
+        var token: String = ""
+    }
+}
+
+
+

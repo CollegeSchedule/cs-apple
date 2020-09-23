@@ -4,11 +4,11 @@ struct RoundedDefaultButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
-            .font(.system(size: 18, weight: .bold, design: .rounded))
+            .font(.system(size: 20, weight: .regular, design: .rounded))
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
             .foregroundColor(.white)
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: 360, alignment: .center)
             .foregroundColor(
                 configuration.isPressed
                     ? Color.white.opacity(0.5)
@@ -24,7 +24,7 @@ struct RoundedDefaultButtonStyle: ButtonStyle {
                     ? Color.accentColor.opacity(0.5)
                     : Color.accentColor
             )
-            .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
 
