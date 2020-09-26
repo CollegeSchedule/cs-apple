@@ -1,8 +1,20 @@
 import SwiftUI
 
+
+struct DarkBlueShadowProgressViewStyle: ProgressViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ProgressView(configuration)
+            .shadow(color: Color(red: 0, green: 0, blue: 0.6),
+                    radius: 4.0, x: 1.0, y: 2.0)
+    }
+}
+
 struct AuthenticationView: View {
+    @EnvironmentObject
+    var agent: Agent
+    
     @ObservedObject
-    var model: AuthenticationView.ViewModel = .init()
+    private var model: AuthenticationView.ViewModel = .init()
     
     var body: some View {
         ZStack {
@@ -31,14 +43,22 @@ struct AuthenticationView: View {
                 }
                 
                 Button(action: self.model.login) {
-                    Text("Get Started")
+                    ZStack {
+                        Text("Get Started")
+                        
+                        if case APIResult.loading = self.model.status {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
                 }
                 .rounded()
                 .padding(.horizontal, 20)
                 .disabled(!self.model.isValid)
                 
                 Button(action: {
-                    self.model.me()
+//                    self.model.me()
                 }) {
                     HStack {
                         Text("Doesn't have an account?")
@@ -50,9 +70,6 @@ struct AuthenticationView: View {
                 }
                 .padding([.horizontal, .bottom], 20)
                 .padding(.top, 10)
-                .sheet(isPresented: .constant(true)) {
-                    Text("Register")
-                }
             }
         }
     }

@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    @State
-    var isPresented: Bool = true
+    @Binding
+    var isPresented: Bool
     
+    @State
     private var items: [OnBoardingView.Item] = [
         .init(
             icon: "house",

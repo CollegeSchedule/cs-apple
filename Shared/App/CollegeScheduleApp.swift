@@ -6,19 +6,27 @@ struct CollegeSchedule: App {
     @ObservedObject
     var model: CollegeSchedule.ViewModel = .init()
     
+    @Environment(\.agent)
+    var agent: Agent
+    
+    @State
+    private var isAuthenticated: Bool = false
+    
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
             self.currentScene()
-                .environmentObject(Agent())
-                .sheet(isPresented: .constant(false)) {
-                    OnBoardingView()
+                .sheet(isPresented: self.model.$onBoarding) {
+                    OnBoardingView(isPresented: self.model.$onBoarding)
+                }
+                .onReceive(self.agent.$isAuthenticated) {
+                    self.isAuthenticated = $0
                 }
         }
     }
     
     private func currentScene() -> AnyView {
-        if true {
+        if !self.isAuthenticated {
             return AnyView(AuthenticationView())
         } else {
             return AnyView(ContentView())

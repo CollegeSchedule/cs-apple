@@ -8,7 +8,9 @@ extension URLRequest {
         headers: [String: Any] = [:]
     ) {
         self.init(
-            url: (method != .get) ? url : url.appending(params.map { (key, value) in
+            url: (method != .get) ? url : url.appending(params.map {
+                (key, value) in
+                
                 URLQueryItem(name: key, value: String(describing: value))
             })!
         )

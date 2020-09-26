@@ -1,14 +1,19 @@
 import Foundation
+import SwiftUI
 import Combine
 
 extension AuthenticationView {
     class ViewModel: BaseViewModel, ObservableObject {
+        @Environment(\.authenticationService)
+        var service: AuthenticationService
+        
         // MARK: - Input
         @Published var mail: String = "hello@whywelive.me"
         @Published var password: String = "12345678"
         
         // MARK: - Output
         @Published var isValid: Bool = false
+        @Published var status: APIResult<AuthenticationEntity> = .empty
         
         // MARK: - Private logic
         private var isMailValidPublisher: AnyPublisher<Bool, Never> {
@@ -36,7 +41,7 @@ extension AuthenticationView {
                 self.isMailValidPublisher,
                 self.isPasswordValidPublisher
             )
-            .map { mail, password in
+            .map { (mail, password) in
                 return mail && password
             }
             .assign(to: \.self.isValid, on: self)
@@ -45,44 +50,15 @@ extension AuthenticationView {
         
         public func login() {
             self.performGetOperation(
-                databaseQuery: self.database(),
-                networkCall: AuthenticationService().login(
+                networkCall: self.service.login(
                     mail: self.mail,
                     password: self.password
                 )
             )
             .subscribe(on: Scheduler.background)
             .receive(on: Scheduler.main)
-            .sink(receiveValue: { result in
-                print("got result: \(result)")
-            })
+            .assign(to: \.self.status, on: self)
             .store(in: &self.bag)
         }
-        
-        public func me() {
-            self.performGetOperation(
-                databaseQuery: self.meDatabase(),
-                networkCall: AuthenticationService().test()
-            )
-            .subscribe(on: Scheduler.background)
-            .receive(on: Scheduler.main)
-            .sink(receiveValue: { result in
-                print("got result: \(result)")
-            })
-            .store(in: &self.bag)
-        }
-        
-        func database() -> AnyPublisher<AuthenticationEntity, Never> {
-            return Deferred {
-                Future { promise in }
-            }.eraseToAnyPublisher()
-        }
-        
-        func meDatabase() -> AnyPublisher<AccountMeEntity, Never> {
-            return Deferred {
-                Future { promise in }
-            }.eraseToAnyPublisher()
-        }
-        
     }
 }

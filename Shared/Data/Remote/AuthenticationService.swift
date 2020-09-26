@@ -10,12 +10,12 @@ protocol AuthenticationServiceType {
     func refreshToken(
         token: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
-    
-    func test() -> AnyPublisher<APIResult<AccountMeEntity>, Never>
 }
 
 final class AuthenticationService: AuthenticationServiceType {
-    @EnvironmentObject var agent: Agent
+    @Environment(\.agent)
+    var agent: Agent
+    
     func login(
         mail: String,
         password: String
@@ -40,10 +40,19 @@ final class AuthenticationService: AuthenticationServiceType {
             type: .none
         )
     }
-    
-    func test() -> AnyPublisher<APIResult<AccountMeEntity>, Never> {
-        self.agent.run(
-            "/account/me"
-        )
+}
+
+struct AuthenticationServiceKey: EnvironmentKey {
+    static let defaultValue: AuthenticationService = AuthenticationService()
+}
+
+extension EnvironmentValues {
+    var authenticationService: AuthenticationService {
+        get {
+            self[AuthenticationServiceKey.self]
+        }
+        set {
+            self[AuthenticationServiceKey.self] = newValue
+        }
     }
 }
