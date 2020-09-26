@@ -6,12 +6,12 @@ struct CollegeSchedule: App {
     @ObservedObject
     var model: CollegeSchedule.ViewModel = .init()
     
-    
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
             self.currentScene()
-                .sheet(isPresented: .constant(true)) {
+                .environmentObject(Agent())
+                .sheet(isPresented: .constant(false)) {
                     OnBoardingView()
                 }
         }

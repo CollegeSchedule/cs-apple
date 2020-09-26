@@ -35,7 +35,9 @@ struct OnBoardingView: View {
                     ForEach(self.items, id: \.self) { item in
                         OnBoardingItemView(item: item)
                     }
-                }.padding(.top, 64).padding(.horizontal, 32)
+                }
+                .padding(.top, 64)
+                .padding(.horizontal, 32)
             }
             
             Spacer()
@@ -44,7 +46,10 @@ struct OnBoardingView: View {
                 self.isPresented = false
             }) {
                 Text("Continue")
-            }.rounded().padding(.bottom, 60).padding(.horizontal)
+            }
+            .rounded()
+            .padding(.bottom, 60)
+            .padding(.horizontal)
         }
     }
 }

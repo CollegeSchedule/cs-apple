@@ -32,7 +32,10 @@ struct AuthenticationView: View {
                 
                 Button(action: self.model.login) {
                     Text("Get Started")
-                }.rounded().padding(.horizontal, 20).disabled(!self.model.isValid)
+                }
+                .rounded()
+                .padding(.horizontal, 20)
+                .disabled(!self.model.isValid)
                 
                 Button(action: {
                     self.model.me()

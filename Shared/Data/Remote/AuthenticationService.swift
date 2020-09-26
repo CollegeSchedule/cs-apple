@@ -1,4 +1,5 @@
 import Combine
+import SwiftUI
 
 protocol AuthenticationServiceType {
     func login(
@@ -14,11 +15,12 @@ protocol AuthenticationServiceType {
 }
 
 final class AuthenticationService: AuthenticationServiceType {
+    @EnvironmentObject var agent: Agent
     func login(
         mail: String,
         password: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
-        Agent.agent.run(
+        self.agent.run(
             "/authentication/",
             method: .put,
             params: [
@@ -32,7 +34,7 @@ final class AuthenticationService: AuthenticationServiceType {
     func refreshToken(
         token: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
-        Agent.agent.run(
+        self.agent.run(
             "/authentication/token/\(token)",
             method: .post,
             type: .none
@@ -40,7 +42,7 @@ final class AuthenticationService: AuthenticationServiceType {
     }
     
     func test() -> AnyPublisher<APIResult<AccountMeEntity>, Never> {
-        Agent.agent.run(
+        self.agent.run(
             "/account/me"
         )
     }

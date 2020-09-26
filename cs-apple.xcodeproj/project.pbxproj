@@ -35,6 +35,7 @@
 		65DBF97424E3E25E00B795AF /* RoundedDefaultButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBF97324E3E25E00B795AF /* RoundedDefaultButtonStyle.swift */; };
 		65EFD53624C96F9300CDAB49 /* CollegeScheduleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EFD52324C96F9200CDAB49 /* CollegeScheduleApp.swift */; };
 		65EFD53A24C96F9300CDAB49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EFD52524C96F9300CDAB49 /* Assets.xcassets */; };
+		844551C4251E04EC00485DF2 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 844551C3251E04EC00485DF2 /* KeychainSwift */; };
 		847896A4251B4119001160ED /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847896A3251B4119001160ED /* OnBoardingView.swift */; };
 		847896A7251B415E001160ED /* OnBoardingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847896A6251B415E001160ED /* OnBoardingItemView.swift */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844551C4251E04EC00485DF2 /* KeychainSwift in Frameworks */,
 				65356A0024D4249000152E49 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +342,7 @@
 			name = iOS;
 			packageProductDependencies = (
 				653569FF24D4249000152E49 /* CodeScanner */,
+				844551C3251E04EC00485DF2 /* KeychainSwift */,
 			);
 			productName = iOS;
 			productReference = 65EFD52A24C96F9300CDAB49 /* cs-apple.app */;
@@ -370,6 +373,7 @@
 			mainGroup = 65EFD51D24C96F9200CDAB49;
 			packageReferences = (
 				653569FE24D4249000152E49 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				844551C2251E04EC00485DF2 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 65EFD52B24C96F9300CDAB49 /* Products */;
 			projectDirPath = "";
@@ -552,7 +556,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/cs-apple.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YNZB3J5436;
+				DEVELOPMENT_TEAM = 26XNSF4Y2J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -575,7 +579,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/cs-apple.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YNZB3J5436;
+				DEVELOPMENT_TEAM = 26XNSF4Y2J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -624,6 +628,14 @@
 				minimumVersion = 1.0.6;
 			};
 		};
+		844551C2251E04EC00485DF2 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -631,6 +643,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 653569FE24D4249000152E49 /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		844551C3251E04EC00485DF2 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 844551C2251E04EC00485DF2 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
