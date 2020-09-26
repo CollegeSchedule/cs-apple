@@ -29,7 +29,7 @@ class Agent: ObservableObject {
     
     // MARK: - TODO: Check token on application launch
     init() {
-        self.isAuthenticated = !self.access.isEmpty && !self.refresh.isEmpty
+//        self.isAuthenticated = !self.access.isEmpty && !self.refresh.isEmpty
     }
     
     func run<T: Codable>(
@@ -107,10 +107,11 @@ class Agent: ObservableObject {
                             .eraseToAnyPublisher()
                     }
                     
-                    // MARK: - TODO update on main thread
                     self.access = ""
                     self.refresh = ""
-                    self.isAuthenticated = false
+                    Scheduler.main.perform {
+                        self.isAuthenticated = false
+                    }
                     
                     return Just(.error(.init(code: -1)))
                         .eraseToAnyPublisher()
@@ -121,10 +122,12 @@ class Agent: ObservableObject {
                    request.description.contains("/authentication/") {
                     let authentication = result.data as! AuthenticationEntity
                     
-                    // MARK: - TODO update on main thread
                     self.access = authentication.access.token
                     self.refresh = authentication.refresh.token
-                    self.isAuthenticated = true
+                    
+                    Scheduler.main.perform {
+                        self.isAuthenticated = true
+                    }
                 }
                                 
                 return Just(APIResult.success(data))

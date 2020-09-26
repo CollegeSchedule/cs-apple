@@ -27,9 +27,9 @@ struct CollegeSchedule: App {
     
     private func currentScene() -> AnyView {
         if !self.isAuthenticated {
-            return AnyView(AuthenticationView())
+            return AuthenticationView().eraseToAnyView()
         } else {
-            return AnyView(ContentView())
+            return ContentView().eraseToAnyView()
         }
     }
 }
