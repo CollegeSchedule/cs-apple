@@ -34,7 +34,7 @@ enum NavigationItem: CaseIterable {
         case .marks: return Text("Marks").eraseToAnyView()
         case .schedule: return Text("Schedule").eraseToAnyView()
         case .search: return Text("Search").eraseToAnyView()
-        case .settings: return Text("Settings").eraseToAnyView()
+        case .settings: return SettingsView().eraseToAnyView()
         }
     }
 }

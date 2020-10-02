@@ -3,11 +3,14 @@ import Combine
 
 @main
 struct CollegeSchedule: App {
+    @Environment(\.agent)
+    var agent: Agent
+    
     @ObservedObject
     var model: CollegeSchedule.ViewModel = .init()
     
-    @Environment(\.agent)
-    var agent: Agent
+    @AppStorage("settings_appearance_current")
+    var currentAppearance: Bool = true
     
     @State
     private var isAuthenticated: Bool = false
@@ -15,6 +18,10 @@ struct CollegeSchedule: App {
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
+            Text("content: \(self.currentAppearance.description)")
+            Toggle("Test", isOn: self.$currentAppearance)
+                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            
             self.currentScene()
                 .sheet(isPresented: self.model.$onBoarding) {
                     OnBoardingView(isPresented: self.model.$onBoarding)
@@ -22,6 +29,7 @@ struct CollegeSchedule: App {
                 .onReceive(self.agent.$isAuthenticated) {
                     self.isAuthenticated = $0
                 }
+                .environment(\.colorScheme, self.currentAppearance ? .light : .dark)
         }
     }
     

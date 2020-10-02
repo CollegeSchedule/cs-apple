@@ -9,6 +9,7 @@ struct AppTabNavigation: View {
             ForEach(NavigationItem.allCases, id: \.self) { item in
                 NavigationView {
                     item.view
+                        .navigationTitle(item.title)
                 }
                 .tabItem {
                     Label(item.title, systemImage: item.icon)

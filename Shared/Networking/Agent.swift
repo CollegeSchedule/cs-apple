@@ -29,7 +29,7 @@ class Agent: ObservableObject {
     
     // MARK: - TODO: Check token on application launch
     init() {
-//        self.isAuthenticated = !self.access.isEmpty && !self.refresh.isEmpty
+        self.isAuthenticated = !self.access.isEmpty && !self.refresh.isEmpty
     }
     
     func run<T: Codable>(
