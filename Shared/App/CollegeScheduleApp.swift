@@ -17,7 +17,15 @@ struct CollegeSchedule: App {
                     OnBoardingView(isPresented: self.$state.onBoarding)
                 }
                 .environmentObject(self.state)
-                .preferredColorScheme((!self.state.isSystemAppearance) ? ((self.state.currentAppearance != 0) ? .dark : .light) : .none)
+                .preferredColorScheme(
+                    !self.state.isSystemAppearance
+                        ? (
+                            (self.state.currentAppearance != 0)
+                                ? ColorScheme.dark
+                                : ColorScheme.light
+                            )
+                        : ColorScheme.init(.unspecified)
+                )
         }
     }
     private func currentScene() -> AnyView {
@@ -41,23 +49,4 @@ class AppState: ObservableObject {
     
     @Published("token")
     var token: String = ""
-}
-
-extension CollegeSchedule {
-    func mod(_ isSystem: Bool, current: Int) -> ColorScheme?{
-        if isSystem {
-            print(isSystem.description)
-            
-            return ColorScheme.init(.unspecified)
-        }
-        else {
-            print(isSystem.description)
-            if (current != 0) {
-                return ColorScheme.init(.dark)
-            }
-            else{
-                return ColorScheme.init(.light)
-            }
-        }
-    }
 }

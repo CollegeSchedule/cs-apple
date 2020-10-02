@@ -1,10 +1,6 @@
 import SwiftUI
 
 struct SettingsAppearanceView: View {
-    
-    @Environment(\.colorScheme)
-    var scheme: ColorScheme
-    
     @EnvironmentObject
     var state: AppState
     
@@ -32,7 +28,6 @@ struct SettingsAppearanceView: View {
                     }
                 }
             }
-//            .environment(\.colorScheme, .light)
         }.listStyle(InsetGroupedListStyle())
     }
 }
