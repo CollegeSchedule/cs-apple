@@ -30,10 +30,10 @@ enum NavigationItem: CaseIterable {
     
     var view: AnyView {
         switch self {
-        case .news: return NewsView().eraseToAnyView()
+        case .news: return Text("News").eraseToAnyView()
         case .marks: return Text("Marks").eraseToAnyView()
         case .schedule: return Text("Schedule").eraseToAnyView()
-        case .search: return Text("Search").eraseToAnyView()
+        case .search: return SearchView().eraseToAnyView()
         case .settings: return SettingsView().eraseToAnyView()
         }
     }
