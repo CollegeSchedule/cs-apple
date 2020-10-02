@@ -3,38 +3,25 @@ import Combine
 
 @main
 struct CollegeSchedule: App {
-    @Environment(\.agent)
-    var agent: Agent
+    @ObservedObject
+    var agent: Agent = AgentKey.defaultValue
     
     @ObservedObject
-    var model: CollegeSchedule.ViewModel = .init()
-    
-    @AppStorage("settings_appearance_current")
-    var currentAppearance: Bool = true
-    
-    @State
-    private var isAuthenticated: Bool = false
-    
+    var state: AppState = .init()
+            
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-            Text("content: \(self.currentAppearance.description)")
-            Toggle("Test", isOn: self.$currentAppearance)
-                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-            
             self.currentScene()
-                .sheet(isPresented: self.model.$onBoarding) {
-                    OnBoardingView(isPresented: self.model.$onBoarding)
+                .sheet(isPresented: self.$state.onBoarding) {
+                    OnBoardingView(isPresented: self.$state.onBoarding)
                 }
-                .onReceive(self.agent.$isAuthenticated) {
-                    self.isAuthenticated = $0
-                }
-                .environment(\.colorScheme, self.currentAppearance ? .light : .dark)
+                .environmentObject(self.state)
+                .preferredColorScheme((!self.state.isSystemAppearance) ? ((self.state.currentAppearance != 0) ? .dark : .light) : .none)
         }
     }
-    
     private func currentScene() -> AnyView {
-        if !self.isAuthenticated {
+        if !self.agent.isAuthenticated {
             return AuthenticationView().eraseToAnyView()
         } else {
             return ContentView().eraseToAnyView()
@@ -42,15 +29,35 @@ struct CollegeSchedule: App {
     }
 }
 
-extension CollegeSchedule {
-    class ViewModel: ObservableObject {
-        @AppStorage("on_boarding_launch")
-        var onBoarding: Bool = true
-        
-        @AppStorage("token")
-        var token: String = ""
-    }
+class AppState: ObservableObject {
+    @Published("settings_appearance_is_system")
+    var isSystemAppearance: Bool = true
+    
+    @Published("settings_appearance_current")
+    var currentAppearance: Int = 0
+    
+    @Published("on_boarding_launch")
+    var onBoarding: Bool = true
+    
+    @Published("token")
+    var token: String = ""
 }
 
-
-
+extension CollegeSchedule {
+    func mod(_ isSystem: Bool, current: Int) -> ColorScheme?{
+        if isSystem {
+            print(isSystem.description)
+            
+            return ColorScheme.init(.unspecified)
+        }
+        else {
+            print(isSystem.description)
+            if (current != 0) {
+                return ColorScheme.init(.dark)
+            }
+            else{
+                return ColorScheme.init(.light)
+            }
+        }
+    }
+}

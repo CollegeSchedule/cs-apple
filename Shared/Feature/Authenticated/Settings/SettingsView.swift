@@ -51,28 +51,48 @@ struct SettingsView: View {
             ForEach(self.sections, id: \.header) { section in
                 Section(header: Text(section.header)) {
                     ForEach(section.items, id: \.title) { item in
-                        NavigationLink(
-                            destination: item.view.navigationTitle(item.title)
-                        ) {
-                            Label {
-                                Text(item.title)
-                            } icon: {
-                                Image(systemName: item.icon)
-                                    .foregroundColor(.white)
-                                    .frame(
-                                        width: 32,
-                                        height: 32,
-                                        alignment: .center
-                                    )
-                                    .background(item.color)
-                                    .cornerRadius(8)
-                            }
-                        }
+                        self.item(item)
                     }
                 }
             }
         }
         .listStyle(InsetGroupedListStyle())
+    }
+    
+    private func item(_ item: SettingsSection.SettingsItem) -> AnyView {
+        if item.view != nil {
+            return NavigationLink(
+                destination: item.view?.navigationTitle(item.title)
+            ) {
+                self.label(item)
+            }.eraseToAnyView()
+        } else if item.execute != nil {
+            return Button(action: item.execute!) {
+                self.label(item)
+            }.eraseToAnyView()
+        } else if item.link != nil {
+            return Link(destination: URL(string: item.link!)!) {
+                self.label(item)
+            }.eraseToAnyView()
+        }
+        
+        return EmptyView().eraseToAnyView()
+    }
+    
+    private func label(_ item: SettingsSection.SettingsItem) -> AnyView {
+        return Label {
+            Text(item.title)
+        } icon: {
+            Image(systemName: item.icon)
+                .foregroundColor(.white)
+                .frame(
+                    width: 32,
+                    height: 32,
+                    alignment: .center
+                )
+                .background(item.color)
+                .cornerRadius(8)
+        }.eraseToAnyView()
     }
     
     struct SettingsSection {
@@ -83,7 +103,10 @@ struct SettingsView: View {
             let icon: String
             let title: String
             let color: Color
-            let view: AnyView
+            
+            var view: AnyView? = nil
+            var execute: (() -> Void)? = nil
+            var link: String? = nil
         }
     }
 }

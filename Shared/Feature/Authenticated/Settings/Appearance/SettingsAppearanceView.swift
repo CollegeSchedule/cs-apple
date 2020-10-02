@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct SettingsAppearanceView: View {
-    @AppStorage("settings_appearance_is_system")
-    var isSystemAppearance: Bool = true
     
-    @AppStorage("settings_appearance_current")
-    var currentAppearance: Int = 0
+    @Environment(\.colorScheme)
+    var scheme: ColorScheme
+    
+    @EnvironmentObject
+    var state: AppState
+    
+    @ObservedObject var model: SettingsAppearanceView.ViewModel = .init()
             
     @State
     var items: [String] = ["Всегда светлая", "Всегда темная"]
@@ -20,15 +23,22 @@ struct SettingsAppearanceView: View {
                     header: Text("Светлая и темная тема"),
                     footer: Text("При включённом индикаторе повторяется системное оформление.")
                 ) {
-                    Toggle("Системное", isOn: self.$isSystemAppearance)
+                    Toggle("Системное", isOn: self.$state.isSystemAppearance)
                 }
-
-                if !self.isSystemAppearance {
+                
+                if !self.state.isSystemAppearance {
                     Section(footer: Text("Будет использоваться выбранное оформление. Системное оформление игнорируется.")) {
-                        InlinePicker(items: self.items, selection: self.$selection)
+                        InlinePicker(items: self.items, selection: self.$state.currentAppearance)
                     }
                 }
             }
+//            .environment(\.colorScheme, .light)
         }.listStyle(InsetGroupedListStyle())
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }

@@ -18,10 +18,10 @@ class Agent: ObservableObject {
     private let secret: String = "3162c1b0-e25f-4b7d-9c2d-d99096d9a984"
     
     // MARK: - Account credentials (temporary solution)
-    @AppStorage("access_token")
+    @Published("access_token")
     private(set) var access: String = ""
     
-    @AppStorage("refresh_token")
+    @Published("refresh_token")
     private(set) var refresh: String = ""
     
     @Published
@@ -121,11 +121,10 @@ class Agent: ObservableObject {
                 if result.status,
                    request.description.contains("/authentication/") {
                     let authentication = result.data as! AuthenticationEntity
-                    
-                    self.access = authentication.access.token
-                    self.refresh = authentication.refresh.token
-                    
+
                     Scheduler.main.perform {
+                        self.access = authentication.access.token
+                        self.refresh = authentication.refresh.token
                         self.isAuthenticated = true
                     }
                 }
