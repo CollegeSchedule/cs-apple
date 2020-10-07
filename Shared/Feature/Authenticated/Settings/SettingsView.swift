@@ -34,13 +34,13 @@ struct SettingsView: View {
                     icon: "envelope.fill",
                     title: "Связаться с разработчиком",
                     color: .blue,
-                    view: SettingsAppearanceView().eraseToAnyView()
+                    link: "https:/vk.com"
                 ),
                 .init(
                     icon: "house.fill",
                     title: "О приложении",
                     color: .pink,
-                    view: SettingsAppearanceView().eraseToAnyView()
+                    view: SettingsAboutAppView().eraseToAnyView()
                 )
             ]
         )
@@ -71,9 +71,11 @@ struct SettingsView: View {
                 self.label(item)
             }.eraseToAnyView()
         } else if item.link != nil {
-            return Link(destination: URL(string: item.link!)!) {
+            return Link(destination: URL(string: item.link!)!){
                 self.label(item)
-            }.eraseToAnyView()
+            }
+            .foregroundColor(.black)
+            .eraseToAnyView()
         }
         
         return EmptyView().eraseToAnyView()

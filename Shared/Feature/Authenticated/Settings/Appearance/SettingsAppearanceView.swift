@@ -4,7 +4,8 @@ struct SettingsAppearanceView: View {
     @EnvironmentObject
     var state: AppState
     
-    @ObservedObject var model: SettingsAppearanceView.ViewModel = .init()
+    @ObservedObject
+    var model: SettingsAppearanceView.ViewModel = .init()
             
     @State
     var items: [String] = ["Всегда светлая", "Всегда темная"]
