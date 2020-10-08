@@ -16,7 +16,9 @@ struct SettingsView: View {
                     icon: "globe",
                     title: "Язык",
                     color: .orange,
-                    view: SettingsAppearanceView().eraseToAnyView()
+                    execute: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    }
                 )
             ]
         ),
@@ -74,7 +76,6 @@ struct SettingsView: View {
             return Link(destination: URL(string: item.link!)!){
                 self.label(item)
             }
-            .foregroundColor(.black)
             .eraseToAnyView()
         }
         
@@ -84,6 +85,7 @@ struct SettingsView: View {
     private func label(_ item: SettingsSection.SettingsItem) -> AnyView {
         return Label {
             Text(item.title)
+                .foregroundColor(Color("GeneralTextColor"))
         } icon: {
             Image(systemName: item.icon)
                 .foregroundColor(.white)

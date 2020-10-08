@@ -7,6 +7,8 @@ struct SearchView: View {
     var body: some View {
         ScrollView {
             Text("Gonna be here")
+            
+            Text(LocalizedStringKey("authenticated.tab.settings"))
         }.add(self.searchBar)
     }
 }

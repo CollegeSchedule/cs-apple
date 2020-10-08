@@ -1,0 +1,7 @@
+import SwiftUI
+
+extension UIApplication{
+    static var appVersion: String? {
+            return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+}

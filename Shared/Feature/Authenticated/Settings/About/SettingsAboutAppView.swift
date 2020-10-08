@@ -6,8 +6,10 @@ struct SettingsAboutAppView: View {
             HStack{
                 Text("Version")
                 Spacer()
-                Text("1.0")
+                Text(UIApplication.appVersion!)
             }
         }.listStyle(InsetGroupedListStyle())
     }
 }
+
+

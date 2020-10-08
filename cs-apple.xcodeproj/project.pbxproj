@@ -10,6 +10,7 @@
 		650F132E252DA2A500C6058D /* SettingsAboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650F132D252DA2A500C6058D /* SettingsAboutAppView.swift */; };
 		650F1335252DA62700C6058D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 650F1333252DA4AE00C6058D /* Localizable.strings */; };
 		650FBF5B2526E71B00C027C9 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FBF5A2526E71B00C027C9 /* Published.swift */; };
+		65309BDB252EF4410015A522 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65309BDA252EF4410015A522 /* UIApplication.swift */; };
 		6532D96E24CAAC0D0014F807 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532D96D24CAAC0D0014F807 /* ContentView.swift */; };
 		6532D97024CAACEA0014F807 /* AppSidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532D96F24CAACEA0014F807 /* AppSidebarNavigation.swift */; };
 		6532D97224CAAECE0014F807 /* AppTabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532D97124CAAECE0014F807 /* AppTabNavigation.swift */; };
@@ -68,6 +69,7 @@
 		650F1332252DA4AE00C6058D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		650F1334252DA4B400C6058D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		650FBF5A2526E71B00C027C9 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
+		65309BDA252EF4410015A522 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		6532D95324CAAB780014F807 /* cs-apple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "cs-apple.entitlements"; sourceTree = "<group>"; };
 		6532D96D24CAAC0D0014F807 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6532D96F24CAACEA0014F807 /* AppSidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebarNavigation.swift; sourceTree = "<group>"; };
@@ -122,12 +124,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		650F132C252D9DD400C6058D /* AboutApp */ = {
+		650F132C252D9DD400C6058D /* About */ = {
 			isa = PBXGroup;
 			children = (
 				650F132D252DA2A500C6058D /* SettingsAboutAppView.swift */,
 			);
-			path = AboutApp;
+			path = About;
 			sourceTree = "<group>";
 		};
 		6532D96C24CAAC010014F807 /* Navigation */ = {
@@ -148,6 +150,7 @@
 				65AD9D7B24E40EBC0052BD4E /* View.swift */,
 				6577237E24E4228400A9FB43 /* String.swift */,
 				650FBF5A2526E71B00C027C9 /* Published.swift */,
+				65309BDA252EF4410015A522 /* UIApplication.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -188,7 +191,7 @@
 		65C78C212520A9770027DA06 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				650F132C252D9DD400C6058D /* AboutApp */,
+				650F132C252D9DD400C6058D /* About */,
 				65C78C252520B96D0027DA06 /* Appearance */,
 				65C78C222520A9E80027DA06 /* SettingsView.swift */,
 			);
@@ -465,6 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65309BDB252EF4410015A522 /* UIApplication.swift in Sources */,
 				657F3DB9252762AD00CE37AF /* SearchBar.swift in Sources */,
 				65947573250B68A3009290A0 /* AuthenticationType.swift in Sources */,
 				65EFD53624C96F9300CDAB49 /* CollegeScheduleApp.swift in Sources */,

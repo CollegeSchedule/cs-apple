@@ -14,7 +14,7 @@ enum NavigationItem: CaseIterable {
         case .marks: return "Оценки"
         case .schedule: return "Расписание"
         case .search: return "Поиск"
-        case .settings: return "Настройки"
+        case .settings: return "authenticated.tab.settings"
         }
     }
     
