@@ -4,11 +4,35 @@ struct SearchView: View {
     @ObservedObject
     var searchBar: SearchBar = SearchBar()
     
+    @State
+    var friends: [Int] = .init(0...100)
+    
     var body: some View {
         ScrollView {
-            Text("Gonna be here")
-            
-            Text(LocalizedStringKey("authenticated.tab.settings"))
+            ListView(self.friends, title: "Teachers") { item in
+                RoundedRectangle(cornerRadius: 12)
+                    .overlay(
+                        Text("item: \(item)")
+                            .foregroundColor(.black)
+                            .padding()
+                    )
+                    .eraseToAnyView()
+            } navigation: { item in
+                Text("navigation: \(item)")
+                    .eraseToAnyView()
+            }
+            ListView(self.friends, title: "Groups") { item in
+                RoundedRectangle(cornerRadius: 12)
+                    .overlay(
+                        Text("item: \(item)")
+                            .foregroundColor(.black)
+                            .padding()
+                    )
+                    .eraseToAnyView()
+            } navigation: { item in
+                Text("navigation: \(item)")
+                    .eraseToAnyView()
+            }
         }.add(self.searchBar)
     }
 }

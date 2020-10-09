@@ -21,9 +21,9 @@ struct AppSidebarNavigation: View {
     
     var mainSection: some View {
         ForEach(NavigationItem.allCases, id: \.self) { item in
-            NavigationLink(destination: item.view) {
+            NavigationLink(destination: item.view.navigationTitle(LocalizedStringKey(item.title))) {
                 Label(
-                    item.title,
+                    LocalizedStringKey(item.title),
                     systemImage: item.icon
                 )
             }.tag(item).accessibility(label: Text(item.title))

@@ -8,14 +8,22 @@ struct CollegeSchedule: App {
     
     @ObservedObject
     var state: AppState = .init()
+    
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
             
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
+//            Text("H: \((self.horizontalSizeClass == nil).description)")
+//            Text("V: \((self.verticalSizeClass == nil).description)")
+            
             self.currentScene()
                 .sheet(isPresented: self.$state.onBoarding) {
                     OnBoardingView(isPresented: self.$state.onBoarding)
                 }
+                
                 .environmentObject(self.state)
                 .preferredColorScheme(
                     !self.state.isSystemAppearance
