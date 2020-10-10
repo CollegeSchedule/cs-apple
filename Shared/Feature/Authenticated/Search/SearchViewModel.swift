@@ -16,8 +16,7 @@ extension SearchView {
 		override init() {
 			super.init()
 			
-			self.searchBar
-				.$text
+			self.searchBar.$text
 				.debounce(for: 1, scheduler: Scheduler.main)
 				.subscribe(on: Scheduler.background)
 				.receive(on: Scheduler.main)
