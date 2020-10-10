@@ -4,6 +4,12 @@ import SwiftUI
 
 protocol AccountServiceType {
     func me() -> AnyPublisher<APIResult<AccountMeEntity>, Never>
+    
+    func get(
+		offset: Int,
+        limit: Int
+//		search: String?
+    ) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never>
 }
 
 final class AccountService: AccountServiceType {
@@ -15,6 +21,21 @@ final class AccountService: AccountServiceType {
             "/account/me"
         )
     }
+	
+	func get(
+		offset: Int = 0,
+		limit: Int = 30
+//		search: String? = ""
+	) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never> {
+		self.agent.run(
+			"/account/",
+			params: [
+				"offset": offset,
+				"limit": limit,
+//				"search": search
+			]
+		)
+	}
 }
 
 struct AccountServiceKey: EnvironmentKey {
