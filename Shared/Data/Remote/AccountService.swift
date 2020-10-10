@@ -7,8 +7,8 @@ protocol AccountServiceType {
     
     func get(
 		offset: Int,
-        limit: Int
-//		search: String?
+        limit: Int,
+		search: String?
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never>
 }
 
@@ -24,15 +24,15 @@ final class AccountService: AccountServiceType {
 	
 	func get(
 		offset: Int = 0,
-		limit: Int = 30
-//		search: String? = ""
+		limit: Int = 30,
+		search: String? = nil
 	) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never> {
 		self.agent.run(
 			"/account/",
 			params: [
 				"offset": offset,
 				"limit": limit,
-//				"search": search
+				"search": search ?? ""
 			]
 		)
 	}
