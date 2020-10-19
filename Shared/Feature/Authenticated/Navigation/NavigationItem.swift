@@ -32,7 +32,7 @@ enum NavigationItem: CaseIterable {
         switch self {
         case .news: return NewsView().eraseToAnyView()
         case .marks: return Text("Marks").eraseToAnyView()
-        case .schedule: return Text("Schedule").eraseToAnyView()
+        case .schedule: return ScheduleView().eraseToAnyView()
         case .search: return Text("Search").eraseToAnyView()
         case .settings: return SettingsView().eraseToAnyView()
         }
