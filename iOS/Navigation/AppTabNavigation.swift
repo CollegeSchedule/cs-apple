@@ -9,11 +9,17 @@ struct AppTabNavigation: View {
             ForEach(NavigationItem.allCases, id: \.self) { item in
                 NavigationView {
                     item.view
-                        .navigationTitle(LocalizedStringKey(item.title))
+                        .navigationTitle(
+                            LocalizedStringKey(item.title)
+                        )
                 }
                 .tabItem {
-                    Label(LocalizedStringKey(item.title), systemImage: item.icon)
-                        .accessibility(label: Text(LocalizedStringKey(item.title)))
+                    Label(
+                        LocalizedStringKey(item.title),
+                        systemImage: item.icon)
+                        .accessibility(
+                            label: Text(LocalizedStringKey(item.title))
+                        )
                 }
                 .tag(item)
             }
