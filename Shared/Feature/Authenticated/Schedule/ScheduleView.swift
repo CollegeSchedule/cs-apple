@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    let week: [String] = ["пн","вт","ср","чт","пт","сб","вс"]
-    
+	let date: Date = Date()
+	
+	@State
+	private var day: String = Date().today
     @State
     private var items: [ScheduleItem] = [
         .init(
@@ -49,16 +51,17 @@ struct ScheduleView: View {
                 .padding(.horizontal)
             VStack{
                 ScrollView(.horizontal, showsIndicators: false ) {
-                    HStack{
-                        ForEach(self.getDate(), id: \.self) { day in
-                            VStack{
-                                Text(day)
-                                    .font(.title2)
-                                Text(week[0])
-                                    .font(.title3)
-                            }
-                        }
-                    }
+					HStack{
+						ForEach(self.date.scheduleTimeline(), id: \.self){ week in
+							VStack{
+								Text(week.prefix(2))
+								Text("md")
+							}
+							.onTapGesture{
+								self.day = week
+							}
+						}
+					}
                 }
             }
             .padding()
@@ -66,7 +69,7 @@ struct ScheduleView: View {
             VStack{
                 Divider()
                 HStack{
-                    Text("Monday, 19 october")
+					Text("\(self.day)")
                     Spacer()
                     Text("Week")
                 }
@@ -82,28 +85,10 @@ struct ScheduleView: View {
             Spacer()
         }
     }
-    
     struct ScheduleItem: Hashable{
         let startLes: String
         let endLes: String
         let lesson: String
         let classroom: String
-    }
-    
-    func getDate() -> [String] {
-        let date = Date()
-        let formatter = DateFormatter()
-        var dateWeek: [String] = []
-        
-        formatter.locale = Locale(identifier: "nl_NL")
-        formatter.setLocalizedDateFormatFromTemplate("dd")
-        
-        
-        for i in 0...14{
-            let nextDay = Calendar.current.date(byAdding: .day, value: i, to: date)
-            dateWeek.append(formatter.string(from: nextDay!))
-        }
-
-        return dateWeek
     }
 }
