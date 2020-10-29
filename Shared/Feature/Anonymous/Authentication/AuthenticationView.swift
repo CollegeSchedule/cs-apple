@@ -23,11 +23,18 @@ struct AuthenticationView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                Text("CollegeSchedule")
-                    .foregroundColor(.primary)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 30)
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                Logo()
+                
+                VStack{
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .frame(
+                            minWidth: 0,
+                            maxWidth: 113,
+                            minHeight: 0,
+                            maxHeight: 113
+                        )
+                }
                 
                 Form {
                     TextField("Email", text: self.$model.mail)

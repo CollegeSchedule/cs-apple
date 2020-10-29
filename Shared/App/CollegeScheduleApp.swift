@@ -9,9 +9,11 @@ struct CollegeSchedule: App {
     @ObservedObject
     var state: AppState = .init()
     
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
     
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.verticalSizeClass)
+    private var verticalSizeClass
             
     @SceneBuilder
     var body: some Scene {
@@ -40,7 +42,7 @@ struct CollegeSchedule: App {
         if !self.agent.isAuthenticated {
             return AuthenticationView().eraseToAnyView()
         } else {
-            return ContentView().eraseToAnyView()
+            return AuthenticationView().eraseToAnyView()
         }
     }
 }
