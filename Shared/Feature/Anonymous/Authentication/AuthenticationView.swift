@@ -25,15 +25,12 @@ struct AuthenticationView: View {
             VStack {
                 Logo()
                 
-                VStack{
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(
-                            minWidth: 0,
-                            maxWidth: 113,
-                            minHeight: 0,
-                            maxHeight: 113
-                        )
+                VStack {
+                    Spacer()
+                    
+                    self.model.item.image
+                    
+                    Spacer()
                 }
                 
                 Form {

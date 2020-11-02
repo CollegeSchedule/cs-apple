@@ -12,6 +12,7 @@ extension AuthenticationView {
         @Published var password: String = "12345678"
         
         // MARK: - Output
+        @Published var item: AuthenticationItem = .notFound
         @Published var isValid: Bool = false
         @Published var status: APIResult<AuthenticationEntity> = .empty
         
