@@ -31,7 +31,7 @@ enum NavigationItem: CaseIterable {
     var view: AnyView {
         switch self {
         case .news: return Text("News").eraseToAnyView()
-        case .marks: return Text("Marks").eraseToAnyView()
+        case .marks: return MarksView().eraseToAnyView()
         case .schedule: return ScheduleView().eraseToAnyView()
         case .search: return SearchView().eraseToAnyView()
         case .settings: return SettingsView().eraseToAnyView()

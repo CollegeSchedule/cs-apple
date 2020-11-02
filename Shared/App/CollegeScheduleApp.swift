@@ -34,7 +34,7 @@ struct CollegeSchedule: App {
                                 ? ColorScheme.dark
                                 : ColorScheme.light
                             )
-                        : ColorScheme.init(.unspecified)
+                        : ColorScheme.init(.dark)
                 )
         }
     }
@@ -42,7 +42,7 @@ struct CollegeSchedule: App {
         if !self.agent.isAuthenticated {
             return AuthenticationView().eraseToAnyView()
         } else {
-            return AuthenticationView().eraseToAnyView()
+            return ContentView().eraseToAnyView()
         }
     }
 }

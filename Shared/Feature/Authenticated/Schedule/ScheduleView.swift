@@ -5,6 +5,7 @@ struct ScheduleView: View {
 	
 	@State
 	private var day: String = Date().today
+    
     @State
     private var items: [ScheduleItem] = [
         .init(

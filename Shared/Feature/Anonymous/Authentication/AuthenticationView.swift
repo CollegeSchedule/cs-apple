@@ -26,6 +26,7 @@ struct AuthenticationView: View {
                 Logo()
                 
                 VStack {
+                    
                     Spacer()
                     
                     self.model.item.image
