@@ -43,12 +43,12 @@ struct ListView<T: Hashable, Content: View>: View {
                     ),
                     spacing: 0
                 ) {
-                    ForEach(self.data, id: \.self) { item in
+                    ForEach(self.data, id: \.hashValue) { item in
                         NavigationLink(destination: self.navigation(item)) {
                             self.content(item)
                                 .frame(
-                                    minWidth: 100,
-                                    maxWidth: 200
+                                    minWidth: 150,
+                                    maxWidth: 500
                                 )
                                 .padding(.leading)
                                 

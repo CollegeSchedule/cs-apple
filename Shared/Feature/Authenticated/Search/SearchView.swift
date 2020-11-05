@@ -21,16 +21,16 @@ struct SearchView: View {
 				Text("Error")
 			}
 			
-            ListView(self.friends, title: "Teachers") { item in
+            ListView(self.model.teach, title: "Teachers") { item in
                 RoundedRectangle(cornerRadius: 12)
                     .overlay(
-                        Text("item: \(item)")
+                        Text("item: \(item.firstName)")
                             .foregroundColor(.black)
                             .padding()
                     )
                     .eraseToAnyView()
             } navigation: { item in
-                Text("navigation: \(item)")
+                Text("navigation: \(item.firstName)")
                     .eraseToAnyView()
             }
             ListView(self.friends, title: "Groups") { item in

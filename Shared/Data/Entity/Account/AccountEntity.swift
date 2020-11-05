@@ -1,6 +1,6 @@
 import Foundation
 
-struct AccountEntity: Codable {
+struct AccountEntity: Codable, Hashable {
     let id: Int
     let token: String
     let mail: String?

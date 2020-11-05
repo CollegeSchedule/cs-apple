@@ -12,6 +12,9 @@ extension SearchView {
 		
 		@Published
 		var teachers: APIResult<CollectionMetaResponse<AccountEntity>> = .empty
+        
+        @Published
+        var teach: [AccountEntity] = []
 		
 		override init() {
 			super.init()
@@ -22,9 +25,12 @@ extension SearchView {
 				.receive(on: Scheduler.main)
 				.sink(receiveValue: {
 					self.get(search: $0)
+                    if case let APIResult.success(content) = self.teachers {
+                        self.teach = content.items
+                        print(self.teach)
+                    }
 				})
 				.store(in: &self.bag)
-			
 			self.get()
 		}
 		
