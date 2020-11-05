@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct MarkslSubjectView: View {
+struct MarksSubjectView: View {
     @State
-    private var items: [MarksView.SubjectItem] = [
+    private var items: [MarksSubjectView.SubjectItem] = [
         .init(
             subject: "Physics",
             teacher: "Салий Н.А",
@@ -41,5 +41,10 @@ struct MarkslSubjectView: View {
                 }
             }
         }
+    }
+    struct SubjectItem: Hashable {
+        let subject: String
+        let teacher: String
+        let rating: String
     }
 }

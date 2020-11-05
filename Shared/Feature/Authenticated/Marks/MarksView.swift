@@ -19,14 +19,9 @@ struct MarksView: View {
                 Text("ff")
             }
             else{
-                MarkslSubjectView()
+                MarksSubjectView()
             }
         }
-    }
-    struct SubjectItem: Hashable {
-        let subject: String
-        let teacher: String
-        let rating: String
     }
 }
 

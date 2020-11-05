@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MarksSubjectItemView: View {
-    let item: MarksView.SubjectItem
+    let item: MarksSubjectView.SubjectItem
     
     var body: some View {
         HStack{
