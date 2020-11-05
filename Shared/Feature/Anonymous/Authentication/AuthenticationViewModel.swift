@@ -5,16 +5,23 @@ import Combine
 extension AuthenticationView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Environment(\.authenticationService)
-        var service: AuthenticationService
+        private var service: AuthenticationService
         
         // MARK: - Input
-        @Published var mail: String = "hello@whywelive.me"
-        @Published var password: String = "12345678"
+        @Published
+		var mail: String = "hello@whywelive.me"
+        @Published
+		var password: String = "12345678"
         
         // MARK: - Output
-        @Published var item: AuthenticationItem = .notFound
-        @Published var isValid: Bool = false
-        @Published var status: APIResult<AuthenticationEntity> = .empty
+		@Published
+		var isActive: Bool = false
+		@Published
+		var item: AuthenticationItem = .empty
+        @Published
+		var isValid: Bool = false
+        @Published
+		var status: APIResult<AuthenticationEntity> = .empty
         
         // MARK: - Private logic
         private var isMailValidPublisher: AnyPublisher<Bool, Never> {

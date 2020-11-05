@@ -45,13 +45,27 @@ struct SettingsView: View {
                     view: SettingsAboutAppView().eraseToAnyView()
                 )
             ]
-        )
+        ),
+		.init(
+			items: [
+				.init(
+					icon: "globe",
+					title: "Выйти",
+					color: .orange,
+					textColor: .pink,
+					execute: {
+						print("hello")
+					}
+				)
+			]
+		)
+		
     ]
     
     var body: some View {
         List {
             ForEach(self.sections, id: \.header) { section in
-                Section(header: Text(section.header)) {
+				Section(header: Text(section.header)) {
                     ForEach(section.items, id: \.title) { item in
                         self.item(item)
                     }
@@ -85,28 +99,33 @@ struct SettingsView: View {
     private func label(_ item: SettingsSection.SettingsItem) -> AnyView {
         return Label {
             Text(item.title)
-                .foregroundColor(Color("GeneralTextColor"))
+				.foregroundColor(item.textColor ?? Color("GeneralTextColor"))
         } icon: {
-            Image(systemName: item.icon)
-                .foregroundColor(.white)
-                .frame(
-                    width: 32,
-                    height: 32,
-                    alignment: .center
-                )
-                .background(item.color)
-                .cornerRadius(8)
-        }.eraseToAnyView()
+			if item.icon != nil {
+				Image(systemName: item.icon!)
+					.foregroundColor(.white)
+					.frame(
+						width: 32,
+						height: 32,
+						alignment: .center
+					)
+					.background(item.color)
+					.cornerRadius(8)
+			}
+		}
+//		.labelStyle(item.icon == nil ? DefaultLabelStyle() as! LabelStyle: IconOnlyLabelStyle())
+		.eraseToAnyView()
     }
     
     struct SettingsSection {
-        let header: String
+        var header: String = ""
         let items: [SettingsItem]
         
         struct SettingsItem {
-            let icon: String
+            let icon: String?
             let title: String
-            let color: Color
+            let color: Color?
+			var textColor: Color? = nil
             
             var view: AnyView? = nil
             var execute: (() -> Void)? = nil

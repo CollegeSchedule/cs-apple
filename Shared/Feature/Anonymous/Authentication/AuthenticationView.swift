@@ -24,15 +24,17 @@ struct AuthenticationView: View {
             
             VStack {
                 Logo()
-                
-                VStack {
-                    
-                    Spacer()
-                    
-                    self.model.item.image
-                    
-                    Spacer()
-                }
+					.padding(20)
+				
+				if self.model.item != AuthenticationItem.empty {
+					VStack{
+						Spacer()
+						
+						AuthenticationItemView(item: self.model.item)
+						
+						Spacer()
+					}
+				}
                 
                 Form {
                     TextField("Email", text: self.$model.mail)
@@ -45,7 +47,9 @@ struct AuthenticationView: View {
                         .textContentType(.password)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
-                }
+						.sheet(isPresented: self.$model.isActive, content: { CodeScanner(isActive: self.$model.isActive) })
+				}
+				
                 
                 Button(action: self.model.login) {
                     ZStack {
@@ -64,6 +68,7 @@ struct AuthenticationView: View {
                 
                 Button(action: {
 //                    self.model.me()
+					self.model.isActive = true
                 }) {
                     HStack {
                         Text("Doesn't have an account?")
