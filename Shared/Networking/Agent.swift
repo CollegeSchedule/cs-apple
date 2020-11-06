@@ -119,6 +119,7 @@ class Agent: ObservableObject {
                 
                 // if response succed and method is authentication
                 if result.status,
+                   request.httpMethod != "GET",
                    request.description.contains("/authentication/") {
                     let authentication = result.data as! AuthenticationEntity
 

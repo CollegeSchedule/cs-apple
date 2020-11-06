@@ -30,24 +30,35 @@ struct AuthenticationView: View {
 					VStack{
 						Spacer()
 						
-						AuthenticationItemView(item: self.model.item)
+                        AuthenticationItemView(item: self.model.item)
 						
 						Spacer()
 					}
-				}
+                }
                 
                 Form {
-                    TextField("Email", text: self.$model.mail)
+                    TextField("Email", text: self.$model.mail, onCommit: {
+                        print("Ok")
+                    })
                         .textContentType(.emailAddress)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
+                        
+                        .sheet(item: self.$model.sheetItem) { item in
+                            switch item {
+                            case .camera:
+                                CodeScanner(model: self.model, item: self.$model.item, isActive: self.$model.sheetItem)
+                            case .keyboard:
+                                AuthenticationKeyboardView(isActive: self.$model.sheetItem)
+                            }
+                        }
+                        
                     
                     SecureField("Password", text: self.$model.password)
                         .textContentType(.password)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
-						.sheet(isPresented: self.$model.isActive, content: { CodeScanner(isActive: self.$model.isActive) })
 				}
 				
                 
@@ -68,7 +79,7 @@ struct AuthenticationView: View {
                 
                 Button(action: {
 //                    self.model.me()
-					self.model.isActive = true
+                    self.model.sheetItem = .camera
                 }) {
                     HStack {
                         Text("Doesn't have an account?")

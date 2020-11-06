@@ -10,6 +10,10 @@ protocol AuthenticationServiceType {
     func refreshToken(
         token: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
+    
+    func scanner(
+        token: String
+    ) -> AnyPublisher<APIResult<AuthenticationScannerEntity>, Never>
 }
 
 final class AuthenticationService: AuthenticationServiceType {
@@ -38,6 +42,18 @@ final class AuthenticationService: AuthenticationServiceType {
             "/authentication/token/\(token)",
             method: .post,
             type: .none
+        )
+    }
+    
+    func scanner(
+        token: String
+    ) -> AnyPublisher<APIResult<AuthenticationScannerEntity>, Never> {
+        self.agent.run(
+            "/authentication/",
+            params: [
+                "token" : token
+            ],
+            type: .application
         )
     }
 }

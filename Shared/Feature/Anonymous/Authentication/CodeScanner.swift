@@ -2,18 +2,37 @@ import SwiftUI
 import CodeScanner
 
 struct CodeScanner: View {
-	@Binding
-	var isActive: Bool
+    @ObservedObject
+    var model: AuthenticationView.ViewModel
+    
+    @Binding
+    var item: AuthenticationItem
+    
+    @Binding
+	var isActive: AuthenticationScanerItem?
 	
     var body: some View {
-		CodeScannerView(
-			codeTypes: [.qr],
-			completion: { result in
-				if case let .success(code) = result {
-					print(code)
-					self.isActive = false
-				}
-			}
-		)
+        ZStack{
+            CodeScannerView(
+                codeTypes: [.qr],
+                completion: { result in
+                    if case let .success(code) = result {
+                        self.model.statusScanner(token: code)
+                        self.isActive = nil
+                    }
+                }
+            )
+            VStack{
+                Text("fdalkfdaslkdf")
+                
+                Spacer()
+                
+                Button(action: {
+                    self.isActive = .keyboard
+                }) {
+                    Text("Go keyboard")
+                }
+            }.padding()
+        }
     }
 }
