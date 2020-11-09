@@ -44,7 +44,9 @@ struct SearchView: View {
             } navigation: { item in
                 Text("navigation: \(item)")
                     .eraseToAnyView()
-            }
+			}.sheet(isPresented: .constant(true)){
+				Text("fda")
+			}
 		}.add(self.model.searchBar)
     }
 }

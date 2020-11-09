@@ -5,8 +5,11 @@ struct AuthenticationKeyboardView: View {
     @Binding
     var isActive: AuthenticationScanerItem?
     
-    @State
-    private var text: String = ""
+	@ObservedObject
+	var model: AuthenticationView.ViewModel
+	
+	@State
+	private var text: String = ""
     
     var body: some View {
         ZStack{
@@ -15,13 +18,18 @@ struct AuthenticationKeyboardView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack{
-                Form {
-                    TextField("Text", text: self.$text)
-                }
+				TextField("Text", text: self.$text)
+					.padding()
+					.background(
+						RoundedRectangle(cornerRadius: 8)
+							.foregroundColor(Color("FormTextFieldBackgroundColor"))
+					)
+					.padding()
                 
                 Spacer()
                 
                 Button(action: {
+					self.model.statusScanner(token: self.text)
                     self.isActive = nil
                 }){
                     Text("Get")

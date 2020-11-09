@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct SettingsView: View {
+	@Environment(\.agent)
+	var model: Agent
+	
     @State
     var sections: [SettingsSection] = [
         .init(
@@ -54,7 +57,9 @@ struct SettingsView: View {
 					color: .orange,
 					textColor: .pink,
 					execute: {
-						print("hello")
+//						AgentKey.defaultValue.access = ""
+//						AgentKey.defaultValue.refresh = ""
+						AgentKey.defaultValue.isAuthenticated = false
 					}
 				)
 			]

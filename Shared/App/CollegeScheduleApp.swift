@@ -18,14 +18,10 @@ struct CollegeSchedule: App {
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-//            Text("H: \((self.horizontalSizeClass == nil).description)")
-//            Text("V: \((self.verticalSizeClass == nil).description)")
-            
             self.currentScene()
                 .sheet(isPresented: self.$state.onBoarding) {
                     OnBoardingView(isPresented: self.$state.onBoarding)
                 }
-                
                 .environmentObject(self.state)
                 .preferredColorScheme(
                     !self.state.isSystemAppearance
@@ -38,6 +34,7 @@ struct CollegeSchedule: App {
                 )
         }
     }
+	
     private func currentScene() -> AnyView {
         if !self.agent.isAuthenticated {
             return AuthenticationView().eraseToAnyView()

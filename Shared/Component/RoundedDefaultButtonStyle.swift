@@ -25,7 +25,6 @@ struct RoundedDefaultButtonStyle: ButtonStyle {
                     : Color.accentColor
             )
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .animation(.easeInOut)
     }
 }
 

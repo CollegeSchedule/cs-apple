@@ -15,3 +15,10 @@ enum AuthenticationScanerItem: CaseIterable, Identifiable {
     case camera
     case keyboard
 }
+
+enum AccountStatusResult {
+	case empty
+	case success(AccountEntity)
+	case notFound
+	case active
+}

@@ -9,19 +9,21 @@ extension AuthenticationView {
         
         // MARK: - Input
         @Published
-		var mail: String = "hello@whywelive.me"
+		var mail: String = "test@whywelive.me"
+		
         @Published
-		var password: String = "12345678"
-        
+		var password: String = "fucktest"
+		
+        @Published
+		var accountCode: String = ""
+		
         // MARK: - Output
+		// Используется для валидности введенных данных
         @Published
         var isValid: Bool = false
         
-		@Published
-		var isActive: Bool = false
-        
         @Published
-        var item: AuthenticationItem = .empty
+		var account: AccountStatusResult = .empty
         
         @Published
         var sheetItem: AuthenticationScanerItem?
@@ -29,9 +31,8 @@ extension AuthenticationView {
         @Published
 		var status: APIResult<AuthenticationEntity> = .empty
         
-        @Published
-        var scanner: APIResult<AuthenticationScannerEntity> = .empty
-        
+
+//
         // MARK: - Private logic
         private var isMailValidPublisher: AnyPublisher<Bool, Never> {
             self.$mail
@@ -51,6 +52,58 @@ extension AuthenticationView {
                 .eraseToAnyPublisher()
         }
         
+		private var accountStatusPublisher: AnyPublisher<AccountStatusResult, Never> {
+			self.$accountCode
+				.flatMap { result in
+					self.service.scanner(token: result)
+				}
+				.map { result in
+					guard case let APIResult.success(content) = result else {
+						
+					}
+					
+					guard let APIResult.empty != result else {
+						return .empty
+					}
+					
+					if case APIResult.empty = result {
+						return .empty
+					} else {
+						return .empty
+					}
+				}
+				
+				.eraseToAnyPublisher()
+				
+		}
+		
+		//		self.performGetOperation(
+		//			networkCall: self.service.scanner(token: token)
+		//		)
+		//		.subscribe(on: Scheduler.background)
+		//		.receive(on: Scheduler.main)
+		//		.map { result in
+		//			if case APIResult.empty = result {
+		//				self.item = .empty
+		//			} else if case let APIResult.success(content) = result {
+		////					if content.avatar != nil {
+		////						self.url = content.avatar!
+		////						print(self.url)
+		////					}
+		////					if content.active {
+		////						self.item = .activated
+		////					} else {
+		////						self.item = .success
+		////						self.nameAccount = "\(content.secondName) \(content.firstName.prefix(1)). \(content.thirdName.prefix(1))."
+		////					}
+		//
+		//			} else if case APIResult.error = result {
+		//				self.item = .notFound
+		//			}
+		//			return result
+		//		}
+		//		.assign(to: \.self.scanner, on: self)
+		//		.store(in: &self.bag)
         override init() {
             super.init()
             
@@ -88,11 +141,17 @@ extension AuthenticationView {
                 if case APIResult.empty = result {
                     self.item = .empty
                 } else if case let APIResult.success(content) = result {
-                    if content.active {
-                        self.item = .activated
-                    } else {
-                        self.item = .success
-                    }
+//					if content.avatar != nil {
+//						self.url = content.avatar!
+//						print(self.url)
+//					}
+//					if content.active {
+//						self.item = .activated
+//					} else {
+//						self.item = .success
+//						self.nameAccount = "\(content.secondName) \(content.firstName.prefix(1)). \(content.thirdName.prefix(1))."
+//					}
+                    
                 } else if case APIResult.error = result {
                     self.item = .notFound
                 }

@@ -16,7 +16,6 @@ struct OnBoardingItemView: View {
                 Text(self.item.description)
                     .foregroundColor(.gray)
                     .font(.system(size: 16, weight: .light))
-                    
             }.padding(.leading)
         }.frame(maxWidth: 500)
     }

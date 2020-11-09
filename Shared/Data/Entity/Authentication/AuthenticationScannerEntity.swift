@@ -5,6 +5,7 @@ struct AuthenticationScannerEntity: Codable {
     let firstName: String
     let secondName: String
     let thirdName: String
+	let avatar: String?
     let active: Bool
     
 }

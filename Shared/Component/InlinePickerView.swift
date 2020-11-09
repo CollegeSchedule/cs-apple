@@ -15,9 +15,6 @@ struct InlinePicker: View {
                     HStack {
                         Text(self.items[index])
                             .foregroundColor(.primary)
-//                            .onTapGesture {
-//                                print(index)
-//                            }
                         
                         Spacer()
                         
