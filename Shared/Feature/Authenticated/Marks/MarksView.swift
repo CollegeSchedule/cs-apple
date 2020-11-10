@@ -17,12 +17,10 @@ struct MarksView: View {
             
             if self.selection == 0 {
                 Text("ff")
-            }
-            else{
+            } else{
                 MarksSubjectView()
             }
         }
     }
 }
-
 
