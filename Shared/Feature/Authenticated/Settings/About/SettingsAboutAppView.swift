@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SettingsAboutAppView: View {
     var body: some View {
-        List{
-            HStack{
+        List {
+            HStack {
                 Text("Version")
                 Spacer()
                 Text(UIApplication.appVersion!)

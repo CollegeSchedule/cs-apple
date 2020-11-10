@@ -16,10 +16,8 @@ struct AppTabNavigation: View {
                 .tabItem {
                     Label(
                         LocalizedStringKey(item.title),
-                        systemImage: item.icon)
-                        .accessibility(
-                            label: Text(LocalizedStringKey(item.title))
-                        )
+                        systemImage: item.icon
+					)
                 }
                 .tag(item)
             }

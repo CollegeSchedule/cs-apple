@@ -45,12 +45,7 @@ extension Color {
         UIColor { (traits) -> UIColor in
             // Return one of two colors depending on light or dark mode
             return traits.userInterfaceStyle == .dark
-                ? UIColor(
-                    red: 28 / 255,
-                    green: 28 / 255,
-                    blue: 30 / 255,
-                    alpha: 1
-                )
+				? UIColor(named: "InlinePickerButtonBackgroundColor")!
                 : UIColor.white
         }
     )
