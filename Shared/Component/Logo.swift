@@ -7,14 +7,14 @@ struct Logo: View {
     private let gradient: Gradient = .init(
         colors: [
             Color.init(
-                red: 35/255,
-                green: 35/255,
-                blue: 35/255
+                red: 35 / 255,
+                green: 35 / 255,
+                blue: 35 / 255
 			),
             Color.init(
-                red: 69/255,
-                green: 69/255,
-                blue: 69/255
+                red: 69 / 255,
+                green: 69 / 255,
+                blue: 69 / 255
 			)
         ]
 	)

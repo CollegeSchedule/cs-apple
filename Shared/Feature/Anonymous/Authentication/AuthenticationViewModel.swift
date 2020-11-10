@@ -23,7 +23,7 @@ extension AuthenticationView {
         var isValid: Bool = false
         
         @Published
-		var account: AccountStatusResult = .empty
+        var account: AccountStatusResult = .empty
         
         @Published
         var sheetItem: AuthenticationScanerItem?
@@ -31,12 +31,10 @@ extension AuthenticationView {
         @Published
 		var status: APIResult<AuthenticationEntity> = .empty
         
-
-//
         // MARK: - Private logic
         private var isMailValidPublisher: AnyPublisher<Bool, Never> {
             self.$mail
-                .debounce(for: 0.2, scheduler: Scheduler.main)
+//                .debounce(for: 0.2, scheduler: Scheduler.main)
                 .map { result in
                     result.isEmail()
                 }
@@ -45,65 +43,46 @@ extension AuthenticationView {
         
         private var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
             self.$password
-                .debounce(for: 0.2, scheduler: Scheduler.main)
+//                .debounce(for: 0.2, scheduler: Scheduler.main)
                 .map { result in
                     result.count >= 8
                 }
                 .eraseToAnyPublisher()
         }
         
-		private var accountStatusPublisher: AnyPublisher<AccountStatusResult, Never> {
+		private var accountStatusPublisher: AnyPublisher<
+            AccountStatusResult,
+            Never
+        > {
 			self.$accountCode
-				.flatMap { result in
-					self.service.scanner(token: result)
+                .flatMap { result -> AnyPublisher<
+                    APIResult<AuthenticationScannerEntity>,
+                    Never
+                > in
+                    if result.isEmpty {
+                        return Just(.empty).eraseToAnyPublisher()
+                    }
+                    
+                    return self.service.scanner(token: result)
 				}
 				.map { result in
-					guard case let APIResult.success(content) = result else {
-						
-					}
-					
-					guard let APIResult.empty != result else {
-						return .empty
-					}
-					
-					if case APIResult.empty = result {
-						return .empty
-					} else {
-						return .empty
-					}
+                    if case .error = result {
+                        return .notFound
+                    }
+                    
+                    if case .empty = result {
+                        return .empty
+                    }
+                                        
+                    guard case let .success(content) = result else {
+                        return .notFound
+                    }
+                    
+                    return .success(content)
 				}
-				
-				.eraseToAnyPublisher()
-				
+                .eraseToAnyPublisher()
 		}
 		
-		//		self.performGetOperation(
-		//			networkCall: self.service.scanner(token: token)
-		//		)
-		//		.subscribe(on: Scheduler.background)
-		//		.receive(on: Scheduler.main)
-		//		.map { result in
-		//			if case APIResult.empty = result {
-		//				self.item = .empty
-		//			} else if case let APIResult.success(content) = result {
-		////					if content.avatar != nil {
-		////						self.url = content.avatar!
-		////						print(self.url)
-		////					}
-		////					if content.active {
-		////						self.item = .activated
-		////					} else {
-		////						self.item = .success
-		////						self.nameAccount = "\(content.secondName) \(content.firstName.prefix(1)). \(content.thirdName.prefix(1))."
-		////					}
-		//
-		//			} else if case APIResult.error = result {
-		//				self.item = .notFound
-		//			}
-		//			return result
-		//		}
-		//		.assign(to: \.self.scanner, on: self)
-		//		.store(in: &self.bag)
         override init() {
             super.init()
             
@@ -112,52 +91,44 @@ extension AuthenticationView {
                 self.isPasswordValidPublisher
             )
             .map { (mail, password) in
-                return mail && password
+                guard case .success = self.account else {
+                    return mail && password
+                }
+                
+                return password
             }
             .assign(to: \.self.isValid, on: self)
             .store(in: &self.bag)
+            
+            self.accountStatusPublisher
+                .sink { result in
+                    self.mail = ""
+                    self.password = ""
+                    self.account = result
+                }
+                .store(in: &self.bag)
         }
         
         func login() {
             self.performGetOperation(
-                networkCall: self.service.login(
-                    mail: self.mail,
-                    password: self.password
-                )
-            )
-            .subscribe(on: Scheduler.background)
-            .receive(on: Scheduler.main)
-            .assign(to: \.self.status, on: self)
-            .store(in: &self.bag)
-        }
-        
-        func statusScanner(token: String) {
-            self.performGetOperation(
-                networkCall: self.service.scanner(token: token)
-            )
-            .subscribe(on: Scheduler.background)
-            .receive(on: Scheduler.main)
-            .map { result in
-                if case APIResult.empty = result {
-                    self.item = .empty
-                } else if case let APIResult.success(content) = result {
-//					if content.avatar != nil {
-//						self.url = content.avatar!
-//						print(self.url)
-//					}
-//					if content.active {
-//						self.item = .activated
-//					} else {
-//						self.item = .success
-//						self.nameAccount = "\(content.secondName) \(content.firstName.prefix(1)). \(content.thirdName.prefix(1))."
-//					}
+                networkCall: {
+                    guard case .success = self.account else {
+                        return self.service.login(
+                            mail: self.mail,
+                            password: self.password
+                        )
+                    }
                     
-                } else if case APIResult.error = result {
-                    self.item = .notFound
-                }
-                return result
-            }
-            .assign(to: \.self.scanner, on: self)
+                    return self.service.login(
+                        token: self.accountCode,
+                        password: self.password
+                    )
+                }()
+            )
+            .subscribe(on: Scheduler.background)
+            .receive(on: Scheduler.main)
+            .print()
+            .assign(to: \.self.status, on: self)
             .store(in: &self.bag)
         }
     }
