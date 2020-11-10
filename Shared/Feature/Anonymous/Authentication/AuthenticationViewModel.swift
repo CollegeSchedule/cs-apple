@@ -127,7 +127,6 @@ extension AuthenticationView {
             )
             .subscribe(on: Scheduler.background)
             .receive(on: Scheduler.main)
-            .print()
             .assign(to: \.self.status, on: self)
             .store(in: &self.bag)
         }

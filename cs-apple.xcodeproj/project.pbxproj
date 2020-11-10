@@ -771,7 +771,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/cs-apple.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DYWGPXDB3A;
+				DEVELOPMENT_TEAM = 26XNSF4Y2J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -779,7 +779,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.whywelive.cs-applewj";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.whywelive.cs-applewji";
 				PRODUCT_NAME = "cs-apple";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
