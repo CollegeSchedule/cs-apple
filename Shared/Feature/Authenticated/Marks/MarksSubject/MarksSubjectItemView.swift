@@ -12,6 +12,7 @@ struct MarksSubjectItemView: View {
                     .font(.system(size: 10, weight: .regular, design: .default))
                     .foregroundColor(Color("MarksSubjectText"))
             }
+            
             Spacer()
             
             HStack(spacing: 20) {
