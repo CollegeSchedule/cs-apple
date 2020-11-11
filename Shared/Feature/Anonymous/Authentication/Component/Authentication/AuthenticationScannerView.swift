@@ -37,7 +37,7 @@ struct AuthenticationScannerView: View {
                 }) {
                     HStack {
                         Text("Can't scan a QR-code?")
-                            .foregroundColor(.white)
+                            .foregroundColor(.gray)
                         
                         Text("Go to keybaord")
                             .foregroundColor(.accentColor)
