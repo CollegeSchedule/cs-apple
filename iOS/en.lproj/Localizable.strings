@@ -31,7 +31,7 @@
 "authentication.no_account" = "Doesn't have an account?";
 "authentication.registry" = "Account already registered";
 "authentication.on_boarding.continue" = "Continue";
-"authentication.on_boarding.welcome" = "Welcome to CollegeSchedule"
+"authentication.on_boarding.welcome" = "Welcome to CollegeSchedule";
 "authentication.scanner.go_keyboard" = "Go to keybaord";
 "authentication.scanner.can_not_scan" = "Can't scan a QR-Code";
 "authentication.scanner.scan_account" = "Scan your account's QR-Code";

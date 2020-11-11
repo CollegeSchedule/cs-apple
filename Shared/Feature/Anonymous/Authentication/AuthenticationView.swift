@@ -8,20 +8,20 @@ struct AuthenticationView: View {
         ZStack {
             Form {
                 EmptyView()
-                    .sheet(item: self.$model.sheetItem) { item in
-                        switch item {
-                            case .camera:
-                                AuthenticationScannerView(
-                                    model: self.model,
-                                    isActive: self.$model.sheetItem
-                                )
-                            case .keyboard:
-                                AuthenticationKeyboardView(
-                                    model: self.model,
-                                    isActive: self.$model.sheetItem
-                                )
-                        }
-                    }
+					.fullScreenCover(item: self.$model.sheetItem) { item in
+						switch item {
+							case .camera:
+								AuthenticationScannerView(
+									model: self.model,
+									isActive: self.$model.sheetItem
+								).ignoresSafeArea()
+//							case .keyboard:
+//								AuthenticationKeyboardView(
+//									model: self.model,
+//									isActive: self.$model.sheetItem
+//								).ignoresSafeArea()
+						}
+					}
             }
             
             Color

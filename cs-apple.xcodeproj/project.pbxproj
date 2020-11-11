@@ -779,7 +779,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.whywelive.cs-applewji";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.whywelive.cs-applewk";
 				PRODUCT_NAME = "cs-apple";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;

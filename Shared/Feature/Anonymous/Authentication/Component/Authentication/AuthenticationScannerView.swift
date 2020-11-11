@@ -20,20 +20,31 @@ struct AuthenticationScannerView: View {
                     }
                 }
             )
+			
             VStack {
-                VStack(spacing: 20) {
-                    Text("Scan your account's QR-Code")
-                        .font(.largeTitle)
-                    
-                    Text("If you doesn't have a QR-code, you should ask your master for them")
-                }
-                .padding()
-                .multilineTextAlignment(.center)
+				VStack(spacing: 12) {
+					HStack(alignment: .top) {
+						Button(action: {
+							self.model.sheetItem = nil
+						}) {
+							Image(systemName: "multiply")
+								.font(.system(size: 32))
+						}.padding(.top, 12)
+						
+						Text("Scan your account's QR-Code")
+							.font(.largeTitle)
+					}
+					
+					Text("If you doesn't have a QR-code, you should ask your master for them")
+				}
+				.multilineTextAlignment(.center)
+				.padding(.vertical)
+                
                 
                 Spacer()
                 
                 Button(action: {
-                    self.isActive = .keyboard
+//                    self.isActive = .keyboard
                 }) {
                     HStack {
                         Text("Can't scan a QR-code?")

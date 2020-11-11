@@ -28,6 +28,12 @@ struct AuthenticationKeyboardView: View {
 					.padding()
                 
                 Spacer()
+				
+				Button(action:{
+					self.isActive = nil
+				}){
+					Text("Dismiss")
+				}
                 
                 Button(action: {
                         self.model.accountCode = self.text
