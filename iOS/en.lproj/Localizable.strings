@@ -27,7 +27,9 @@
 "authentication.sign_in" = "Sign In";
 "authentication.field_email" = "Email";
 "authentication.field_password" = "Password";
+"authentication.not_Found" = "Account not found";
 "authentication.no_account" = "Doesn't have an account?";
+"authentication.registry" = "Account already registered";
 "authentication.scanner.go_keyboard" = "Go to keybaord";
 "authentication.scanner.can_not_scan" = "Can't scan a QR-Code";
 "authentication.scanner.scan_account" = "Scan your account's QR-Code";
