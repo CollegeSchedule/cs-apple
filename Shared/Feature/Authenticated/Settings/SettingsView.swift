@@ -55,10 +55,7 @@ struct SettingsView: View {
 					icon: "globe",
 					title: "Выйти",
 					color: .orange,
-					textColor: .pink,
 					execute: {
-//						AgentKey.defaultValue.access = ""
-//						AgentKey.defaultValue.refresh = ""
 						AgentKey.defaultValue.isAuthenticated = false
 					}
 				)

@@ -27,8 +27,10 @@ class Agent: ObservableObject {
     @Published
 	var isAuthenticated: Bool = false {
 		didSet {
-			self.access = ""
-			self.refresh = ""
+            if !self.isAuthenticated {
+                self.access = ""
+                self.refresh = ""
+            }
 		}
 	}
     

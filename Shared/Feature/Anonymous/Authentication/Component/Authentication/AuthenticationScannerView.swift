@@ -38,24 +38,25 @@ struct AuthenticationScannerView: View {
 					Text("If you doesn't have a QR-code, you should ask your master for them")
 				}
 				.multilineTextAlignment(.center)
-				.padding(.vertical)
+                .padding(.vertical)
+                .padding(.top)
                 
                 
                 Spacer()
                 
-                Button(action: {
-//                    self.isActive = .keyboard
-                }) {
-                    HStack {
-                        Text("Can't scan a QR-code?")
-                            .foregroundColor(.gray)
-                        
-                        Text("Go to keybaord")
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .padding([.horizontal, .bottom], 20)
-                .padding(.top, 10)
+//                Button(action: {
+////                    self.isActive = .keyboard
+//                }) {
+//                    HStack {
+//                        Text("Can't scan a QR-code?")
+//                            .foregroundColor(.gray)
+//
+//                        Text("Go to keybaord")
+//                            .foregroundColor(.accentColor)
+//                    }
+//                }
+//                .padding([.horizontal, .bottom], 20)
+//                .padding(.top, 10)
             }.padding()
         }
     }

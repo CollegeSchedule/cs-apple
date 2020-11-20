@@ -6,7 +6,7 @@ extension Date {
 	func scheduleTimeline() -> [String] {
 		let first = Date().startOfWeek
 		let form = DateFormatter()
-		form.dateFormat = "dd MMMM"
+		form.dateFormat = "dd MMMM yyyy"
 		
 		return (1...14).map { index in
 			form.string(from:Calendar.current.date(byAdding: .day, value: index, to: first)!)
@@ -26,9 +26,9 @@ extension Date {
 		)!
 	}
 	
-	var today: String{
+	var today: String {
 		let form = DateFormatter()
-		form.dateFormat = "dd MMMM"
+		form.dateFormat = "dd MMMM yyyy"
 		
 		return form.string(from: Date())
 	}

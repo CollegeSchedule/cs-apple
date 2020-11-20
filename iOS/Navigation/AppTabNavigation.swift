@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AppTabNavigation: View {
     @State
-    private var selection: NavigationItem = .marks
+    private var selection: NavigationItem = .news
     
     var body: some View {
         TabView(selection: self.$selection) {

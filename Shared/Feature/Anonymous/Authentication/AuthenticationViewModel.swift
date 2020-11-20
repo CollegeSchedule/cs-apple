@@ -34,7 +34,7 @@ extension AuthenticationView {
         // MARK: - Private logic
         private var isMailValidPublisher: AnyPublisher<Bool, Never> {
             self.$mail
-//                .debounce(for: 0.2, scheduler: Scheduler.main)
+                .debounce(for: 0.2, scheduler: Scheduler.main)
                 .map { result in
                     result.isEmail()
                 }
@@ -43,7 +43,7 @@ extension AuthenticationView {
         
         private var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
             self.$password
-//                .debounce(for: 0.2, scheduler: Scheduler.main)
+                .debounce(for: 0.2, scheduler: Scheduler.main)
                 .map { result in
                     result.count >= 8
                 }
@@ -102,8 +102,11 @@ extension AuthenticationView {
             
             self.accountStatusPublisher
                 .sink { result in
-                    self.mail = ""
-                    self.password = ""
+                    if case .success = result {
+                        self.mail = ""
+                        self.password = ""
+                    }
+
                     self.account = result
                 }
                 .store(in: &self.bag)
