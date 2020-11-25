@@ -17,9 +17,9 @@ extension HomeView {
             super.init()
             
             self.$isRefreshing
-                .allSatisfy { !$0 }
-                .flatMap { result -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
-                    self.performGetOperation(
+                .filter { $0 }
+                .flatMap { _ -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
+                    return self.performGetOperation(
                         networkCall: self.service.get(
                             groupId: nil,
                             year: 2020,
@@ -30,27 +30,15 @@ extension HomeView {
                     )
                 }
                 .sink(receiveValue: { result in
-                    print(result)
                     self.isRefreshing = false
-                    if case .error = result {
-                        print("eror")
-                    }
                     
-                    if case .empty = result {
-                        
-                        print("empty")
-                    }
-                                        
                     if case let .success(content) = result {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             self.homeStatus = content.items
+                        }
                     }
-                        print("succes")
-                    }
-                    
                 })
                 .store(in: &self.bag)
-            
         }
     }
 }
