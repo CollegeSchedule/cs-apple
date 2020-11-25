@@ -1,6 +1,6 @@
 struct ScheduleSubjectEntity: Codable, Hashable {
     let id: Int
-    let day: Int
+    var day: Int
     let sort: Int
     
     let teacher: AccountEntity
