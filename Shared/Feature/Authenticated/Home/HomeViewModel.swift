@@ -3,11 +3,13 @@ import Combine
 
 extension HomeView {
     class ViewModel: BaseViewModel, ObservableObject {
+        
         @Environment(\.scheduleSubjectService)
         private var service: ScheduleSubjectService
         
         @Published
         var isRefreshing: Bool = false
+        
         @Published
         var homeStatus: [ScheduleSubjectEntity] = []
         
@@ -22,8 +24,8 @@ extension HomeView {
                             groupId: nil,
                             year: 2020,
                             week: 48,
-                            teacherId: nil,
-                            studentId: 1
+                            teacherId: 50,
+                            studentId: nil
                         )
                     )
                 }
@@ -35,15 +37,17 @@ extension HomeView {
                     }
                     
                     if case .empty = result {
-                        self.homeStatus = []
+                        
                         print("empty")
                     }
                                         
                     if case let .success(content) = result {
-                        self.homeStatus = content.items
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            self.homeStatus = content.items
+                    }
                         print("succes")
                     }
-                    print(self.isRefreshing)
+                    
                 })
                 .store(in: &self.bag)
             

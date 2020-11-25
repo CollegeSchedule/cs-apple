@@ -534,8 +534,8 @@
 				840F7BBC2540110C004938BE /* HomeItemView.swift */,
 				840F7BC025401128004938BE /* HomeView.swift */,
 				84CEB665256D0E4D0021D9BB /* HomeViewControllerRepresentable.swift */,
-				84CEB668256D0E840021D9BB /* HomeContentView.swift */,
 				84CEB66B256D0F8B0021D9BB /* HomeViewModel.swift */,
+				84CEB668256D0E840021D9BB /* HomeContentView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";

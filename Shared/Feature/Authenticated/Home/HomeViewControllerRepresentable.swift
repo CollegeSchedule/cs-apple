@@ -41,10 +41,9 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
         
         content.view.translatesAutoresizingMaskIntoConstraints = false
         
-        
         controller.extendedLayoutIncludesOpaqueBars = true
         
-        content.view.backgroundColor = .red
+        
         
         // setup constraints
         NSLayoutConstraint.activate([
@@ -64,7 +63,6 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
             content.view.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
             content.view.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
             content.view.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
-            content.view.heightAnchor.constraint(equalTo: scroll.heightAnchor),
             
 //            content.view.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
 //            content.view.topAnchor.constraint(equalTo: stack.topAnchor),
