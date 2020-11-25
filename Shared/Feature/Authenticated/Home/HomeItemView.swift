@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct ScheduleItemView: View {
-    let item: ScheduleView.ScheduleItem
+struct HomeItemView: View {
+    let item: HomeContentView.ScheduleItem
     
     var body: some View {
         HStack {
@@ -29,6 +29,5 @@ struct ScheduleItemView: View {
                     .foregroundColor(.green)
             }
         }
-        .padding()
     }
 }

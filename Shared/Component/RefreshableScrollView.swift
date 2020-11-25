@@ -3,22 +3,27 @@ import SwiftUI
 struct RefreshableScrollView<Content: View>: View {
     @Binding
     var refreshing: Bool
+    
     @State
     var isSearch: Bool = false
+    
     @State
     private var frozen: Bool = false
+    
     @State
     private var scrollOffset: CGFloat = 0
+    
     @State
     private var rotation: Angle = .degrees(0)
+    
     @State
     private var previousScrollOffset: CGFloat = 0
     
     let content: Content
     let action: () -> Void
+    
     private var threshold: CGFloat = 280
     
-
     init(
         height: CGFloat = 80,
         refreshing: Binding<Bool>,
@@ -32,22 +37,24 @@ struct RefreshableScrollView<Content: View>: View {
     }
 
     var body: some View {
-        return VStack {
+        VStack {
             ScrollView {
                 ZStack(alignment: .top) {
                     MovingView()
-//                        .animation(.easeInOut)
 
                     VStack {
                         self.content
-                            .animation((self.refreshing && self.frozen) ? nil : .easeIn )
-                    }.alignmentGuide(.top,
-                                     computeValue: { d in
-                                        (self.refreshing && self.frozen) ?
-                                            -self.threshold
-                                            :
-                                            0.0
-                                     }
+//                            .animation(
+//                                (self.refreshing && self.frozen) ? nil : .easeIn
+//                            )
+                    }.alignmentGuide(
+                        .top,
+                        computeValue: { _ in
+                            (self.refreshing && self.frozen)
+                                ? -self.threshold
+                                : 0.0
+                            
+                        }
                     )
 
                     SymbolView(
@@ -68,18 +75,27 @@ struct RefreshableScrollView<Content: View>: View {
 
     func refreshLogic(values: [RefreshableKeyTypes.PrefData]) {
         DispatchQueue.main.async {
-            let movingBounds = values.first { $0.vType == .movingView }?.bounds ?? .zero
-            let fixedBounds = values.first { $0.vType == .fixedView }?.bounds ?? .zero
+            let movingBounds = values.first {
+                $0.vType == .movingView
+            }?.bounds ?? .zero
+            
+            let fixedBounds = values.first {
+                $0.vType == .fixedView
+            }?.bounds ?? .zero
 
             self.scrollOffset  = movingBounds.minY - fixedBounds.minY
 
-            if !self.refreshing && (self.scrollOffset > self.threshold && self.previousScrollOffset <= self.threshold) {
+            if !self.refreshing,
+               self.scrollOffset > self.threshold,
+               self.previousScrollOffset <= self.threshold {
                 self.refreshing = true
             }
 
             if self.refreshing {
-                if self.previousScrollOffset > self.threshold && self.scrollOffset <= self.threshold {
+                if self.previousScrollOffset > self.threshold,
+                   self.scrollOffset <= self.threshold {
                     self.frozen = true
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         self.refreshing = false
                     }

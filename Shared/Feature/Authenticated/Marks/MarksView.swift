@@ -15,10 +15,12 @@ struct MarksView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
             
-            if self.selection == 0 {
-                MarksDateView()
-            } else{
-                MarksSubjectView()
+            RefreshableScrollView(refreshing: .constant(true), action: {}) {
+                if self.selection == 0 {
+                    MarksDateView()
+                } else{
+                    MarksSubjectView()
+                }
             }
             Spacer()
         }

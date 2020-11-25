@@ -2,13 +2,13 @@ import SwiftUI
 
 struct AppSidebarNavigation: View {
     @State
-    var selection: NavigationItem? = .news
+    var selection: NavigationItem? = .home
     
     var body: some View {
         NavigationView {
             self.sidebar
                                     
-            NewsView()
+            HomeView()
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }

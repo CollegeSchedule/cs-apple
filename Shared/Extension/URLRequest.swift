@@ -4,14 +4,16 @@ extension URLRequest {
     init(
         _ url: URL,
         method: HTTPMethod = .get,
-        params: [String: Any] = [:],
+        params: [String: Any?] = [:],
         headers: [String: Any] = [:]
     ) {
         self.init(
-            url: (method != .get) ? url : url.appending(params.map {
+            url: (method != .get) ? url : url.appending(params.filter {
+                $0.value != nil
+            }.map {
                 (key, value) in
                 
-                URLQueryItem(name: key, value: String(describing: value))
+                URLQueryItem(name: key, value: String(describing: value!))
             })!
         )
         
