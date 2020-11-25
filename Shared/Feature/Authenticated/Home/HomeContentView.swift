@@ -38,10 +38,10 @@ struct HomeContentView: View {
                     return result.day == Int(self.currentDay!)!
                 }, id: \.self) { item in
                     HomeItemView(item: item)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+        }
     }
 
     private func dateFormat(_ day: String, type: String) -> String {
