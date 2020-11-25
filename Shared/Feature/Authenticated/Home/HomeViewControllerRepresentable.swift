@@ -13,7 +13,7 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UINavigationController {
         let controller: UIViewController = context.coordinator.controller
         let scroll: UIScrollView = context.coordinator.scroll
-        let stack: UIStackView = context.coordinator.stack
+//        let stack: UIStackView = context.coordinator.stack
         let content: UIHostingController = context.coordinator.content
         let refresh: UIRefreshControl = context.coordinator.refresh
         let navigation: UINavigationController = .init(rootViewController: controller)
@@ -31,19 +31,20 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
 //        scroll.contentInsetAdjustmentBehavior = .never
         
         // setup UIStackView
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        scroll.addSubview(stack)
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+        scroll.addSubview(content.view)
         
         // setup UIView
-        controller.addChild(content)
-        stack.addArrangedSubview(content.view)
-        content.didMove(toParent: controller)
+//        controller.addChild(content)
+//        stack.addArrangedSubview(content.view)
+//        content.didMove(toParent: controller)
         
         content.view.translatesAutoresizingMaskIntoConstraints = false
         
-        stack.backgroundColor = .blue
+        
         controller.extendedLayoutIncludesOpaqueBars = true
         
+        content.view.backgroundColor = .red
         
         // setup constraints
         NSLayoutConstraint.activate([
@@ -52,17 +53,25 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
             scroll.trailingAnchor.constraint(equalTo: controller.view.trailingAnchor),
             scroll.bottomAnchor.constraint(equalTo: controller.view.bottomAnchor),
             
-            stack.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
-            stack.topAnchor.constraint(equalTo: scroll.topAnchor),
-            stack.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
-            stack.widthAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.widthAnchor),
+//            stack.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
+//            stack.topAnchor.constraint(equalTo: scroll.topAnchor),
+//            stack.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
+//            stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
+//            stack.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
+  
+            content.view.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
+            content.view.topAnchor.constraint(equalTo: scroll.topAnchor),
+            content.view.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
+            content.view.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
+            content.view.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
+            content.view.heightAnchor.constraint(equalTo: scroll.heightAnchor),
             
-            content.view.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            content.view.topAnchor.constraint(equalTo: stack.topAnchor),
-            content.view.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
-            content.view.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
-            content.view.widthAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.widthAnchor),
+//            content.view.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+//            content.view.topAnchor.constraint(equalTo: stack.topAnchor),
+//            content.view.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+//            content.view.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
+//            content.view.widthAnchor.constraint(equalTo: controller.view.widthAnchor),
+//            content.view.heightAnchor.constraint(equalTo: stack.heightAnchor),
         ])
         
         // setup refresh

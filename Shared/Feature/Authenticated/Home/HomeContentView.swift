@@ -48,7 +48,7 @@ struct HomeContentView: View {
         ]
  
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             ScrollView(.horizontal, showsIndicators: false ) {
                                 HStack{
                                     ForEach(Date().scheduleTimeline(), id: \.self) { week in
@@ -66,9 +66,13 @@ struct HomeContentView: View {
                                 }
                             }
             
-            ForEach(self.model.homeStatus, id: \.self) { item in
-                HomeItemView(item: item)
-            }
+            VStack {
+                ForEach(self.model.homeStatus, id: \.self) { item in
+                    HomeItemView(item: item)
+                }
+            }.background(Color.green)
+            
+            Spacer()
         }
     }
 
