@@ -8,6 +8,8 @@ extension HomeView {
         
         @Published
         var isRefreshing: Bool = false
+        @Published
+        var homeStatus: [ScheduleSubjectEntity] = []
         
         override init() {
             super.init()
@@ -25,10 +27,23 @@ extension HomeView {
                         )
                     )
                 }
-                .sink(receiveValue: {
-                    print($0)
-                    
+                .sink(receiveValue: { result in
+                    print(result)
                     self.isRefreshing = false
+                    if case .error = result {
+                        print("eror")
+                    }
+                    
+                    if case .empty = result {
+                        self.homeStatus = []
+                        print("empty")
+                    }
+                                        
+                    if case let .success(content) = result {
+                        self.homeStatus = content.items
+                        print("succes")
+                    }
+                    print(self.isRefreshing)
                 })
                 .store(in: &self.bag)
             

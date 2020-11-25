@@ -3,58 +3,73 @@ import SwiftUI
 struct HomeContentView: View {
     @EnvironmentObject
     var model: HomeView.ViewModel
-    
-    let date: Date = Date()
 
     @State
-    private var day: String = Date().today
-
-    @State
-    private var items: [ScheduleItem] = [
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        ),
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        ),
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        ),
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        ),
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        ),
-        .init(
-            startLes: "10:50",
-            endLes: "12:00",
-            lesson: "History",
-            classroom: "309"
-        )
-    ]
+        private var day: String = Date().today
+        
+        @State
+        private var items: [ScheduleItem] = [
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            ),
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            ),
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            ),
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            ),
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            ),
+            .init(
+                startLes: "10:50",
+                endLes: "12:00",
+                lesson: "History",
+                classroom: "309"
+            )
+        ]
  
     var body: some View {
         VStack(spacing: 20) {
-            ForEach(self.items, id: \.self) { item in
+            ScrollView(.horizontal, showsIndicators: false ) {
+                                HStack{
+                                    ForEach(Date().scheduleTimeline(), id: \.self) { week in
+                                        VStack {
+                                            Text(week.prefix(2))
+                                            Text(self.dateFormat(week).lowercased())
+                                        }
+                                        .padding(4)
+                                        .background(week == self.day ? Color.blue : Color.clear)
+                                        .cornerRadius(12)
+                                        .onTapGesture {
+                                            self.day = week
+                                        }
+                                    }
+                                }
+                            }
+            
+            ForEach(self.model.homeStatus, id: \.self) { item in
                 HomeItemView(item: item)
             }
-        }.padding()
+        }
     }
 
     private func dateFormat(_ day: String) -> String {
@@ -67,7 +82,7 @@ struct HomeContentView: View {
     }
 
     private func week() -> String {
-        if self.date.scheduleTimeline()[7] > self.day {
+        if Date().scheduleTimeline()[7] > self.day {
             return "Нечетная"
         } else {
             return "Четная"

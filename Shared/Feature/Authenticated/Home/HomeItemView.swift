@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct HomeItemView: View {
-    let item: HomeContentView.ScheduleItem
+    let item: ScheduleSubjectEntity
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(self.item.startLes)
-                Text(self.item.endLes)
+                Text("10:50")
+                Text("12:00")
             }
             .padding(.trailing)
             
@@ -17,8 +17,8 @@ struct HomeItemView: View {
                     .foregroundColor(.green)
                 
                 VStack(alignment: .leading) {
-                    Text(self.item.lesson)
-                    Text("Аудитория: \(self.item.classroom)")
+                    Text(self.item.subject.name)
+                    Text("Аудитория: \(self.item.classroom.name)")
                 }
             }
             Spacer()

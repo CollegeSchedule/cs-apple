@@ -13,21 +13,37 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UINavigationController {
         let controller: UIViewController = context.coordinator.controller
         let scroll: UIScrollView = context.coordinator.scroll
-        let content: UIView = context.coordinator.content
+        let stack: UIStackView = context.coordinator.stack
+        let content: UIHostingController = context.coordinator.content
         let refresh: UIRefreshControl = context.coordinator.refresh
         let navigation: UINavigationController = .init(rootViewController: controller)
         
+        // setup UIViewController
+        controller.title = "Home"
+        
         // setup navigation
         navigation.navigationBar.prefersLargeTitles = true
+        navigation.navigationItem.largeTitleDisplayMode = .always
         
         // setup UIScrollView
         controller.view.addSubview(scroll)
         scroll.translatesAutoresizingMaskIntoConstraints = false
+//        scroll.contentInsetAdjustmentBehavior = .never
+        
+        // setup UIStackView
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        scroll.addSubview(stack)
         
         // setup UIView
-        scroll.addSubview(content)
-        content.translatesAutoresizingMaskIntoConstraints = false
-        controller.title = "Home"
+        controller.addChild(content)
+        stack.addArrangedSubview(content.view)
+        content.didMove(toParent: controller)
+        
+        content.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        stack.backgroundColor = .blue
+        controller.extendedLayoutIncludesOpaqueBars = true
+        
         
         // setup constraints
         NSLayoutConstraint.activate([
@@ -36,11 +52,17 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
             scroll.trailingAnchor.constraint(equalTo: controller.view.trailingAnchor),
             scroll.bottomAnchor.constraint(equalTo: controller.view.bottomAnchor),
             
-            content.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
-            content.topAnchor.constraint(equalTo: scroll.topAnchor),
-            content.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
-            content.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
-            content.widthAnchor.constraint(equalTo: scroll.widthAnchor),
+            stack.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
+            stack.topAnchor.constraint(equalTo: scroll.topAnchor),
+            stack.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
+            stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
+            stack.widthAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.widthAnchor),
+            
+            content.view.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            content.view.topAnchor.constraint(equalTo: stack.topAnchor),
+            content.view.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            content.view.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
+            content.view.widthAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.widthAnchor),
         ])
         
         // setup refresh
@@ -80,10 +102,11 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
         
         let controller: NotificationViewController = .init()
         let scroll: UIScrollView = .init()
+        let stack: UIStackView = .init()
         let refresh: UIRefreshControl = .init()
-        let content: UIView = UIHostingController(
+        let content: UIHostingController = UIHostingController(
             rootView: HomeContentView()
-        ).view
+        )
         
         init(_ presentable: HomeViewControllerRepresentable) {
             self.presentable = presentable
