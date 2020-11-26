@@ -7,8 +7,7 @@ protocol ScheduleSubjectServiceType {
         groupId: Int?,
         year: Int,
         week: Int,
-        teacherId: Int?,
-        studentId: Int?
+        accountId: Int?
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never>
 }
 
@@ -20,14 +19,12 @@ final class ScheduleSubjectService: ScheduleSubjectServiceType {
         groupId: Int? = nil,
         year: Int,
         week: Int,
-        teacherId: Int? = nil,
-        studentId: Int? = nil
+        accountId: Int? = nil
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> {
         self.agent.run(
             "/schedule/subject/\(groupId == nil ? -1 : groupId!)/\(year)/\(week)/",
             params: [
-                "studentId": studentId,
-                "teacherId": teacherId,
+                "accountId": accountId,
             ]
         )
     }

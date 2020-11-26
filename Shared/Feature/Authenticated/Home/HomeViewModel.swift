@@ -27,8 +27,7 @@ extension HomeView {
                                 groupId: nil,
                                 year: 2020,
                                 week: 48,
-                                teacherId: 50,
-                                studentId: nil
+                                accountId: 50
                             )
                         ),
                         self.performGetOperation(
@@ -36,14 +35,12 @@ extension HomeView {
                                 groupId: nil,
                                 year: 2020,
                                 week: 49,
-                                teacherId: 50,
-                                studentId: nil
+                                accountId: 50
                             )
                         )
                     )
                 }
                 .assertNoFailure()
-     
                 .sink(receiveValue: { result in
                     self.isRefreshing = false
                     

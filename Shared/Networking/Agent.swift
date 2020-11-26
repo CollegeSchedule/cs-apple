@@ -13,8 +13,8 @@ class Agent: ObservableObject {
     var accountService: AccountService
     
     // MARK: - Application credentials
-//    private let base: URL = URL(string: "https://api.collegeschedule.ru:2096")!
-    private let base: URL = URL(string: "http:/30.30.30.196:5000")!
+    private let base: URL = URL(string: "https://api.collegeschedule.ru:2096")!
+//    private let base: URL = URL(string: "http:/30.30.30.196:5000")!
     private let token: String = "8d181a53-f87b-4377-a057-cd07c49af82f"
     private let secret: String = "3162c1b0-e25f-4b7d-9c2d-d99096d9a984"
     
@@ -115,9 +115,9 @@ class Agent: ObservableObject {
                             .eraseToAnyPublisher()
                     }
                     
-                    self.access = ""
-                    self.refresh = ""
                     Scheduler.main.perform {
+                        self.access = ""
+                        self.refresh = ""
                         self.isAuthenticated = false
                     }
                     

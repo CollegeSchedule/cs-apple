@@ -3,13 +3,13 @@ import SwiftUI
 
 struct WeekDay {
     let id: Int
-    let day: String
+    let day: Int
     let name: String
 }
 
 struct HomeContentView: View {
-    @EnvironmentObject
-    var model: HomeView.ViewModel
+    @ObservedObject
+    var model: HomeView.ViewModel = .init()
     
     @State
     var days: [WeekDay] = []
@@ -20,37 +20,32 @@ struct HomeContentView: View {
     @State
     var currentPage: Int = 1
     
+    @State
+    var today: Int = 0
+    
+    func dayBackgroundView(_ day: WeekDay) -> AnyView {
+        if day.day == self.today {
+            return Circle().stroke().foregroundColor(.blue).eraseToAnyView()
+        } else if day.id == self.currentWeekDay {
+            return Circle().foregroundColor(.blue).eraseToAnyView()
+        } else {
+            return Circle().foregroundColor(.clear).eraseToAnyView()
+        }
+    }
+    
     var body: some View {
         VStack {
-            //            ScrollView(.horizontal, showsIndicators: false) {
-            //                HStack {
-            //                    ForEach(self.days, id: \.id) { item in
-            //                        VStack {
-            //                            Text(item.name)
-            //                            Text(item.day)
-            //                        }
-            //                        .padding(8)
-            //                        .cornerRadius(12)
-            //                        .onTapGesture {
-            //                            self.currentWeekDay = item.id
-            //                        }
-            //                    }
-            //                }
-            //            }
-            
-//            Text(self.days.description)
             TabView(selection: self.$currentPage) {
-//                WeekView(days: self.days.filter{ $0.id > 7 }, currentWeekDay: self.$currentWeekDay)
-//                WeekView(days: self.days.filter{ $0.id > 7 }, currentWeekDay: self.$currentWeekDay)
                 HStack{
-                    ForEach(self.days.filter{ $0.id < 8 }, id: \.id) { item in
+                    ForEach(self.days.dropLast(7), id: \.id) { item in
                         Spacer()
                         VStack {
                             Text(item.name)
-                            Text(item.day)
+                            Text(item.day.description)
+                                .padding(4)
+                                .background(self.dayBackgroundView(item))
                         }
-                        .padding(8)
-                        .cornerRadius(12)
+                        
                         .onTapGesture {
                             self.currentWeekDay = item.id
                         }
@@ -58,14 +53,14 @@ struct HomeContentView: View {
                     }
                 }
                 HStack{
-                    ForEach(self.days.filter{ $0.id > 7 }, id: \.id) { item in
+                    ForEach(self.days.dropFirst(7), id: \.id) { item in
                         Spacer()
                         VStack {
                             Text(item.name)
-                            Text(item.day)
+                            Text(item.day.description)
+                                .padding(4)
+                                .background(self.dayBackgroundView(item))
                         }
-                        .padding(8)
-                        .cornerRadius(12)
                         .onTapGesture {
                             self.currentWeekDay = item.id
                         }
@@ -87,8 +82,6 @@ struct HomeContentView: View {
                 }
             }
         }.onAppear {
-            self.model.isRefreshing = true
-            
             let calendar = Calendar.init(identifier: .gregorian)
             let date = calendar.date(
                 from: calendar.dateComponents(
@@ -100,45 +93,21 @@ struct HomeContentView: View {
                 )
             )!
             
+            self.today = Int(MONTH_DAY_FORMATTER.string(from: Date()))!
+            self.currentWeekDay = 8
+            
             self.days = (1...14).map { index in
                 let day = calendar.date(byAdding: .day, value: index, to: date)!
                 
                 return WeekDay(
                     id: index,
-                    day: MONTH_DAY_FORMATTER.string(from: day),
+                    day: Int(MONTH_DAY_FORMATTER.string(from: day))!,
                     name: WEEK_DAY_FORMATTER.string(from: day)
                 )
             }
+            print(self.days)
         }
     }
-    
-    struct WeekView: View {
-        @State
-        var days: [WeekDay]
-        @Binding
-        var currentWeekDay: Int
-        
-        var body: some View {
-            HStack{
-                Text(self.days.count.description)
-                ForEach(self.days, id: \.id) { item in
-                    
-                    
-                    VStack {
-                        Text(item.name)
-                        Text(item.day)
-                    }
-                    .padding(8)
-                    .cornerRadius(12)
-                    .onTapGesture {
-                        self.currentWeekDay = item.id
-                    }
-
-                }
-            }
-        }
-    }
-    
 }
 
 let WEEK_DAY_FORMATTER: DateFormatter = {

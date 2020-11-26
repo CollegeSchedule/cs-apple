@@ -74,8 +74,6 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
         context: Context
     ) {
         let refresh = context.coordinator.refresh
-       
-        print("handleRefresh: \(refresh.isRefreshing)")
         
         if self.isRefreshing, !refresh.isRefreshing {
             refresh.beginRefreshing()
@@ -100,8 +98,6 @@ struct HomeViewControllerRepresentable: UIViewControllerRepresentable {
         
         @objc
         func handleRefresh() {
-            print("handleRefresh")
-            
             self.presentable.isRefreshing = true
         }
         
