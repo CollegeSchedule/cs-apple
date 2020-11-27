@@ -8,7 +8,7 @@ extension SearchView {
 		var service: AccountService
 		
 		@Published
-		var searchBar: SearchBar = .init()
+		var search: String = ""
 		
 		@Published
 		var teachers: APIResult<CollectionMetaResponse<AccountEntity>> = .empty
@@ -19,7 +19,7 @@ extension SearchView {
 		override init() {
 			super.init()
 			
-			self.searchBar.$text
+			self.$search
 				.debounce(for: 1, scheduler: Scheduler.main)
 				.subscribe(on: Scheduler.background)
 				.receive(on: Scheduler.main)

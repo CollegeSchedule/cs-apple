@@ -62,9 +62,10 @@ struct AuthenticationView: View {
                     self.model.sheetItem = .camera
                 }) {
                     HStack {
+                        // MARK: - Move to localization
                         Text("Doesn't have an account?")
                             .foregroundColor(.gray)
-                        
+                        // MARK: - Move to localization
                         Text("Sign Up")
                             .foregroundColor(.accentColor)
                     }
@@ -103,6 +104,7 @@ struct AuthenticationView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 8)
+                // MARK: - Move to Extension
                 .foregroundColor(Color("FormTextFieldBackgroundColor"))
         )
         .padding([.horizontal, .bottom], 20)
@@ -111,9 +113,11 @@ struct AuthenticationView: View {
     
     private func actionText() -> String {
         if case .success = self.model.account {
+            // MARK: - Move to localization
             return "Зарегистрироваться"
         }
         
+        // MARK: - Move to localization
         return "Войти"
     }
 }

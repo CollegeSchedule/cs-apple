@@ -87,6 +87,8 @@ class Agent: ObservableObject {
             }
             .decode(type: APIResponse<T>.self, decoder: JSONDecoder())
             .flatMap { result -> AnyPublisher<APIResult<T>, Never> in
+                print(request)
+                print(self.access)
                 guard let data = result.data, result.status else {
                     guard result.error!.code == 4 else {
                         return Just(APIResult.error(result.error!))

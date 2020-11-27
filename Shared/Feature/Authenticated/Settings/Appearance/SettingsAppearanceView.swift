@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsAppearanceView: View {
     @EnvironmentObject
-    var state: AppState
+    var state: CollegeSchedule.ViewModel
     
     @ObservedObject
     var model: SettingsAppearanceView.ViewModel = .init()

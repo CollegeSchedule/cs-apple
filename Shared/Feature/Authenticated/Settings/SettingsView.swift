@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-	@Environment(\.agent)
-	var model: Agent
-	
+    @Environment(\.agent)
+    var model: Agent
+    @State
+    private var isActive: Bool = false
+    
     @State
     var sections: [SettingsSection] = [
         .init(
@@ -25,7 +27,6 @@ struct SettingsView: View {
                 )
             ]
         ),
-        
         .init(
             header: "Тех. Поддержка",
             items: [
@@ -48,33 +49,41 @@ struct SettingsView: View {
                     view: SettingsAboutAppView().eraseToAnyView()
                 )
             ]
-        ),
-		.init(
-			items: [
-				.init(
-					icon: "globe",
-					title: "Выйти",
-					color: .orange,
-					execute: {
-						AgentKey.defaultValue.isAuthenticated = false
-					}
-				)
-			]
-		)
-		
+        )
     ]
     
     var body: some View {
         List {
             ForEach(self.sections, id: \.header) { section in
-				Section(header: Text(section.header)) {
+                Section(header: Text(section.header)) {
                     ForEach(section.items, id: \.title) { item in
                         self.item(item)
                     }
                 }
             }
+            Section {
+                Button(action: {
+                    self.isActive = true
+                }) {
+                    Label("Выйти", image: "globe")
+                        .labelStyle(TitleOnlyLabelStyle())
+//                        .foregroundColor(.red)
+                }
+            }
         }
         .listStyle(InsetGroupedListStyle())
+        .alert(isPresented: self.$isActive, content: {
+            Alert(
+                title: Text("Выход"),
+                message: Text("Вы действительно хотите выйти ?"),
+                primaryButton: .cancel(),
+                secondaryButton: .destructive(Text("Выход"),
+                    action: {
+                        AgentKey.defaultValue.isAuthenticated = false            
+                    }
+                )
+            )
+        })
     }
     
     private func item(_ item: SettingsSection.SettingsItem) -> AnyView {
@@ -101,22 +110,22 @@ struct SettingsView: View {
     private func label(_ item: SettingsSection.SettingsItem) -> AnyView {
         return Label {
             Text(item.title)
-				.foregroundColor(item.textColor ?? Color("GeneralTextColor"))
+                .foregroundColor(item.textColor ?? Color("GeneralTextColor"))
         } icon: {
-			if item.icon != nil {
-				Image(systemName: item.icon!)
-					.foregroundColor(.white)
-					.frame(
-						width: 32,
-						height: 32,
-						alignment: .center
-					)
-					.background(item.color)
-					.cornerRadius(8)
-			}
-		}
-//		.labelStyle(item.icon == nil ? DefaultLabelStyle() as! LabelStyle: IconOnlyLabelStyle())
-		.eraseToAnyView()
+            if item.icon != nil {
+                Image(systemName: item.icon!)
+                    .foregroundColor(.white)
+                    .frame(
+                        width: 32,
+                        height: 32,
+                        alignment: .center
+                    )
+                    .background(item.color)
+                    .cornerRadius(8)
+            }
+        }
+        //		.labelStyle(item.icon == nil ? DefaultLabelStyle() as! LabelStyle: IconOnlyLabelStyle())
+        .eraseToAnyView()
     }
     
     struct SettingsSection {
@@ -127,7 +136,7 @@ struct SettingsView: View {
             let icon: String?
             let title: String
             let color: Color?
-			var textColor: Color? = nil
+            var textColor: Color? = nil
             
             var view: AnyView? = nil
             var execute: (() -> Void)? = nil

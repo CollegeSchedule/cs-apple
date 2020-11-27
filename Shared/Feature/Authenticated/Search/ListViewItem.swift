@@ -37,7 +37,7 @@ struct ListView<T: Hashable, Content: View>: View {
                 LazyHGrid(
                     rows: .init(
                         repeating: .init(
-                            .flexible(minimum: 50, maximum: 100)
+                            .adaptive(minimum: 0, maximum: 1000)
                         ),
                         count: 3
                     ),
@@ -46,22 +46,15 @@ struct ListView<T: Hashable, Content: View>: View {
                     ForEach(self.data, id: \.hashValue) { item in
                         NavigationLink(destination: self.navigation(item)) {
                             self.content(item)
-                                .frame(
-                                    minWidth: 150,
-                                    maxWidth: 500
-                                )
+//                                .frame(
+//                                    minWidth: 150,
+//                                    maxWidth: 500
+//                                )
                                 .padding(.leading)
-                                
                         }
                     }
                 }
             }
         }
-    }
-}
-
-struct AnyItem_Previews: PreviewProvider {
-    static var previews: some View {
-            SearchView()
     }
 }

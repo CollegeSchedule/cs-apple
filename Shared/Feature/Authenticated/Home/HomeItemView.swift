@@ -1,5 +1,6 @@
 import SwiftUI
 
+// MARK: - Move to ScheduleView Component
 struct HomeItemView: View {
     let item: ScheduleSubjectEntity
     
@@ -18,6 +19,7 @@ struct HomeItemView: View {
                     
                     VStack(alignment: .leading) {
                         Text(self.item.subject.name)
+                        // MARK: - Move to localization
                         Text("Аудитория: \(self.item.classroom.name)")
                     }
                 }

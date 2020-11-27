@@ -31,10 +31,12 @@ struct AuthenticationScannerView: View {
 								.font(.system(size: 32))
 						}.padding(.top, 12)
 						
+                        // MARK: - Move to localization
 						Text("Scan your account's QR-Code")
 							.font(.largeTitle)
 					}
 					
+                    // MARK: - Move to localization
 					Text("If you doesn't have a QR-code, you should ask your master for them")
 				}
 				.multilineTextAlignment(.center)

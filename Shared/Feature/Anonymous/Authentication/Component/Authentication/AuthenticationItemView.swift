@@ -37,10 +37,12 @@ struct AuthenticationItemView: View {
     
     private func text() -> String {
         guard case let .success(content) = self.item else {
+            // MARK: - Move to localization
             return "Account not found"
         }
         
         guard !content.active else {
+            // MARK: - Move to localization
             return "Account already registered"
         }
         

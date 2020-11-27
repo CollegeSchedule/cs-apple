@@ -22,6 +22,7 @@ struct AuthenticationKeyboardView: View {
 					.background(
 						RoundedRectangle(cornerRadius: 8)
 							.foregroundColor(
+                                // MARK: - Move to Color extension
                                 Color("FormTextFieldBackgroundColor")
                             )
 					)
@@ -32,6 +33,7 @@ struct AuthenticationKeyboardView: View {
 				Button(action:{
 					self.isActive = nil
 				}){
+                    // MARK: - Move to localization
 					Text("Dismiss")
 				}
                 
@@ -40,6 +42,7 @@ struct AuthenticationKeyboardView: View {
                         self.isActive = nil
                 }) {
                     ZStack {
+                        // MARK: - Move to localization
                         Text("Get Started")
                         
                         if case APIResult.loading = self.model.status {
@@ -63,9 +66,11 @@ struct AuthenticationKeyboardView: View {
                     self.isActive = .camera
                 }) {
                     HStack {
+                        // MARK: - Move to localization
                         Text("Can scan a QR-code?")
                             .foregroundColor(.gray)
                         
+                        // MARK: - Move to localization
                         Text("Go to scanner")
                             .foregroundColor(.accentColor)
                     }
