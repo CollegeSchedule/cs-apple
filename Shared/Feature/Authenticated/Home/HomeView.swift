@@ -1,15 +1,11 @@
 import SwiftUI
 
-// MARK: - Move to Schedule and Name -> extension ScheduleView -> WeekDay
-struct WeekDay {
-    let id: Int
-    let day: Int
-    let name: String
-}
-
 struct HomeView: View {
+    @EnvironmentObject
+    var model: CollegeSchedule.ViewModel
+    
     var body: some View {
-        ScheduleView(accountId: nil, groupId: nil)
+        ScheduleView(accountId: self.model.account?.account.id, groupId: nil)
     }
 }
 

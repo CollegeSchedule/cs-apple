@@ -1,14 +1,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
-    @ViewBuilder
+    @State
+    private var selection: NavigationItem = .search
+    
     var body: some View {
-        if self.horizontalSizeClass == .compact {
-            AppTabNavigation()
-        } else {
-            AppSidebarNavigation()
+        TabView(selection: self.$selection) {
+            ForEach(NavigationItem.allCases, id: \.self) { item in
+                NavigationView {
+                    item.view
+                        .navigationTitle(
+                            LocalizedStringKey(item.title)
+                        )
+                }
+                .tabItem {
+                    Label(
+                        LocalizedStringKey(item.title),
+                        systemImage: item.icon
+                    )
+                }
+                .tag(item)
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ struct AuthenticationView: View {
 
                 Button(action: self.model.login) {
                     ZStack {
-                        Text(self.actionText())
+                        Text(LocalizedStringKey(self.actionText()))
                         
                         if case APIResult.loading = self.model.status {
                             ProgressView()
@@ -62,11 +62,9 @@ struct AuthenticationView: View {
                     self.model.sheetItem = .camera
                 }) {
                     HStack {
-                        // MARK: - Move to localization
-                        Text("Doesn't have an account?")
+                        Text(LocalizedStringKey("authentication.no_account"))
                             .foregroundColor(.gray)
-                        // MARK: - Move to localization
-                        Text("Sign Up")
+                        Text(LocalizedStringKey("authentication.sign_up"))
                             .foregroundColor(.accentColor)
                     }
                 }
@@ -83,7 +81,7 @@ struct AuthenticationView: View {
         
         return VStack(spacing: 0) {
             if case .empty = self.model.account {
-                TextField("Email", text: self.$model.mail)
+                TextField(LocalizedStringKey("authentication.field_email"), text: self.$model.mail)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
@@ -94,7 +92,7 @@ struct AuthenticationView: View {
                 Divider().padding(.leading)
             }
                 
-            SecureField("Password", text: self.$model.password)
+            SecureField(LocalizedStringKey("authentication.field_password"), text: self.$model.password)
                 .textContentType(.password)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -104,8 +102,7 @@ struct AuthenticationView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 8)
-                // MARK: - Move to Extension
-                .foregroundColor(Color("FormTextFieldBackgroundColor"))
+                .foregroundColor(Color.formTextFieldBackgroudColor)
         )
         .padding([.horizontal, .bottom], 20)
         .eraseToAnyView()
@@ -113,12 +110,11 @@ struct AuthenticationView: View {
     
     private func actionText() -> String {
         if case .success = self.model.account {
-            // MARK: - Move to localization
-            return "Зарегистрироваться"
+            
+            return "authentication.sign_up"
         }
         
-        // MARK: - Move to localization
-        return "Войти"
+        return "authentication.sign_in"
     }
 }
 

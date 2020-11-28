@@ -23,12 +23,12 @@ struct ListView<T: Hashable, Content: View>: View {
             VStack{
                 Divider()
                 HStack {
-                    Text(self.title)
+                    Text(LocalizedStringKey(self.title))
                         .font(.system(size: 22, weight: .bold))
                         
                     Spacer()
                     
-                    NavigationLink("См. Все", destination: Text("All"))
+                    NavigationLink(LocalizedStringKey("authenticated.search.all"), destination: Text(LocalizedStringKey("authenticated.search.all")))
                 }
             }
             .padding([.horizontal, .top])
@@ -37,7 +37,7 @@ struct ListView<T: Hashable, Content: View>: View {
                 LazyHGrid(
                     rows: .init(
                         repeating: .init(
-                            .adaptive(minimum: 0, maximum: 1000)
+                            .flexible()
                         ),
                         count: 3
                     ),
@@ -46,10 +46,6 @@ struct ListView<T: Hashable, Content: View>: View {
                     ForEach(self.data, id: \.hashValue) { item in
                         NavigationLink(destination: self.navigation(item)) {
                             self.content(item)
-//                                .frame(
-//                                    minWidth: 150,
-//                                    maxWidth: 500
-//                                )
                                 .padding(.leading)
                         }
                     }

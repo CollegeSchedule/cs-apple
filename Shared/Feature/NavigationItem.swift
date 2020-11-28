@@ -8,8 +8,8 @@ enum NavigationItem: CaseIterable {
     
     var title: String {
         switch self {
-        case .home: return "Дневник"
-        case .search: return "Search"
+        case .home: return "authenticated.tab.home"
+        case .search: return "authenticated.tab.search"
         case .settings: return "authenticated.tab.settings"
         }
     }

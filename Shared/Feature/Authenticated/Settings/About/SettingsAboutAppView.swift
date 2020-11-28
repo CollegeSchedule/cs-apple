@@ -4,7 +4,7 @@ struct SettingsAboutAppView: View {
     var body: some View {
         List {
             HStack {
-                Text("Version")
+                Text(LocalizedStringKey("authenticated.settings.about.verstion"))
                 Spacer()
                 Text(UIApplication.appVersion!)
             }

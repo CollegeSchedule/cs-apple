@@ -7,40 +7,40 @@ struct SearchViewNavigationItem: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("Основная информация")) {
+                Section(header: Text(LocalizedStringKey("authenticated.search.employee.basic_information"))) {
                     HStack {
-                        Text("Должность")
+                        Text(LocalizedStringKey("authenticated.search.employee.position"))
                         Spacer()
                         Text("Директор")
                             .foregroundColor(.gray)
                     }
                     HStack {
-                        Text("Телефон")
+                        Text(LocalizedStringKey("authenticated.search.employee.phone"))
                         Spacer()
                         Link("2255044", destination: URL(string: "tel:2255044")!)
                             .foregroundColor(.gray)
                     }
                     HStack {
-                        Text("Почта")
+                        Text(LocalizedStringKey("authenticated.search.employee.mail"))
                         Spacer()
                         Link("nke@nke.ru", destination: URL(string: "mailto:nke@nke.ru")!)
                             .foregroundColor(.gray)
                     }
                     HStack {
-                        Text("Сайт")
+                        Text(LocalizedStringKey("authenticated.search.employee.website"))
                         Spacer()
                         Link("nke.ru", destination: URL(string: "http://nke.ru")!)
                             .foregroundColor(.gray)
                     }
                     HStack {
-                        Text("Стаж работы")
+                        Text(LocalizedStringKey("authenticated.search.employee.work_experience"))
                         Spacer()
                         Text("19 лет")
                             .foregroundColor(.gray)
                     }
                 }
                 NavigationLink(destination: ScheduleView(accountId: self.account.id)){
-                    Text("Расписание")
+                    Text(LocalizedStringKey("authenticated.search.employee.schedule"))
                         .foregroundColor(.gray)
                 }
             }

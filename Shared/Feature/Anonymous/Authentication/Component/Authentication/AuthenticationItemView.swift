@@ -39,11 +39,13 @@ struct AuthenticationItemView: View {
         guard case let .success(content) = self.item else {
             // MARK: - Move to localization
             return "Account not found"
+//            return "authentication.not_Found"
         }
         
         guard !content.active else {
             // MARK: - Move to localization
             return "Account already registered"
+//            return "authentication.registry"
         }
         
         let firstName = content.firstName.prefix(1)

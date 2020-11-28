@@ -17,13 +17,12 @@ struct AuthenticationKeyboardView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-				TextField("Text", text: self.$text)
+				TextField(LocalizedStringKey("authentication.keyboard.placeholder"), text: self.$text)
 					.padding()
 					.background(
 						RoundedRectangle(cornerRadius: 8)
 							.foregroundColor(
-                                // MARK: - Move to Color extension
-                                Color("FormTextFieldBackgroundColor")
+                                Color.formTextFieldBackgroudColor
                             )
 					)
 					.padding()
@@ -33,8 +32,7 @@ struct AuthenticationKeyboardView: View {
 				Button(action:{
 					self.isActive = nil
 				}){
-                    // MARK: - Move to localization
-					Text("Dismiss")
+					Text(LocalizedStringKey("authentication.keyboard.dissmiss"))
 				}
                 
                 Button(action: {
@@ -42,8 +40,7 @@ struct AuthenticationKeyboardView: View {
                         self.isActive = nil
                 }) {
                     ZStack {
-                        // MARK: - Move to localization
-                        Text("Get Started")
+                        Text(LocalizedStringKey("authentication.keyboard.get_started"))
                         
                         if case APIResult.loading = self.model.status {
                             ProgressView()
@@ -66,12 +63,10 @@ struct AuthenticationKeyboardView: View {
                     self.isActive = .camera
                 }) {
                     HStack {
-                        // MARK: - Move to localization
-                        Text("Can scan a QR-code?")
+                        Text(LocalizedStringKey("authentication.keyboard.can_scan"))
                             .foregroundColor(.gray)
                         
-                        // MARK: - Move to localization
-                        Text("Go to scanner")
+                        Text(LocalizedStringKey("authentication.keyboard.go_scan"))
                             .foregroundColor(.accentColor)
                     }
                 }

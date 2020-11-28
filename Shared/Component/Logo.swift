@@ -6,8 +6,8 @@ struct Logo: View {
     
     private let gradient: Gradient = .init(
         colors: [
-            Color("LogoGradientStart"),
-            Color("LogoGradientEnd")
+            Color.logoGradientStart,
+            Color.logoGradientEnd
         ]
 	)
     
@@ -32,7 +32,7 @@ struct Logo: View {
                     .foregroundColor(.white)
             }
             VStack(alignment: .leading) {
-                Text("Электронное")
+                Text(LocalizedStringKey("authentication.logo.college"))
                     .font(
 						.system(
 							size: self.isCompact ? 16 : 30,
@@ -40,7 +40,7 @@ struct Logo: View {
 							design: .rounded
 						)
 					)
-                Text("Расписание")
+                Text(LocalizedStringKey("authentication.logo.shedule"))
                     .font(
 						.system(
 							size: self.isCompact ? 16 : 30,
