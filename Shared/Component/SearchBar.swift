@@ -34,9 +34,6 @@ struct SearchBarModifier: ViewModifier {
                     viewController
                         .navigationItem
                         .searchController = self.searchBar.searchController
-                    
-                    
-                        
                 }
                 .frame(width: 0, height: 0)
             )
