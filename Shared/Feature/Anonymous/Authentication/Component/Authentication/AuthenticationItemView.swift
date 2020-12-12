@@ -12,7 +12,7 @@ struct AuthenticationItemView: View {
             VStack(spacing: 12) {
                 self.image()
                 
-                Text(self.text())
+                Text(LocalizedStringKey(self.text()))
                     .font(.largeTitle)
                     .bold()
                     .multilineTextAlignment(.center)
@@ -38,19 +38,10 @@ struct AuthenticationItemView: View {
     private func text() -> String {
         guard case let .success(content) = self.item else {
             // MARK: - Move to localization
-            return "Account not found"
-//            return "authentication.not_Found"
+            
+            return "authentication.not_Found"
         }
         
-        guard !content.active else {
-            // MARK: - Move to localization
-            return "Account already registered"
-//            return "authentication.registry"
-        }
-        
-        let firstName = content.firstName.prefix(1)
-        let thirdName = content.thirdName.prefix(1)
-        
-        return "\(content.secondName) \(firstName). \(thirdName)."
+        return content.print
     }
 }

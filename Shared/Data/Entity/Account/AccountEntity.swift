@@ -14,3 +14,9 @@ struct AccountEntity: Codable, Hashable {
 	
     let createdAt: Int?
 }
+
+extension AccountEntity {
+    var print: String {
+        "\(secondName) \(firstName.prefix(1)). \(thirdName.prefix(1))"
+    }
+}

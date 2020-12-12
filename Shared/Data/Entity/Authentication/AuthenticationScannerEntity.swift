@@ -8,3 +8,8 @@ struct AuthenticationScannerEntity: Codable {
 	let avatar: String?
     let active: Bool
 }
+extension AuthenticationScannerEntity {
+    var print: String {
+        "\(secondName) \(firstName.prefix(1)). \(thirdName.prefix(1))"
+    }
+}

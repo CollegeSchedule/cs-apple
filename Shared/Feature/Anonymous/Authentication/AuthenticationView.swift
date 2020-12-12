@@ -80,7 +80,9 @@ struct AuthenticationView: View {
         }
         
         return VStack(spacing: 0) {
-            if case .empty = self.model.account {
+            if case let .success(content) = self.model.account, content.active {
+                EmptyView()
+            } else {
                 TextField(LocalizedStringKey("authentication.field_email"), text: self.$model.mail)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -109,8 +111,7 @@ struct AuthenticationView: View {
     }
     
     private func actionText() -> String {
-        if case .success = self.model.account {
-            
+        if case let .success(content) = self.model.account, !content.active {
             return "authentication.sign_up"
         }
         

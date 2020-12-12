@@ -1,89 +1,124 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    @State
-    var days: [WeekDay] = []
-    
-    @State
-    var currentIndex: Int = 1
-    
-    @State
-    var currentPage: Int = 1
-    
-    @State
-    var today: Int = 0
-    
-    var accountId: Int? = nil
-    
-    var groupId: Int? = nil
-    
     @ObservedObject
-    private var model: ScheduleView.ViewModel = .init()
+    private var model: ScheduleView.ViewModel
     
-    var body: some View {
-        ScrollView {
-            TabView(selection: self.$currentPage) {
-                ScheduleItemViewDay(
-                    days: self.days.dropLast(7).sorted {
-                        $0.id < $1.id
-                    },
-                    currentIndex: self.$currentIndex,
-                    today: self.$today
-                )
+    private var days: [WeekDay] = {
+        let dateInWeek = Date()
+        let calendar = Calendar.init(identifier: .gregorian)
+        let dayOfWeek = calendar.component(.weekday, from: dateInWeek) - 1
+        let weekdays = calendar.range(of: .weekday, in: .yearForWeekOfYear, for: dateInWeek)!
+        return (weekdays.lowerBound ..< weekdays.upperBound - 1)
+            .compactMap {
                 
-                ScheduleItemViewDay(
-                    days: self.days.dropFirst(7).sorted {
-                        $0.id < $1.id
-                    },
-                    currentIndex: self.$currentIndex,
-                    today: self.$today
-                )
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            
-            VStack {
-                if self.model.schedule.isEmpty {
-                    Text("Test")
-                } else {
-                    ForEach(
-                        self.model.schedule.filter { $0.day == self.currentIndex },
-                        id: \.self
-                    ) { item in
-                        ScheduleItemView(item: item)
-                    }
+                if dayOfWeek - 1 == $0 {
+                    return WeekDay(
+                        id: $0,
+                        name: "authenticated.schedule.yesterday"
+                    )
                 }
-            }
-        }.onAppear {
-            self.model.fetchShedule(accountId: self.accountId, groupId: self.groupId)
-            
-            let calendar = Calendar.init(identifier: .gregorian)
-            let date = calendar.date(
-                from: calendar.dateComponents(
-                    [
-                        .yearForWeekOfYear,
-                        .weekOfYear
-                    ],
-                    from: Date()
-                )
-            )
-            
-            self.today = Int(ScheduleView.MONTH_DAY_FORMATTER.string(from: Date()))!
-            
-            
-            self.days = (1...14).map { index in
-                let date = calendar.date(byAdding: .day, value: index, to: date!)!
-                let day = Int(ScheduleView.MONTH_DAY_FORMATTER.string(from: date))!
                 
-                if self.today == day {
-                    self.currentIndex = index
+                if dayOfWeek == $0 {
+                    return WeekDay(
+                        id: $0,
+                        name: "authenticated.schedule.today"
+                    )
+                }
+                
+                if dayOfWeek + 1 == $0 {
+                    return WeekDay(
+                        id: $0,
+                        name: "authenticated.schedule.tomorrow"
+                    )
                 }
                 
                 return WeekDay(
-                    id: index,
-                    day: day,
-                    name: ScheduleView.WEEK_DAY_FORMATTER.string(from: date)
+                    id: $0,
+                    name: DateFormatter.WEEK_DAY_FORMATTER.string(
+                        from: calendar
+                            .date(
+                                byAdding: .day,
+                                value: $0 - dayOfWeek,
+                                to: dateInWeek
+                            )!
+                    )
                 )
             }
+    }()
+    
+    private var isTeacher: Bool
+    
+    init(
+        accountId: Int? = nil,
+        groupId: Int? = nil
+    ) {
+        self.model = .init(
+            accountId: accountId,
+            groupId: groupId
+        )
+        
+        self.isTeacher = accountId != nil
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Picker("Выбор недели", selection: self.$model.selection) {
+                Text(LocalizedStringKey("authenticated.schedule.current")).tag(0)
+                Text(LocalizedStringKey("authenticated.schedule.next")).tag(1)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            APIResultView(status: self.$model.schedule) { item in
+                if item.items.isEmpty {
+                    Text("Пар нет")
+                } else {
+                    List {
+                        ForEach(self.days, id: \.id) { day in
+                            if item.items.filter { result in
+                                result.day == day.id
+                            }.count == 0 {
+                                EmptyView()
+                            } else {
+                                Section(
+                                    header:
+                                        HStack {
+                                            Text(LocalizedStringKey(day.name))
+                                                .font(.footnote)
+                                                .foregroundColor(.scheduleListSectionTextColor)
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal)
+                                        .background(Color.scheduleSectionListColor)
+                                ) {
+                                    ForEach(
+                                        item.items.filter {
+                                            $0.day == day.id
+                                        },
+                                        id: \.id
+                                    ) { item in
+                                        ScheduleItemView(
+                                            item: item,
+                                            isTeacher: self.isTeacher
+                                        )
+                                        .listRowBackground(Color.scheduleRowListColor)
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 8)
+                                    }
+                                }.listRowInsets(
+                                    EdgeInsets(
+                                        top: 0,
+                                        leading: 0,
+                                        bottom: 0,
+                                        trailing: 0
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            Spacer()
         }
     }
 }

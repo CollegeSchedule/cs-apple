@@ -15,7 +15,7 @@ extension Color {
         = Color("AccentColor")
     
     static let formTextFieldBackgroudColor: Color
-        = Color("FormTextFieldBackgroudColor")
+        = Color("FormTextFieldBackgroundColor")
     
     static let generalTextColor: Color
         = Color("GeneralTextColor")
@@ -34,6 +34,15 @@ extension Color {
     
     static let marksSubjectText: Color
         = Color("MarksSubjectText")
+    
+    static let scheduleRowListColor: Color
+        = Color("ScheduleRowListColor")
+    
+    static let scheduleSectionListColor: Color
+        = Color("ScheduleSectionListColor")
+    
+    static let scheduleListSectionTextColor: Color
+        = Color("ScheduleListSectionTextColor")
     
     static let newsCardBackgroundColor: Color
         = Color("NewsCardBackgroundColor")

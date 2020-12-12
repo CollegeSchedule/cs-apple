@@ -2,36 +2,40 @@ import SwiftUI
 
 struct ScheduleItemView: View {
     let item: ScheduleSubjectEntity
+    let isTeacher: Bool
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             VStack(alignment: .leading) {
-                Text("10:50")
-                Text("12:00")
+                Text("8:30")
+                Text("10:05")
             }
-            .padding(.trailing)
             
-            HStack{
-                Circle()
-                    .frame(width: 10, height: 10)
-                    .foregroundColor(.green)
-                
-                VStack(alignment: .leading) {
-                    Text(self.item.subject.name)
-                    HStack(spacing: 0) {
-                        Text(LocalizedStringKey("authenticated.schedule.audience"))
-                        Text(": \(self.item.classroom.name)")
-                    }
-                }
+            VStack {
+                ZStack(alignment: .top) {
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(.yellow)
+                        .frame(maxWidth: 6, maxHeight: 40)
+                    
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: 6, maxHeight: 20)
+                }.padding(.horizontal)
             }
+            
+            VStack(alignment: .leading) {
+                Text(self.item.subject.name)
+                    .truncationMode(.tail)
+                    .lineLimit(1)
+                Text(self.isTeacher ? self.item.group.print! : self.item.teacher.print)
+                    .truncationMode(.tail)
+                    .foregroundColor(.gray)
+                    .lineLimit(1)
+            }
+            
             Spacer()
             
-            VStack(alignment: .center) {
-                Circle()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(.green)
-            }
+            Text(self.item.classroom.name)
         }
-        .padding()
     }
 }

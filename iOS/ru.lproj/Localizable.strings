@@ -6,7 +6,12 @@
 "authenticated.marks.date" = "По дате";
 "authenticated.marks.subject" = "По предмету";
 "authenticated.schedule.week" = "Неделя";
+"authenticated.schedule.today" = "Сегодня";
+"authenticated.schedule.tomorrow" = "Завтра";
+"authenticated.schedule.yesterday" = "Вчера";
 "authenticated.schedule.audience" = "Аудитория";
+"authenticated.schedule.next" = "Следующая";
+"authenticated.schedule.current" = "Текущая";
 "authenticated.search.all" = "См. Все";
 "authenticated.search.groups" = "Группы";
 "authenticated.search.teachers" = "Сотрудники";
@@ -39,7 +44,7 @@
 "authentication.field_password" = "Пароль";
 "authentication.not_Found" = "Аккаунт не найден";
 "authentication.registry" = "Аккаунт уже зарегистрирован";
-"authentication.no_account" = "нет аккаунта?";
+"authentication.no_account" = "Нет аккаунта?";
 "authentication.scanner.go_keyboard" = "Go to keybaord";
 "authentication.scanner.can_not_scan" = "Не можете отсканировать QR-Code";
 "authentication.scanner.scan_account" = "Scan your account's QR-Code";

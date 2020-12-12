@@ -4,47 +4,63 @@ import Combine
 extension ScheduleView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Environment(\.scheduleSubjectService)
-        private var service: ScheduleSubjectService
+        private var subjectService: ScheduleSubjectService
+        
+        @Environment(\.scheduleTimeSubjectService)
+        private var customTimeSubjectService: ScheduleTimeSubjectService
         
         @Published
-        var schedule: [ScheduleSubjectEntity] = []
+        var time: APIResult<ScheduleTimeSubject> = .loading
         
-        override init() {
+        @Published
+        var schedule: APIResult<CollectionMetaResponse<ScheduleSubjectEntity>> = .loading
+        
+        
+        
+        @Published
+        var selection: Int = 0
+        
+        private var groupId: Int? = nil
+        private var accountId: Int? = nil
+        private let year: Int = Calendar.current.component(.year, from: Date())
+        private let week: Int = Calendar.current.component(.weekOfYear,from: Date())
+        
+        init(
+            accountId: Int? = nil,
+            groupId: Int? = nil
+        ) {
+            self.accountId = accountId
+            self.groupId = groupId
+            
             super.init()
-        }
-        
-        func fetchShedule(accountId: Int? = nil, groupId: Int? = nil) {
-            Publishers.CombineLatest(
-                self.performGetOperation(
-                    networkCall: self.service.get(
-                        groupId: groupId,
-                        year: 2020,
-                        week: 48,
-                        accountId: accountId
-                    )
-                ),
-                self.performGetOperation(
-                    networkCall: self.service.get(
-                        groupId: groupId,
-                        year: 2020,
-                        week: 49,
-                        accountId: accountId
-                    )
-                )
+            
+            self.performGetOperation(
+                networkCall: self.customTimeSubjectService.get()
             )
-            .sink(receiveValue: { result in
-                if case let .success(first) = result.0,
-                   case let .success(second) = result.1 {
-                    self.schedule = first.items + second.items.map { item in
-                        var modified = item
-                        
-                        modified.day += 7
-                        
-                        return modified
-                    }
+            .subscribe(on: Scheduler.background)
+            .receive(on: Scheduler.main)
+            .sink { result in
+                if case let .success(content) = result {
+                    
                 }
-            })
+            }
             .store(in: &self.bag)
+            
+            self.$selection
+                .subscribe(on: Scheduler.background)
+                .receive(on: Scheduler.main)
+                .flatMap { result -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
+                    return self.performGetOperation(
+                        networkCall: self.subjectService.get(
+                            groupId: self.groupId,
+                            year: self.year,
+                            week: self.week + self.selection,
+                            accountId: self.accountId
+                        )
+                    )
+                }
+                .assign(to: \.self.schedule, on: self)
+                .store(in: &self.bag)
         }
     }
 }

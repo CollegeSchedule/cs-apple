@@ -6,7 +6,12 @@
 "authenticated.marks.date" = "By Date";
 "authenticated.marks.subject" = "By Subject";
 "authenticated.schedule.week" = "Week";
+"authenticated.schedule.today" = "Today";
+"authenticated.schedule.tomorrow" = "Tomorrow";
 "authenticated.schedule.audience" = "Classroom";
+"authenticated.schedule.yesterday" = "Yesterday";
+"authenticated.schedule.next" = "Next";
+"authenticated.schedule.current" = "Current";
 "authenticated.search.all" = "See all";
 "authenticated.search.groups" = "Groups";
 "authenticated.search.teachers" = "Employees";

@@ -2,12 +2,13 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.agent)
-    var model: Agent
+    private var model: Agent
+    
     @State
     private var isActive: Bool = false
     
     @State
-    var sections: [SettingsSection] = [
+    private var sections: [SettingsSection] = [
         .init(
             header: "authenticated.settings.app",
             items: [
@@ -70,8 +71,8 @@ struct SettingsView: View {
                     self.isActive = true
                 }) {
                     Label(LocalizedStringKey("authenticated.settings.log_out"), image: "globe")
-                        .labelStyle(TitleOnlyLabelStyle())
                         .foregroundColor(.red)
+                        .labelStyle(TitleOnlyLabelStyle())
                 }
             }
         }

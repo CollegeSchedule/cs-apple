@@ -115,17 +115,27 @@ extension AuthenticationView {
         func login() {
             self.performGetOperation(
                 networkCall: {
-                    guard case .success = self.account else {
+                    guard case let .success(content) = self.account else {
                         return self.service.login(
                             mail: self.mail,
                             password: self.password
                         )
                     }
                     
-                    return self.service.login(
-                        token: self.accountCode,
-                        password: self.password
-                    )
+                    if content.active {
+                        return self.service.login(
+                            token: self.accountCode,
+                            password: self.password
+                        )
+                    } else {
+                        return self.service.register(
+                            token: self.accountCode,
+                            mail: self.mail,
+                            password: self.password
+                        )
+                    }
+                    
+                    
                 }()
             )
             .subscribe(on: Scheduler.background)

@@ -8,6 +8,12 @@ protocol AuthenticationServiceType {
         password: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
     
+    func register(
+        token: String?,
+        mail: String?,
+        password: String
+    ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
+    
     func refreshToken(
         token: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
@@ -21,27 +27,36 @@ final class AuthenticationService: AuthenticationServiceType {
     @Environment(\.agent)
     var agent: Agent
     
+    func register(
+        token: String? = nil,
+        mail: String? = nil,
+        password: String
+    ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
+        return self.agent.run(
+            "/authentication/",
+            method: .post,
+            params: [
+                "token": token,
+                "mail": mail,
+                "password": password
+            ],
+            type: .application
+        )
+    }
+    
     func login(
         token: String? = nil,
         mail: String? = nil,
         password: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
-        var params = [
-            "password": password
-        ]
-        
-        if token != nil {
-            params["token"] = token
-        }
-        
-        if mail != nil {
-            params["mail"] = mail
-        }
-        
         return self.agent.run(
             "/authentication/",
             method: .put,
-            params: params,
+            params: [
+                "token": token,
+                "mail": mail,
+                "password": password
+            ],
             type: .application
         )
     }

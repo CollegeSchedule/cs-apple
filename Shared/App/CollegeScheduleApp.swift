@@ -4,10 +4,10 @@ import Combine
 @main
 struct CollegeSchedule: App {
     @ObservedObject
-    var agent: Agent = AgentKey.defaultValue
+    private var agent: Agent = AgentKey.defaultValue
     
     @ObservedObject
-    var state: Self.ViewModel = .init()
+    private var state: Self.ViewModel = .init()
     
     @SceneBuilder
     var body: some Scene {
