@@ -13,9 +13,13 @@ extension ScheduleView {
         var time: APIResult<ScheduleTimeSubject> = .loading
         
         @Published
-        var schedule: APIResult<CollectionMetaResponse<ScheduleSubjectEntity>> = .loading
-        
-        
+        var lessonsTime: ScheduleItemLessons =
+            ScheduleItemLessons(
+                item: [],
+                weekdays: ScheduleTimeSubject(
+                    weekdays: [],
+                    weekends: [])
+            )
         
         @Published
         var selection: Int = 0
@@ -41,7 +45,7 @@ extension ScheduleView {
             .receive(on: Scheduler.main)
             .sink { result in
                 if case let .success(content) = result {
-                    
+                    self.lessonsTime.weekdays = content
                 }
             }
             .store(in: &self.bag)
@@ -59,7 +63,11 @@ extension ScheduleView {
                         )
                     )
                 }
-                .assign(to: \.self.schedule, on: self)
+                .sink { result in
+                    if case let .success(content) = result {
+                        self.lessonsTime.item = content.items
+                    }
+                }
                 .store(in: &self.bag)
         }
     }

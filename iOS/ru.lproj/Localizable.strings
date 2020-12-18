@@ -12,6 +12,7 @@
 "authenticated.schedule.audience" = "Аудитория";
 "authenticated.schedule.next" = "Следующая";
 "authenticated.schedule.current" = "Текущая";
+"authenticated.schedule.no_lessons" = "Занятий нет";
 "authenticated.search.all" = "См. Все";
 "authenticated.search.groups" = "Группы";
 "authenticated.search.teachers" = "Сотрудники";

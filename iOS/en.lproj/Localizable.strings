@@ -12,6 +12,7 @@
 "authenticated.schedule.yesterday" = "Yesterday";
 "authenticated.schedule.next" = "Next";
 "authenticated.schedule.current" = "Current";
+"authenticated.schedule.no_lessons" = "No lessons";
 "authenticated.search.all" = "See all";
 "authenticated.search.groups" = "Groups";
 "authenticated.search.teachers" = "Employees";

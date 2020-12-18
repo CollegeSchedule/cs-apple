@@ -6,30 +6,24 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            Form {
-                EmptyView()
-					.fullScreenCover(item: self.$model.sheetItem) { item in
-						switch item {
-							case .camera:
-								AuthenticationScannerView(
-									model: self.model,
-									isActive: self.$model.sheetItem
-								).ignoresSafeArea()
-//							case .keyboard:
-//								AuthenticationKeyboardView(
-//									model: self.model,
-//									isActive: self.$model.sheetItem
-//								).ignoresSafeArea()
-						}
-					}
-            }
-            
-            Color
-                .backgroundColor
-                .edgesIgnoringSafeArea(.all)
             
             VStack {
-                Logo().padding(20)
+                Logo()
+                    .padding(20)
+                    .fullScreenCover(item: self.$model.sheetItem) { item in
+                        switch item {
+                            case .camera:
+                                AuthenticationScannerView(
+                                    model: self.model,
+                                    isActive: self.$model.sheetItem
+                                ).ignoresSafeArea()
+                            //                            case .keyboard:
+                            //                                AuthenticationKeyboardView(
+                            //                                    model: self.model,
+                            //                                    isActive: self.$model.sheetItem
+                            //                                ).ignoresSafeArea()
+                        }
+                    }
 				
 				Spacer()
                 AuthenticationItemView(item: self.$model.account)

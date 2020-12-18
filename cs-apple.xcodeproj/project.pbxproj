@@ -58,6 +58,8 @@
 		8404D787256E126000DA41FE /* GroupEducationLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8404D786256E126000DA41FE /* GroupEducationLevel.swift */; };
 		8404D78B256E12DC00DA41FE /* ClassroomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8404D78A256E12DC00DA41FE /* ClassroomEntity.swift */; };
 		840F7BC125401128004938BE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F7BC025401128004938BE /* HomeView.swift */; };
+		8444B59F258C97890032B12E /* ScheduleItemViewLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444B59E258C97890032B12E /* ScheduleItemViewLessons.swift */; };
+		8444B5A4258C97F70032B12E /* ScheduleItemLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444B5A3258C97F70032B12E /* ScheduleItemLessons.swift */; };
 		8481FFBD254FD8AF00554313 /* MarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481FFBC254FD8AF00554313 /* MarksView.swift */; };
 		8481FFC1254FDC2900554313 /* MarksSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481FFC0254FDC2900554313 /* MarksSubjectView.swift */; };
 		8481FFC4254FDEC100554313 /* MarksSubjectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481FFC3254FDEC100554313 /* MarksSubjectItemView.swift */; };
@@ -149,6 +151,8 @@
 		8404D786256E126000DA41FE /* GroupEducationLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEducationLevel.swift; sourceTree = "<group>"; };
 		8404D78A256E12DC00DA41FE /* ClassroomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomEntity.swift; sourceTree = "<group>"; };
 		840F7BC025401128004938BE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8444B59E258C97890032B12E /* ScheduleItemViewLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItemViewLessons.swift; sourceTree = "<group>"; };
+		8444B5A3258C97F70032B12E /* ScheduleItemLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItemLessons.swift; sourceTree = "<group>"; };
 		8481FFBC254FD8AF00554313 /* MarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksView.swift; sourceTree = "<group>"; };
 		8481FFC0254FDC2900554313 /* MarksSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksSubjectView.swift; sourceTree = "<group>"; };
 		8481FFC3254FDEC100554313 /* MarksSubjectItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksSubjectItemView.swift; sourceTree = "<group>"; };
@@ -534,6 +538,8 @@
 				84D6224825712A02003E7F71 /* ScheduleViewModel.swift */,
 				84D6225A25721D7C003E7F71 /* ScheduleItemView.swift */,
 				84D6225725721D44003E7F71 /* ScheduleItemWeekDay.swift */,
+				8444B59E258C97890032B12E /* ScheduleItemViewLessons.swift */,
+				8444B5A3258C97F70032B12E /* ScheduleItemLessons.swift */,
 			);
 			path = ScheduleView;
 			sourceTree = "<group>";
@@ -632,6 +638,7 @@
 				8481FFC1254FDC2900554313 /* MarksSubjectView.swift in Sources */,
 				84CEB676256D174D0021D9BB /* ScheduleTimeSubjectService.swift in Sources */,
 				849B3D0925303643000CA91B /* ListView.swift in Sources */,
+				8444B59F258C97890032B12E /* ScheduleItemViewLessons.swift in Sources */,
 				84D6224C25712DEB003E7F71 /* CollegeScheduleAppState.swift in Sources */,
 				8404D783256E121F00DA41FE /* GroupEntity.swift in Sources */,
 				65CAD581251F7BBE004B354B /* AccountEntity.swift in Sources */,
@@ -643,6 +650,7 @@
 				8481FFC4254FDEC100554313 /* MarksSubjectItemView.swift in Sources */,
 				65DBF97424E3E25E00B795AF /* RoundedDefaultButtonStyle.swift in Sources */,
 				6577237F24E4228400A9FB43 /* String.swift in Sources */,
+				8444B5A4258C97F70032B12E /* ScheduleItemLessons.swift in Sources */,
 				650F132E252DA2A500C6058D /* SettingsAboutAppView.swift in Sources */,
 				8404D77A256E10DD00DA41FE /* ScheduleSubjectEntity.swift in Sources */,
 				65DBF96224E3C9C800B795AF /* APIError.swift in Sources */,

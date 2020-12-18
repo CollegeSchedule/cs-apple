@@ -3,13 +3,16 @@ import SwiftUI
 struct ScheduleItemView: View {
     let item: ScheduleSubjectEntity
     let isTeacher: Bool
+    let weekdays: ScheduleTimeSubject.Lesson
     
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading) {
-                Text("8:30")
-                Text("10:05")
-            }
+                Text("\(self.hoursTime(time: self.weekdays.startTime))")
+                    .multilineTextAlignment(.leading)
+                Text("\(self.hoursTime(time: self.weekdays.startTime + self.weekdays.lengthTime))")
+                    .multilineTextAlignment(.leading)
+            }.frame(width: 50)
             
             VStack {
                 ZStack(alignment: .top) {
@@ -37,5 +40,16 @@ struct ScheduleItemView: View {
             
             Text(self.item.classroom.name)
         }
+    }
+    private func hoursTime(time: Int) -> String {
+        let formatter = DateComponentsFormatter()
+        
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .positional
+        
+        print(formatter.string(from: TimeInterval(time * 60))!)
+        
+        return formatter.string(from: TimeInterval(time * 60))!
     }
 }

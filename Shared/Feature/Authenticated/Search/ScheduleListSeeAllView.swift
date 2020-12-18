@@ -34,6 +34,6 @@ struct ScheduleListSeeAllView<T: Codable & Hashable, Content: View>: View {
                         }
                 }
             }.listStyle(InsetGroupedListStyle())
-        }.navigationTitle("Аккаунты")
+        }.navigationTitle(LocalizedStringKey("authenticated.search.teachers"))
     }
 }

@@ -57,28 +57,29 @@ struct ScheduleView: View {
             accountId: accountId,
             groupId: groupId
         )
-        
         self.isTeacher = accountId != nil
+        UITableView.appearance().backgroundColor = UIColor(Color.scheduleSectionListColor)
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            Picker("Выбор недели", selection: self.$model.selection) {
-                Text(LocalizedStringKey("authenticated.schedule.current")).tag(0)
-                Text(LocalizedStringKey("authenticated.schedule.next")).tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            APIResultView(status: self.$model.schedule) { item in
-                if item.items.isEmpty {
-                    Text("Пар нет")
+        ZStack {
+            Color.scheduleSectionListColor.ignoresSafeArea()
+            VStack(spacing: 0) {
+                Picker("Выбор недели", selection: self.$model.selection) {
+                    Text(LocalizedStringKey("authenticated.schedule.current")).tag(0)
+                    Text(LocalizedStringKey("authenticated.schedule.next")).tag(1)
+                }
+                .padding(.horizontal)
+                .pickerStyle(SegmentedPickerStyle())
+                if self.model.lessonsTime.item.isEmpty {
+                    Text(LocalizedStringKey("authenticated.schedule.no_lessons"))
+                        .padding()
                 } else {
                     List {
                         ForEach(self.days, id: \.id) { day in
-                            if item.items.filter { result in
+                            if self.model.lessonsTime.item.filter { result in
                                 result.day == day.id
-                            }.count == 0 {
-                                EmptyView()
-                            } else {
+                            }.count == 0 { } else {
                                 Section(
                                     header:
                                         HStack {
@@ -91,19 +92,28 @@ struct ScheduleView: View {
                                         .padding(.horizontal)
                                         .background(Color.scheduleSectionListColor)
                                 ) {
-                                    ForEach(
-                                        item.items.filter {
-                                            $0.day == day.id
-                                        },
-                                        id: \.id
-                                    ) { item in
-                                        ScheduleItemView(
-                                            item: item,
-                                            isTeacher: self.isTeacher
+                                    if self.isTeacher {
+                                        ScheduleItemViewLessons(
+                                            day: day,
+                                            item: self.model.lessonsTime.item
+                                                .filter {
+                                                    $0.day == day.id
+                                                }.sorted {
+                                                    $0.sort < $1.sort
+                                                },
+                                            isTeacher: self.isTeacher,
+                                            weekdays: self.model.lessonsTime.weekdays
                                         )
-                                        .listRowBackground(Color.scheduleRowListColor)
-                                        .padding(.horizontal)
-                                        .padding(.vertical, 8)
+                                    } else {
+                                        ScheduleItemViewLessons(
+                                            day: day,
+                                            item: self.model.lessonsTime.item
+                                                .filter {
+                                                    $0.day == day.id
+                                                },
+                                            isTeacher: self.isTeacher,
+                                            weekdays: self.model.lessonsTime.weekdays
+                                        )
                                     }
                                 }.listRowInsets(
                                     EdgeInsets(
@@ -117,8 +127,8 @@ struct ScheduleView: View {
                         }
                     }
                 }
+                Spacer()
             }
-            Spacer()
         }
     }
 }
