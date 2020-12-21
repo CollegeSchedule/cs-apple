@@ -70,10 +70,13 @@ struct ScheduleView: View {
                     Text(LocalizedStringKey("authenticated.schedule.next")).tag(1)
                 }
                 .padding(.horizontal)
+                .padding(.bottom, 1)
                 .pickerStyle(SegmentedPickerStyle())
                 if self.model.lessonsTime.item.isEmpty {
+                    Spacer()
                     Text(LocalizedStringKey("authenticated.schedule.no_lessons"))
                         .padding()
+                    Spacer()
                 } else {
                     List {
                         ForEach(self.days, id: \.id) { day in
@@ -92,29 +95,17 @@ struct ScheduleView: View {
                                         .padding(.horizontal)
                                         .background(Color.scheduleSectionListColor)
                                 ) {
-                                    if self.isTeacher {
-                                        ScheduleItemViewLessons(
-                                            day: day,
-                                            item: self.model.lessonsTime.item
-                                                .filter {
-                                                    $0.day == day.id
-                                                }.sorted {
-                                                    $0.sort < $1.sort
-                                                },
-                                            isTeacher: self.isTeacher,
-                                            weekdays: self.model.lessonsTime.weekdays
-                                        )
-                                    } else {
-                                        ScheduleItemViewLessons(
-                                            day: day,
-                                            item: self.model.lessonsTime.item
-                                                .filter {
-                                                    $0.day == day.id
-                                                },
-                                            isTeacher: self.isTeacher,
-                                            weekdays: self.model.lessonsTime.weekdays
-                                        )
-                                    }
+                                    ScheduleItemViewLessons(
+                                        day: day,
+                                        item: self.model.lessonsTime.item
+                                            .filter {
+                                                $0.day == day.id
+                                            }.sorted {
+                                                $0.sort < $1.sort
+                                            },
+                                        isTeacher: self.isTeacher,
+                                        weekdays: self.model.lessonsTime.weekdays
+                                    )
                                 }.listRowInsets(
                                     EdgeInsets(
                                         top: 0,
@@ -125,9 +116,8 @@ struct ScheduleView: View {
                                 )
                             }
                         }
-                    }
+                    }.listStyle(PlainListStyle())
                 }
-                Spacer()
             }
         }
     }

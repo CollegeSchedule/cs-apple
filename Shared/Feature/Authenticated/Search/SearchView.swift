@@ -13,11 +13,15 @@ struct SearchView: View {
                     page: self.$model.teachers.page
                 ) { item in
                     Text(item.print)
-                        .foregroundColor(.generalTextColor)
+                        .foregroundColor(.white)
                         .eraseToAnyView()
                 } navigation: { item in
                     ScheduleView(accountId: item.id)
                         .navigationTitle(item.print)
+                        .eraseToAnyView()
+                } navigationContent: { item in
+                    Text(item.print)
+                        .foregroundColor(.generalTextColor)
                         .eraseToAnyView()
                 }
             }
@@ -28,11 +32,15 @@ struct SearchView: View {
                     page: self.$model.groups.page
                 ) { item in
                     Text(item.print!)
-                        .foregroundColor(.generalTextColor)
+                        .foregroundColor(.white)
                         .eraseToAnyView()
                 } navigation: { item in
                     ScheduleView(groupId: item.id)
                         .navigationTitle(item.print!)
+                        .eraseToAnyView()
+                } navigationContent: { item in
+                    Text(item.print!)
+                        .foregroundColor(.generalTextColor)
                         .eraseToAnyView()
                 }
             }

@@ -7,12 +7,10 @@ struct ScheduleItemView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack(alignment: .leading) {
+            VStack {
                 Text("\(self.hoursTime(time: self.weekdays.startTime))")
-                    .multilineTextAlignment(.leading)
                 Text("\(self.hoursTime(time: self.weekdays.startTime + self.weekdays.lengthTime))")
-                    .multilineTextAlignment(.leading)
-            }.frame(width: 50)
+            }.frame(width: 50, alignment: .leading)
             
             VStack {
                 ZStack(alignment: .top) {

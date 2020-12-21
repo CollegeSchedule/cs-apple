@@ -7,6 +7,7 @@ struct ListView<T: Hashable&Codable, Content: View>: View {
     let title: String
     let content: (_ item: T) -> Content
     let navigation: (_ item: T) -> Content
+    let navigationContent: (_ item: T) -> Content
     
     @Binding
     var page: Int
@@ -16,13 +17,15 @@ struct ListView<T: Hashable&Codable, Content: View>: View {
         title: String,
         page: Binding<Int>,
         @ViewBuilder content: @escaping (_ item: T) -> Content,
-        @ViewBuilder navigation: @escaping (_ item: T) -> Content
+        @ViewBuilder navigation: @escaping (_ item: T) -> Content,
+        @ViewBuilder navigationContent: @escaping (_ item: T) -> Content
     ) {
         self.data = data
         self._page = page
         self.title = title
         self.content = content
         self.navigation = navigation
+        self.navigationContent = navigationContent
     }
     
     var body: some View {
@@ -44,7 +47,7 @@ struct ListView<T: Hashable&Codable, Content: View>: View {
                                 ScheduleListSeeAllView(
                                     self.data,
                                     page: self.$page,
-                                    content: self.content,
+                                    content: self.navigationContent,
                                     navigation: self.navigation
                                 )
                         )
