@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 extension Color {
     static let backgroundColor: Color

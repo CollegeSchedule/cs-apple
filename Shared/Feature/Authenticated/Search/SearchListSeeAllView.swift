@@ -2,7 +2,6 @@ import SwiftUI
 import Combine
 
 struct ScheduleListSeeAllView<T: Codable & Hashable, Content: View>: View {
-    
     @Binding
     var page: Int
     

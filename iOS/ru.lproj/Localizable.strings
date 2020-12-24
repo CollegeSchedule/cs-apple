@@ -3,6 +3,8 @@
 "authenticated.tab.shedule" = "Расписание";
 "authenticated.tab.search" = "Поиск";
 "authenticated.tab.settings" = "Настройки";
+"authenticated.component.api_result_view.error" = "Произошла ошибка";
+"authenticated.component.api_result_view.empty" = "Что-то пошло не так";
 "authenticated.marks.date" = "По дате";
 "authenticated.marks.subject" = "По предмету";
 "authenticated.schedule.week" = "Неделя";

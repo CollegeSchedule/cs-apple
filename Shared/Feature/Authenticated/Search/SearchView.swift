@@ -6,7 +6,10 @@ struct SearchView: View {
     
     var body: some View {
         ScrollView {
-            APIResultView(status: self.$model.teachers.items) { item in
+            APIResultView(
+                status: self.$model.teachers.items,
+                title: "authenticated.search.teachers"
+            ) { item in
                 ListView(
                     item,
                     title: "authenticated.search.teachers",
@@ -25,7 +28,10 @@ struct SearchView: View {
                         .eraseToAnyView()
                 }
             }
-            APIResultView(status: self.$model.groups.items) { item in
+            APIResultView(
+                status: self.$model.groups.items,
+                title: "authenticated.search.groups")
+            { item in
                 ListView(
                     item,
                     title: "authenticated.search.groups",

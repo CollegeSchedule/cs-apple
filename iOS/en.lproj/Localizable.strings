@@ -3,6 +3,8 @@
 "authenticated.tab.shedule" = "Schedule";
 "authenticated.tab.search" = "Search";
 "authenticated.tab.settings" = "Settings";
+"authenticated.component.api_result_view.error" = "An error has occurred";
+"authenticated.component.api_result_view.empty" = "Something went wrong";
 "authenticated.marks.date" = "By Date";
 "authenticated.marks.subject" = "By Subject";
 "authenticated.schedule.week" = "Week";

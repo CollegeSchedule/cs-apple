@@ -132,7 +132,7 @@ struct SettingsView: View {
         .eraseToAnyView()
     }
     
-    struct SettingsSection {
+    private struct SettingsSection {
         var header: String = ""
         let items: [SettingsItem]
         

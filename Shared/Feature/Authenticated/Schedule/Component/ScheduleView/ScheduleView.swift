@@ -15,16 +15,21 @@ struct ScheduleView: View {
             groupId: groupId
         )
         self.isTeacher = accountId != nil
-        UITableView.appearance().backgroundColor = UIColor(Color.scheduleSectionListColor)
+        UITableView.appearance().backgroundColor
+            = UIColor(Color.scheduleSectionListColor)
     }
     
     var body: some View {
         ZStack {
-            Color.scheduleSectionListColor.ignoresSafeArea()
+            Color
+                .scheduleSectionListColor
+                .ignoresSafeArea()
             VStack(spacing: 0) {
                 Picker("Выбор недели", selection: self.$model.selection) {
-                    Text(LocalizedStringKey("authenticated.schedule.current")).tag(0)
-                    Text(LocalizedStringKey("authenticated.schedule.next")).tag(1)
+                    Text(LocalizedStringKey("authenticated.schedule.current"))
+                        .tag(0)
+                    Text(LocalizedStringKey("authenticated.schedule.next"))
+                        .tag(1)
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 1)

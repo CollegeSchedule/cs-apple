@@ -54,7 +54,6 @@ extension ScheduleView {
                 .subscribe(on: Scheduler.background)
                 .receive(on: Scheduler.main)
                 .flatMap { result -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
-                    
                     return self.performGetOperation(
                         networkCall: self.subjectService.get(
                             groupId: self.groupId,

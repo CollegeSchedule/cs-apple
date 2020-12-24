@@ -8,8 +8,14 @@ struct ScheduleItemView: View {
     var body: some View {
         HStack(spacing: 0) {
             VStack {
-                Text("\(self.hoursTime(time: self.weekdays.startTime))")
-                Text("\(self.hoursTime(time: self.weekdays.startTime + self.weekdays.lengthTime))")
+                Text(self.hoursTime(time: self.weekdays.startTime))
+                Text(
+                    self.hoursTime(
+                        time:
+                            self.weekdays.startTime
+                            + self.weekdays.lengthTime
+                    )
+                )
             }.frame(width: 50, alignment: .leading)
             
             VStack {
@@ -28,10 +34,14 @@ struct ScheduleItemView: View {
                 Text(self.item.subject.name)
                     .truncationMode(.tail)
                     .lineLimit(1)
-                Text(self.isTeacher ? self.item.group.print! : self.item.teacher.print)
-                    .truncationMode(.tail)
-                    .foregroundColor(.gray)
-                    .lineLimit(1)
+                Text(
+                    self.isTeacher ?
+                        self.item.group.print!
+                        : self.item.teacher.print
+                )
+                .truncationMode(.tail)
+                .foregroundColor(.gray)
+                .lineLimit(1)
             }
             
             Spacer()
@@ -45,8 +55,6 @@ struct ScheduleItemView: View {
         formatter.zeroFormattingBehavior = .pad
         formatter.allowedUnits = [.hour, .minute]
         formatter.unitsStyle = .positional
-        
-        print(formatter.string(from: TimeInterval(time * 60))!)
         
         return formatter.string(from: TimeInterval(time * 60))!
     }
