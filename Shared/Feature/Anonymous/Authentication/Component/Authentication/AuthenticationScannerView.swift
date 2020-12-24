@@ -44,19 +44,19 @@ struct AuthenticationScannerView: View {
                 
                 Spacer()
                 
-//                Button(action: {
-////                    self.isActive = .keyboard
-//                }) {
-//                    HStack {
-//                        Text("Can't scan a QR-code?")
-//                            .foregroundColor(.gray)
-//
-//                        Text("Go to keybaord")
-//                            .foregroundColor(.accentColor)
-//                    }
-//                }
-//                .padding([.horizontal, .bottom], 20)
-//                .padding(.top, 10)
+                Button(action: {
+                    self.isActive = .keyboard
+                }) {
+                    HStack {
+                        Text("Can't scan a QR-code?")
+                            .foregroundColor(.gray)
+
+                        Text("Go to keybaord")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .padding([.horizontal, .bottom], 20)
+                .padding(.top, 10)
             }.padding()
         }
     }

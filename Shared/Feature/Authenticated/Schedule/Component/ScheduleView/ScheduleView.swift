@@ -4,49 +4,6 @@ struct ScheduleView: View {
     @ObservedObject
     private var model: ScheduleView.ViewModel
     
-    private var days: [WeekDay] = {
-        let dateInWeek = Date()
-        let calendar = Calendar.init(identifier: .gregorian)
-        let dayOfWeek = calendar.component(.weekday, from: dateInWeek) - 1
-        let weekdays = calendar.range(of: .weekday, in: .yearForWeekOfYear, for: dateInWeek)!
-        return (weekdays.lowerBound ..< weekdays.upperBound - 1)
-            .compactMap {
-                
-                if dayOfWeek - 1 == $0 {
-                    return WeekDay(
-                        id: $0,
-                        name: "authenticated.schedule.yesterday"
-                    )
-                }
-                
-                if dayOfWeek == $0 {
-                    return WeekDay(
-                        id: $0,
-                        name: "authenticated.schedule.today"
-                    )
-                }
-                
-                if dayOfWeek + 1 == $0 {
-                    return WeekDay(
-                        id: $0,
-                        name: "authenticated.schedule.tomorrow"
-                    )
-                }
-                
-                return WeekDay(
-                    id: $0,
-                    name: DateFormatter.WEEK_DAY_FORMATTER.string(
-                        from: calendar
-                            .date(
-                                byAdding: .day,
-                                value: $0 - dayOfWeek,
-                                to: dateInWeek
-                            )!
-                    )
-                )
-            }
-    }()
-    
     private var isTeacher: Bool
     
     init(
@@ -79,7 +36,14 @@ struct ScheduleView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(self.days, id: \.id) { day in
+                        ForEach(
+                            self.model.weekDate(
+                                self.model.selection == 0
+                                    ? Date()
+                                    : Date.DAY_IN_WEEK
+                            ),
+                            id: \.id
+                        ) { day in
                             if self.model.lessonsTime.item.filter { result in
                                 result.day == day.id
                             }.count == 0 { } else {

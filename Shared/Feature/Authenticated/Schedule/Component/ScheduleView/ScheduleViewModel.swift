@@ -54,11 +54,16 @@ extension ScheduleView {
                 .subscribe(on: Scheduler.background)
                 .receive(on: Scheduler.main)
                 .flatMap { result -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
+                    
                     return self.performGetOperation(
                         networkCall: self.subjectService.get(
                             groupId: self.groupId,
-                            year: self.year,
-                            week: self.week + self.selection,
+                            year: self.week == 52 && self.selection == 1
+                                ? self.year + 1
+                                : self.year,
+                            week: self.week == 52 && self.selection == 1
+                                ? 1
+                                : self.week + self.selection,
                             accountId: self.accountId
                         )
                     )
@@ -69,6 +74,48 @@ extension ScheduleView {
                     }
                 }
                 .store(in: &self.bag)
+        }
+        
+        func weekDate(_ date: Date) -> [WeekDay] {
+            let calendar = Calendar.init(identifier: .gregorian)
+            let dayOfWeek = calendar.component(.weekday, from: date) - 1
+            let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: date)!
+            return (weekdays.lowerBound ..< weekdays.upperBound - 1)
+                .compactMap {
+                    
+                    if dayOfWeek - 1 == $0 {
+                        return WeekDay(
+                            id: $0,
+                            name: "authenticated.schedule.yesterday"
+                        )
+                    }
+                    
+                    if dayOfWeek == $0 {
+                        return WeekDay(
+                            id: $0,
+                            name: "authenticated.schedule.today"
+                        )
+                    }
+                    
+                    if dayOfWeek + 1 == $0 {
+                        return WeekDay(
+                            id: $0,
+                            name: "authenticated.schedule.tomorrow"
+                        )
+                    }
+                    
+                    return WeekDay(
+                        id: $0,
+                        name: DateFormatter.WEEK_DAY_FORMATTER.string(
+                            from: calendar
+                                .date(
+                                    byAdding: .day,
+                                    value: $0 - dayOfWeek,
+                                    to: date
+                                )!
+                        )
+                    )
+                }
         }
     }
 }

@@ -33,7 +33,9 @@ struct AuthenticationKeyboardView: View {
 					self.isActive = nil
 				}){
 					Text(LocalizedStringKey("authentication.keyboard.dissmiss"))
-				}
+                }.onDisappear{
+                    self.isActive = nil
+                }
                 
                 Button(action: {
                         self.model.accountCode = self.text

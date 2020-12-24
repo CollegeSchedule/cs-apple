@@ -6,31 +6,30 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            
             VStack {
                 Logo()
                     .padding(20)
-                    .fullScreenCover(item: self.$model.sheetItem) { item in
+                    .sheet(item: self.$model.sheetItem) { item in
                         switch item {
                             case .camera:
                                 AuthenticationScannerView(
                                     model: self.model,
                                     isActive: self.$model.sheetItem
                                 ).ignoresSafeArea()
-                            //                            case .keyboard:
-                            //                                AuthenticationKeyboardView(
-                            //                                    model: self.model,
-                            //                                    isActive: self.$model.sheetItem
-                            //                                ).ignoresSafeArea()
+                            case .keyboard:
+                                AuthenticationKeyboardView(
+                                    model: self.model,
+                                    isActive: self.$model.sheetItem
+                                ).ignoresSafeArea()
                         }
                     }
-				
-				Spacer()
+                
+                Spacer()
                 AuthenticationItemView(item: self.$model.account)
-				Spacer()
+                Spacer()
                 
                 self.formView()
-
+                
                 Button(action: self.model.login) {
                     ZStack {
                         Text(LocalizedStringKey(self.actionText()))
@@ -87,7 +86,7 @@ struct AuthenticationView: View {
                 
                 Divider().padding(.leading)
             }
-                
+            
             SecureField(LocalizedStringKey("authentication.field_password"), text: self.$model.password)
                 .textContentType(.password)
                 .autocapitalization(.none)

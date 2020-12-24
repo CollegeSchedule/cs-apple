@@ -4,5 +4,5 @@ enum AuthenticationScanerItem: CaseIterable, Identifiable, Hashable {
     }
     
     case camera
-//    case keyboard
+    case keyboard
 }
