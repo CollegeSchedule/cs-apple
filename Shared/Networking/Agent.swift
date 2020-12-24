@@ -70,7 +70,6 @@ class Agent: ObservableObject {
                 withJSONObject: params.compactMapValues { $0 }
             )
         }
-        print("result: \(path)")
         
         return self.request(request)
     }
@@ -87,7 +86,7 @@ class Agent: ObservableObject {
             }
             .decode(type: APIResponse<T>.self, decoder: JSONDecoder())
             .flatMap { result -> AnyPublisher<APIResult<T>, Never> in
-//                print("\(request.httpMethod!.description) \(request.description)")
+                print("\(request.httpMethod!.description) \(request.description)")
                 
                 guard let data = result.data, result.status else {
                     guard result.error!.code == 4 else {

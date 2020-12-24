@@ -2,10 +2,14 @@ import Foundation
 
 extension Date {
     static let DAY_IN_WEEK: Date = {
-        var date = Date()
-        
-        date.addTimeInterval(86400 * 7)
-        
-        return date
+        Date().addingTimeInterval(86400 * 7)
+    }()
+    
+    static let TOMORROW: Date = {
+        Date().addingTimeInterval(86400)
+    }()
+    
+    static let YESTERDAY: Date = {
+        Date().addingTimeInterval(-86400)
     }()
 }

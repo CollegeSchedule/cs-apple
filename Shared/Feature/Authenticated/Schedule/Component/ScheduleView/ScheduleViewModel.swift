@@ -76,28 +76,52 @@ extension ScheduleView {
                 .store(in: &self.bag)
         }
         
+        private func formatter(_ date: Date) ->  String {
+            DateFormatter.WEEK_DAY_FORMATTER.string(from: date)
+        }
+        
         func weekDate(_ date: Date) -> [WeekDay] {
             let calendar = Calendar.init(identifier: .gregorian)
             let dayOfWeek = calendar.component(.weekday, from: date) - 1
             let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: date)!
             return (weekdays.lowerBound ..< weekdays.upperBound - 1)
                 .compactMap {
-                    
-                    if dayOfWeek - 1 == $0 {
+                    if self.formatter(
+                        calendar
+                            .date(
+                                byAdding: .day,
+                                value: $0 - dayOfWeek,
+                                to: date
+                            )!
+                    ) == self.formatter(Date.YESTERDAY) {
                         return WeekDay(
                             id: $0,
                             name: "authenticated.schedule.yesterday"
                         )
                     }
                     
-                    if dayOfWeek == $0 {
+                    if self.formatter(
+                        calendar
+                            .date(
+                                byAdding: .day,
+                                value: $0 - dayOfWeek,
+                                to: date
+                            )!
+                    ) == self.formatter(Date()) {
                         return WeekDay(
                             id: $0,
                             name: "authenticated.schedule.today"
                         )
                     }
                     
-                    if dayOfWeek + 1 == $0 {
+                    if self.formatter(
+                        calendar
+                            .date(
+                                byAdding: .day,
+                                value: $0 - dayOfWeek,
+                                to: date
+                            )!
+                    ) == self.formatter(Date.TOMORROW) {
                         return WeekDay(
                             id: $0,
                             name: "authenticated.schedule.tomorrow"
