@@ -13,11 +13,8 @@ struct InlinePicker: View {
             }) {
                 Label {
                     HStack {
-                        Text(self.items[index])
+                        Text(LocalizedStringKey(self.items[index]))
                             .foregroundColor(.primary)
-//                            .onTapGesture {
-//                                print(index)
-//                            }
                         
                         Spacer()
                         
@@ -48,7 +45,7 @@ extension Color {
         UIColor { (traits) -> UIColor in
             // Return one of two colors depending on light or dark mode
             return traits.userInterfaceStyle == .dark
-                ? UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 1)
+                ? UIColor(.inlinePickerButtonBackgroundColor)
                 : UIColor.white
         }
     )

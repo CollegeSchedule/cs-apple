@@ -3,7 +3,14 @@ import SwiftUI
 
 protocol AuthenticationServiceType {
     func login(
-        mail: String,
+        token: String?,
+        mail: String?,
+        password: String
+    ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
+    
+    func register(
+        token: String?,
+        mail: String?,
         password: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never>
     
@@ -20,16 +27,35 @@ final class AuthenticationService: AuthenticationServiceType {
     @Environment(\.agent)
     var agent: Agent
     
-    func login(
-        mail: String,
+    func register(
+        token: String? = nil,
+        mail: String? = nil,
         password: String
     ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
-        self.agent.run(
+        return self.agent.run(
+            "/authentication/",
+            method: .post,
+            params: [
+                "token": token,
+                "mail": mail,
+                "password": password
+            ],
+            type: .application
+        )
+    }
+    
+    func login(
+        token: String? = nil,
+        mail: String? = nil,
+        password: String
+    ) -> AnyPublisher<APIResult<AuthenticationEntity>, Never> {
+        return self.agent.run(
             "/authentication/",
             method: .put,
             params: [
+                "token": token,
                 "mail": mail,
-                "password": password,
+                "password": password
             ],
             type: .application
         )

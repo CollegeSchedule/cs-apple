@@ -1,56 +1,55 @@
 import SwiftUI
 
 struct SearchView: View {
-	@ObservedObject
-	private var model: SearchView.ViewModel = .init()
+    @ObservedObject
+    private var model: SearchView.ViewModel = .init()
     
-    @State
-    var friends: [Int] = .init(0...100)
-	
     var body: some View {
         ScrollView {
-			if case APIResult.empty = self.model.teachers {
-				Text("Hello")
-			} else if case let APIResult.success(content) = self.model.teachers {
-				if content.items.isEmpty {
-					Text("EMPTY ASF")
-				} else {
-					Text("Data: \(content.items[0].firstName)")
-				}
-			} else if case APIResult.error = self.model.teachers {
-				Text("Error")
-			}
-			
-            ListView(self.model.teach, title: "Teachers") { item in
-                RoundedRectangle(cornerRadius: 12)
-                    .overlay(
-                        Text("item: \(item.firstName)")
-                            .foregroundColor(.black)
-                            .padding()
-                    )
-                    .eraseToAnyView()
-            } navigation: { item in
-                Text("navigation: \(item.firstName)")
-                    .eraseToAnyView()
+            APIResultView(
+                status: self.$model.teachers.items,
+                title: "authenticated.search.teachers"
+            ) { item in
+                ListView(
+                    item,
+                    title: "authenticated.search.teachers",
+                    page: self.$model.teachers.page
+                ) { item in
+                    Text(item.print)
+                        .foregroundColor(.white)
+                        .eraseToAnyView()
+                } navigation: { item in
+                    ScheduleView(accountId: item.id)
+                        .navigationTitle(item.print)
+                        .eraseToAnyView()
+                } navigationContent: { item in
+                    Text(item.print)
+                        .foregroundColor(.generalTextColor)
+                        .eraseToAnyView()
+                }
             }
-            ListView(self.friends, title: "Groups") { item in
-                RoundedRectangle(cornerRadius: 12)
-                    .overlay(
-                        Text("item: \(item)")
-                            .foregroundColor(.black)
-                            .padding()
-                    )
-                    .eraseToAnyView()
-            } navigation: { item in
-                Text("navigation: \(item)")
-                    .eraseToAnyView()
+            APIResultView(
+                status: self.$model.groups.items,
+                title: "authenticated.search.groups")
+            { item in
+                ListView(
+                    item,
+                    title: "authenticated.search.groups",
+                    page: self.$model.groups.page
+                ) { item in
+                    Text(item.print!)
+                        .foregroundColor(.white)
+                        .eraseToAnyView()
+                } navigation: { item in
+                    ScheduleView(groupId: item.id)
+                        .navigationTitle(item.print!)
+                        .eraseToAnyView()
+                } navigationContent: { item in
+                    Text(item.print!)
+                        .foregroundColor(.generalTextColor)
+                        .eraseToAnyView()
+                }
             }
-		}.add(self.model.searchBar)
-    }
-}
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+        }.add(self.model.searchBar)
     }
 }

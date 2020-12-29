@@ -10,8 +10,9 @@ struct MarksSubjectItemView: View {
                     .font(.system(size: 10, weight: .regular, design: .default))
                 Text(self.item.teacher)
                     .font(.system(size: 10, weight: .regular, design: .default))
-                    .foregroundColor(Color("MarksSubjectText"))
+                    .foregroundColor(Color.marksSubjectText)
             }
+            
             Spacer()
             
             HStack(spacing: 20) {

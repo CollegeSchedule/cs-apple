@@ -1,84 +1,100 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.agent)
+    private var model: Agent
+    
     @State
-    var sections: [SettingsSection] = [
+    private var isActive: Bool = false
+    
+    @State
+    private var sections: [SettingsSection] = [
         .init(
-            header: "Приложение",
+            header: "authenticated.settings.app",
             items: [
                 .init(
                     icon: "lightbulb.fill",
-                    title: "Внешний вид",
+                    title: "authenticated.settings.appearance",
                     color: .purple,
                     view: SettingsAppearanceView().eraseToAnyView()
                 ),
                 .init(
                     icon: "globe",
-                    title: "Язык",
+                    title: "authenticated.settings.language",
                     color: .orange,
                     execute: {
-                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                        UIApplication.shared.open(
+                            URL(
+                                string: UIApplication.openSettingsURLString
+                            )!
+                        )
                     }
                 )
             ]
         ),
-        
         .init(
-            header: "Тех. Поддержка",
+            header: "authenticated.settings.tech_support",
             items: [
                 .init(
                     icon: "heart.fill",
-                    title: "Написать отзыв",
+                    title: "authenticated.settings.feedback",
                     color: .green,
                     view: SettingsAppearanceView().eraseToAnyView()
                 ),
                 .init(
                     icon: "envelope.fill",
-                    title: "Связаться с разработчиком",
+                    title: "authenticated.settings.contact",
                     color: .blue,
                     link: "https:/vk.com"
                 ),
                 .init(
                     icon: "house.fill",
-                    title: "О приложении",
+                    title: "authenticated.settings.about",
                     color: .pink,
                     view: SettingsAboutAppView().eraseToAnyView()
                 )
             ]
-        ),
-		.init(
-			items: [
-				.init(
-					icon: "globe",
-					title: "Выйти",
-					color: .orange,
-					textColor: .pink,
-					execute: {
-						print("hello")
-					}
-				)
-			]
-		)
-		
+        )
     ]
     
     var body: some View {
         List {
             ForEach(self.sections, id: \.header) { section in
-				Section(header: Text(section.header)) {
+                Section(header: Text(LocalizedStringKey(section.header))) {
                     ForEach(section.items, id: \.title) { item in
                         self.item(item)
                     }
                 }
             }
+            Section {
+                Button(action: {
+                    self.isActive = true
+                }) {
+                    Label(LocalizedStringKey("authenticated.settings.log_out"), image: "globe")
+                        .foregroundColor(.red)
+                        .labelStyle(TitleOnlyLabelStyle())
+                }
+            }
         }
         .listStyle(InsetGroupedListStyle())
+        .alert(isPresented: self.$isActive, content: {
+            Alert(
+                title: Text(LocalizedStringKey("authenticated.settings.log_out")),
+                message: Text(LocalizedStringKey("authenticated.settings.message_log_out")),
+                primaryButton: .cancel(),
+                secondaryButton: .destructive(Text(LocalizedStringKey("authenticated.settings.log_out")),
+                    action: {
+                        AgentKey.defaultValue.isAuthenticated = false            
+                    }
+                )
+            )
+        })
     }
     
     private func item(_ item: SettingsSection.SettingsItem) -> AnyView {
         if item.view != nil {
             return NavigationLink(
-                destination: item.view?.navigationTitle(item.title)
+                destination: item.view?.navigationTitle(LocalizedStringKey(item.title))
             ) {
                 self.label(item)
             }.eraseToAnyView()
@@ -98,26 +114,25 @@ struct SettingsView: View {
     
     private func label(_ item: SettingsSection.SettingsItem) -> AnyView {
         return Label {
-            Text(item.title)
-				.foregroundColor(item.textColor ?? Color("GeneralTextColor"))
+            Text(LocalizedStringKey(item.title))
+                .foregroundColor(Color.generalTextColor)
         } icon: {
-			if item.icon != nil {
-				Image(systemName: item.icon!)
-					.foregroundColor(.white)
-					.frame(
-						width: 32,
-						height: 32,
-						alignment: .center
-					)
-					.background(item.color)
-					.cornerRadius(8)
-			}
-		}
-//		.labelStyle(item.icon == nil ? DefaultLabelStyle() as! LabelStyle: IconOnlyLabelStyle())
-		.eraseToAnyView()
+            if item.icon != nil {
+                Image(systemName: item.icon!)
+                    .foregroundColor(.white)
+                    .frame(
+                        width: 32,
+                        height: 32,
+                        alignment: .center
+                    )
+                    .background(item.color)
+                    .cornerRadius(8)
+            }
+        }
+        .eraseToAnyView()
     }
     
-    struct SettingsSection {
+    private struct SettingsSection {
         var header: String = ""
         let items: [SettingsItem]
         
@@ -125,7 +140,6 @@ struct SettingsView: View {
             let icon: String?
             let title: String
             let color: Color?
-			var textColor: Color? = nil
             
             var view: AnyView? = nil
             var execute: (() -> Void)? = nil

@@ -34,7 +34,7 @@ struct MarksSubjectView: View {
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .foregroundColor(Color("MarksSubject"))
+                                    .foregroundColor(Color.marksSubject)
                             )
                             .padding([.horizontal, .top])
                     }

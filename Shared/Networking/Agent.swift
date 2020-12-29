@@ -25,7 +25,14 @@ class Agent: ObservableObject {
     private(set) var refresh: String = ""
     
     @Published
-    var isAuthenticated: Bool = false
+	var isAuthenticated: Bool = false {
+		didSet {
+            if !self.isAuthenticated {
+                self.access = ""
+                self.refresh = ""
+            }
+		}
+	}
     
     // MARK: - TODO: Check token on application launch
     init() {
@@ -36,7 +43,7 @@ class Agent: ObservableObject {
         _ path: String,
         
         method: HTTPMethod = .get,
-        params: [String: Any] = [:],
+        params: [String: Any?] = [:],
         headers: [String: Any] = [:],
         
         decoder: JSONDecoder = JSONDecoder(),
@@ -60,7 +67,7 @@ class Agent: ObservableObject {
                 
         if method != .get {
             request.httpBody = try! JSONSerialization.data(
-                withJSONObject: params
+                withJSONObject: params.compactMapValues { $0 }
             )
         }
         
@@ -79,6 +86,8 @@ class Agent: ObservableObject {
             }
             .decode(type: APIResponse<T>.self, decoder: JSONDecoder())
             .flatMap { result -> AnyPublisher<APIResult<T>, Never> in
+                print("\(request.httpMethod!.description) \(request.description)")
+                
                 guard let data = result.data, result.status else {
                     guard result.error!.code == 4 else {
                         return Just(APIResult.error(result.error!))
@@ -107,9 +116,9 @@ class Agent: ObservableObject {
                             .eraseToAnyPublisher()
                     }
                     
-                    self.access = ""
-                    self.refresh = ""
                     Scheduler.main.perform {
+                        self.access = ""
+                        self.refresh = ""
                         self.isAuthenticated = false
                     }
                     
@@ -134,6 +143,7 @@ class Agent: ObservableObject {
                     .eraseToAnyPublisher()
             }
             .catch { error -> Just<APIResult<T>> in
+                print("Error \(error)")
                 return Just(.error(APIError()))
             }
             .subscribe(on: Scheduler.background)

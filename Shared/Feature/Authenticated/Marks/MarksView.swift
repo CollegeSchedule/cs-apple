@@ -16,13 +16,12 @@ struct MarksView: View {
             .padding(.horizontal)
             
             if self.selection == 0 {
-                Text("ff")
-            }
-            else{
+                MarksDateView()
+            } else{
                 MarksSubjectView()
             }
+            Spacer()
         }
     }
 }
-
 

@@ -1,75 +1,49 @@
 import SwiftUI
 
-
-struct DarkBlueShadowProgressViewStyle: ProgressViewStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        ProgressView(configuration)
-            .shadow(color: Color(red: 0, green: 0, blue: 0.6),
-                    radius: 4.0, x: 1.0, y: 2.0)
-    }
-}
-
 struct AuthenticationView: View {
-    @EnvironmentObject
-    var agent: Agent
-    
     @ObservedObject
     private var model: AuthenticationView.ViewModel = .init()
     
     var body: some View {
         ZStack {
-            Color
-                .backgroundColor
-                .edgesIgnoringSafeArea(.all)
-            
             VStack {
                 Logo()
-					.padding(20)
-				
-				if self.model.item != AuthenticationItem.empty {
-					VStack{
-						Spacer()
-						
-                        AuthenticationItemView(item: self.model.item)
-						
-						Spacer()
-					}
-                }
-                
-                Form {
-                    TextField("Email", text: self.$model.mail, onCommit: {
-                        print("Ok")
-                    })
-                        .textContentType(.emailAddress)
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        
-                        .sheet(item: self.$model.sheetItem) { item in
-                            switch item {
+                    .padding(20)
+                    .sheet(item: self.$model.sheetItem) { item in
+                        switch item {
                             case .camera:
-                                CodeScanner(model: self.model, item: self.$model.item, isActive: self.$model.sheetItem)
+                                AuthenticationScannerView(
+                                    model: self.model,
+                                    isActive: self.$model.sheetItem
+                                ).ignoresSafeArea()
                             case .keyboard:
-                                AuthenticationKeyboardView(isActive: self.$model.sheetItem)
-                            }
+                                AuthenticationKeyboardView(
+                                    model: self.model,
+                                    isActive: self.$model.sheetItem
+                                ).ignoresSafeArea()
                         }
-                        
-                    
-                    SecureField("Password", text: self.$model.password)
-                        .textContentType(.password)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-				}
-				
+                    }
+                
+                Spacer()
+                AuthenticationItemView(item: self.$model.account)
+                Spacer()
+                
+                self.formView()
                 
                 Button(action: self.model.login) {
                     ZStack {
-                        Text("Get Started")
+                        Text(LocalizedStringKey(self.actionText()))
                         
                         if case APIResult.loading = self.model.status {
                             ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+                                .progressViewStyle(
+                                    CircularProgressViewStyle(tint: .white)
+                                )
+                                .frame(
+                                    minWidth: 0,
+                                    maxWidth: .infinity,
+                                    alignment: .trailing
+                                )
                         }
                     }
                 }
@@ -78,14 +52,12 @@ struct AuthenticationView: View {
                 .disabled(!self.model.isValid)
                 
                 Button(action: {
-//                    self.model.me()
                     self.model.sheetItem = .camera
                 }) {
                     HStack {
-                        Text("Doesn't have an account?")
+                        Text(LocalizedStringKey("authentication.no_account"))
                             .foregroundColor(.gray)
-                        
-                        Text("Sign Up")
+                        Text(LocalizedStringKey("authentication.sign_up"))
                             .foregroundColor(.accentColor)
                     }
                 }
@@ -93,6 +65,50 @@ struct AuthenticationView: View {
                 .padding(.top, 10)
             }
         }
+    }
+    
+    private func formView() -> AnyView {
+        if case .notFound = self.model.account {
+            return EmptyView().eraseToAnyView()
+        }
+        
+        return VStack(spacing: 0) {
+            if case let .success(content) = self.model.account, content.active {
+                EmptyView()
+            } else {
+                TextField(LocalizedStringKey("authentication.field_email"), text: self.$model.mail)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                
+                Divider().padding(.leading)
+            }
+            
+            SecureField(LocalizedStringKey("authentication.field_password"), text: self.$model.password)
+                .textContentType(.password)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+            
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(Color.formTextFieldBackgroudColor)
+        )
+        .padding([.horizontal, .bottom], 20)
+        .eraseToAnyView()
+    }
+    
+    private func actionText() -> String {
+        if case let .success(content) = self.model.account, !content.active {
+            return "authentication.sign_up"
+        }
+        
+        return "authentication.sign_in"
     }
 }
 
