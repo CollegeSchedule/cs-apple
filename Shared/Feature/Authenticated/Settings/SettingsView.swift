@@ -35,12 +35,12 @@ struct SettingsView: View {
         .init(
             header: "authenticated.settings.tech_support",
             items: [
-                .init(
-                    icon: "heart.fill",
-                    title: "authenticated.settings.feedback",
-                    color: .green,
-                    view: SettingsAppearanceView().eraseToAnyView()
-                ),
+//                .init(
+//                    icon: "heart.fill",
+//                    title: "authenticated.settings.feedback",
+//                    color: .green,
+//                    view: SettingsAppearanceView().eraseToAnyView()
+//                ),
                 .init(
                     icon: "envelope.fill",
                     title: "authenticated.settings.contact",
