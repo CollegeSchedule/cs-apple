@@ -22,9 +22,10 @@ final class ScheduleSubjectService: ScheduleSubjectServiceType {
         accountId: Int? = nil
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> {
         self.agent.run(
-            "/schedule/subject/\(groupId == nil ? -1 : groupId!)/\(year)/\(week)/",
+            "/schedule/subject/\(year)/\(week)/",
             params: [
                 "accountId": accountId,
+                "groupId": groupId,
             ]
         )
     }
