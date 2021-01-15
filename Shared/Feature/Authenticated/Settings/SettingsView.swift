@@ -35,17 +35,11 @@ struct SettingsView: View {
         .init(
             header: "authenticated.settings.tech_support",
             items: [
-//                .init(
-//                    icon: "heart.fill",
-//                    title: "authenticated.settings.feedback",
-//                    color: .green,
-//                    view: SettingsAppearanceView().eraseToAnyView()
-//                ),
                 .init(
-                    icon: "envelope.fill",
+                    icon: "laptopcomputer",
                     title: "authenticated.settings.contact",
                     color: .blue,
-                    link: "https:/vk.com"
+                    link: "https://collegeschedule.ru:2096"
                 ),
                 .init(
                     icon: "house.fill",

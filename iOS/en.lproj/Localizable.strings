@@ -37,7 +37,7 @@
 "authenticated.settings.language" = "Language";
 "authenticated.settings.tech_support" = "Technical support";
 "authenticated.settings.feedback" = "Write a Review";
-"authenticated.settings.contact" = "Contact the developer";
+"authenticated.settings.contact" = "Website";
 "authenticated.settings.about" = "About";
 "authenticated.settings.about.verstion" = "Version";
 "authenticated.settings.log_out" = "Log Out";

@@ -37,7 +37,7 @@
 "authenticated.settings.language" = "Язык";
 "authenticated.settings.tech_support" = "Тех. Поддержка";
 "authenticated.settings.feedback" = "Оставить отзыв";
-"authenticated.settings.contact" = "Связаться с разработчиками";
+"authenticated.settings.contact" = "Наш сайт";
 "authenticated.settings.about" = "О приложении";
 "authenticated.settings.about.verstion" = "Версия";
 "authenticated.settings.log_out" = "Выйти";
