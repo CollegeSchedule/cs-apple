@@ -26,8 +26,8 @@ struct ScheduleItemViewLessons: View {
                 item: item,
                 isTeacher: self.isTeacher,
                 weekdays: self.day.id == 6
-                    ? (self.weekdays.weekends.count < item.sort - 1 ? self.weekdays.weekends[item.sort - 1] : nil)
-                    : (self.weekdays.weekdays.count < item.sort - 1 ? self.weekdays.weekdays[item.sort - 1] : nil)
+                    ? (item.sort - 1 < self.weekdays.weekends.count ? self.weekdays.weekends[item.sort - 1] : nil)
+                    : (item.sort - 1 < self.weekdays.weekdays.count ? self.weekdays.weekdays[item.sort - 1] : nil)
             )
             .listRowBackground(Color.scheduleRowListColor)
             .padding(.horizontal)
