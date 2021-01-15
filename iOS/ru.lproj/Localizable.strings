@@ -15,6 +15,7 @@
 "authenticated.schedule.next" = "Следующая";
 "authenticated.schedule.current" = "Текущая";
 "authenticated.schedule.no_lessons" = "Занятий нет";
+"authenticated.search.placeholder" = "Поиск сотрудников и групп";
 "authenticated.search.all" = "См. Все";
 "authenticated.search.groups" = "Группы";
 "authenticated.search.teachers" = "Сотрудники";
@@ -40,7 +41,7 @@
 "authenticated.settings.about" = "О приложении";
 "authenticated.settings.about.verstion" = "Версия";
 "authenticated.settings.log_out" = "Выйти";
-"authenticated.settings.message_log_out" = "Вы действительно хотите выйти ?";
+"authenticated.settings.message_log_out" = "Вы действительно хотите выйти?";
 "authentication.sign_up" = "Зарегистрироваться";
 "authentication.sign_in" = "Войти";
 "authentication.field_email" = "Почта";

@@ -13,6 +13,10 @@ class SearchBar: NSObject, ObservableObject {
         
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.searchResultsUpdater = self
+        self.searchController.searchBar.searchTextField.placeholder = NSLocalizedString(
+            "authenticated.search.placeholder",
+            comment: "Search placeholder"
+        )
     }
 }
 

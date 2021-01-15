@@ -15,6 +15,7 @@
 "authenticated.schedule.next" = "Next";
 "authenticated.schedule.current" = "Current";
 "authenticated.schedule.no_lessons" = "No lessons";
+"authenticated.search.placeholder" = "Search for employess and groups";
 "authenticated.search.all" = "See all";
 "authenticated.search.groups" = "Groups";
 "authenticated.search.teachers" = "Employees";
@@ -40,7 +41,7 @@
 "authenticated.settings.about" = "About";
 "authenticated.settings.about.verstion" = "Version";
 "authenticated.settings.log_out" = "Log Out";
-"authenticated.settings.message_log_out" = "Do you really want to leave ?";
+"authenticated.settings.message_log_out" = "Do you really want to leave?";
 "authentication.sign_up" = "Sign Up";
 "authentication.sign_in" = "Sign In";
 "authentication.field_email" = "Email";
