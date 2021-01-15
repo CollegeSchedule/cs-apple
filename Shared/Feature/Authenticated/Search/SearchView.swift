@@ -30,8 +30,8 @@ struct SearchView: View {
             }
             APIResultView(
                 status: self.$model.groups.items,
-                title: "authenticated.search.groups")
-            { item in
+                title: "authenticated.search.groups"
+            ) { item in
                 ListView(
                     item,
                     title: "authenticated.search.groups",

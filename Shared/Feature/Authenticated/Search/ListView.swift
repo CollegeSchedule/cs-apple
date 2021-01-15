@@ -47,6 +47,7 @@ struct ListView<T: Hashable&Codable, Content: View>: View {
                                 ScheduleListSeeAllView(
                                     self.data,
                                     page: self.$page,
+                                    title: self.title,
                                     content: self.navigationContent,
                                     navigation: self.navigation
                                 )

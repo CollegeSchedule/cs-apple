@@ -6,19 +6,22 @@ struct ScheduleListSeeAllView<T: Codable & Hashable, Content: View>: View {
     var page: Int
     
     var data: [ListViewItem<T>]
+    var title: String
     var content: (_ item: T) -> Content
     var navigation: (_ item: T) -> Content
     
     init(
         _ data: [ListViewItem<T>],
         page: Binding<Int>,
+        title: String,
         @ViewBuilder content: @escaping (_ item: T) -> Content,
         @ViewBuilder navigation: @escaping (_ item: T) -> Content
     ) {
         self.data = data
+        self._page = page
+        self.title = title
         self.content = content
         self.navigation = navigation
-        self._page = page
     }
     
     var body: some View {
@@ -33,6 +36,6 @@ struct ScheduleListSeeAllView<T: Codable & Hashable, Content: View>: View {
                         }
                 }
             }.listStyle(InsetGroupedListStyle())
-        }.navigationTitle(LocalizedStringKey("authenticated.search.teachers"))
+        }.navigationTitle(LocalizedStringKey(self.title))
     }
 }
