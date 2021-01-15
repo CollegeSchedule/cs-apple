@@ -3,20 +3,16 @@ import SwiftUI
 struct ScheduleItemView: View {
     let item: ScheduleSubjectEntity
     let isTeacher: Bool
-    let weekdays: ScheduleTimeSubject.Lesson
+    let weekdays: ScheduleTimeSubject.Lesson?
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack {
-                Text(self.hoursTime(time: self.weekdays.startTime))
-                Text(
-                    self.hoursTime(
-                        time:
-                            self.weekdays.startTime
-                            + self.weekdays.lengthTime
-                    )
-                )
-            }.frame(width: 50, alignment: .leading)
+            if self.weekdays != nil {
+                VStack {
+                    Text(self.hoursTime(time: self.weekdays!.startTime))
+                    Text(self.hoursTime(time: self.weekdays!.startTime + self.weekdays!.lengthTime))
+                }.frame(width: 50, alignment: .leading)
+            }
             
             VStack {
                 ZStack(alignment: .top) {
