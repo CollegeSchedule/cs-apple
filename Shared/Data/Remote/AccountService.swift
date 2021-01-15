@@ -32,7 +32,8 @@ final class AccountService: AccountServiceType {
 			params: [
 				"offset": offset,
 				"limit": limit,
-				"search": search ?? ""
+				"search": search ?? "",
+                "scope": "teacher"
 			]
 		)
 	}
