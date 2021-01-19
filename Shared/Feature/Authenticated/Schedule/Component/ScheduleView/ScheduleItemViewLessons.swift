@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ScheduleItemViewLessons: View {
     @State
-    var day: ScheduleView.WeekDay
+    var day: WeekDay
     @State
     var item: [ScheduleSubjectEntity]
     @State
     var isTeacher: Bool
-    @State
+    @Binding
     var weekdays: ScheduleTimeSubject
     
     var body: some View {

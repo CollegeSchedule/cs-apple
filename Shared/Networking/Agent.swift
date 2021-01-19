@@ -70,7 +70,7 @@ class Agent: ObservableObject {
                 withJSONObject: params.compactMapValues { $0 }
             )
         }
-        
+        print("Access: \(self.access)")
         return self.request(request)
     }
     

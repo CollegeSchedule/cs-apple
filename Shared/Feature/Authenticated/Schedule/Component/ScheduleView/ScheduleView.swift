@@ -73,7 +73,7 @@ struct ScheduleView: View {
                                                 $0.sort < $1.sort
                                             },
                                         isTeacher: self.isTeacher,
-                                        weekdays: self.model.lessonsTime.weekdays
+                                        weekdays: self.$model.lessonsTime.weekdays
                                     )
                                 }.listRowInsets(
                                     EdgeInsets(

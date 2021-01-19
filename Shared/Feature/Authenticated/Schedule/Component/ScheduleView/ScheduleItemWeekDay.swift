@@ -1,6 +1,4 @@
-extension ScheduleView {
-    struct WeekDay {
-        let id: Int
-        let name: String
-    }
+struct WeekDay {
+    let id: Int
+    let name: String
 }
