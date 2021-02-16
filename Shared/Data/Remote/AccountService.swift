@@ -2,30 +2,28 @@ import Foundation
 import Combine
 import SwiftUI
 
-protocol AccountServiceType {
-    func me() -> AnyPublisher<APIResult<AccountMeEntity>, Never>
+protocol EntityServiceType {
+    associatedtype Entity: Codable & Hashable
     
     func get(
-		offset: Int,
+        offset: Int,
         limit: Int,
-		search: String?
-    ) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never>
+        search: String?,
+        scope: [String]
+    ) -> AnyPublisher<APIResult<CollectionMetaResponse<Entity>>, Never>
+    
+    func delete(id: Int) -> AnyPublisher<APIResult<Entity>, Never>
 }
 
-final class AccountService: AccountServiceType {
+final class AccountService: EntityServiceType {
     @Environment(\.agent)
     var agent: Agent
-    
-    func me() -> AnyPublisher<APIResult<AccountMeEntity>, Never> {
-        self.agent.run(
-            "/account/me"
-        )
-    }
-	
+
 	func get(
 		offset: Int = 0,
 		limit: Int = 30,
-		search: String? = nil
+		search: String? = nil,
+        scope: [String] = ["teacher"]
 	) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never> {
 		self.agent.run(
 			"/account/",
@@ -33,10 +31,17 @@ final class AccountService: AccountServiceType {
 				"offset": offset,
 				"limit": limit,
 				"search": search ?? "",
-                "scope": "teacher"
+                "scope": scope.joined(separator: ",")
 			]
 		)
 	}
+    
+    func delete(id: Int) -> AnyPublisher<APIResult<AccountEntity>, Never> {
+        self.agent.run(
+            "/account/\(id)",
+            method: .delete
+        )
+    }
 }
 
 struct AccountServiceKey: EnvironmentKey {

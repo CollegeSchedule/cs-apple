@@ -30,4 +30,13 @@ class BaseViewModel {
         
         return object.eraseToAnyPublisher()
     }
+//    
+//    deinit {
+//        print("CLEARING =========")
+//        
+//        self.bag.forEach {
+//            $0.cancel()
+//        }
+//        self.bag.removeAll()
+//    }
 }

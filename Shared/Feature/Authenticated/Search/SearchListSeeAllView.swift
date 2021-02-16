@@ -25,17 +25,15 @@ struct ScheduleListSeeAllView<T: Codable & Hashable, Content: View>: View {
     }
     
     var body: some View {
-        VStack {
-            List(self.data, id: \.item) { item in
-                NavigationLink(destination: self.navigation(item.item)) {
-                    self.content(item.item)
-                        .onAppear {
-                            if self.data.count - 5 == item.id {
-                                self.page += 1
-                            }
+        List(self.data, id: \.item) { item in
+            NavigationLink(destination: self.navigation(item.item)) {
+                self.content(item.item)
+                    .onAppear {
+                        if self.data.count - 5 == item.id {
+                            self.page += 1
                         }
-                }
-            }.listStyle(InsetGroupedListStyle())
-        }.navigationTitle(LocalizedStringKey(self.title))
+                    }
+            }
+        }.listStyle(InsetGroupedListStyle()).navigationTitle(LocalizedStringKey(self.title))
     }
 }

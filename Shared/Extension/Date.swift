@@ -12,4 +12,12 @@ extension Date {
     static let YESTERDAY: Date = {
         Date().addingTimeInterval(-86400)
     }()
+    
+    static let RELATIVE: RelativeDateTimeFormatter = {
+        let value = RelativeDateTimeFormatter()
+        
+        value.unitsStyle = .full
+        
+        return value
+    }()
 }

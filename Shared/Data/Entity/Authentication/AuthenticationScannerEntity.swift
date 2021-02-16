@@ -10,6 +10,6 @@ struct AuthenticationScannerEntity: Codable {
 }
 extension AuthenticationScannerEntity {
     var print: String {
-        "\(secondName) \(firstName.prefix(1)). \(thirdName.prefix(1))"
+        "\(self.secondName) \(self.firstName.prefix(1)). \(self.thirdName.prefix(1))."
     }
 }

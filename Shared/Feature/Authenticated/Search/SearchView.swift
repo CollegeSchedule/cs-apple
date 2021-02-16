@@ -6,50 +6,36 @@ struct SearchView: View {
     
     var body: some View {
         ScrollView {
-            APIResultView(
-                status: self.$model.teachers.items,
-                title: "authenticated.search.teachers"
-            ) { item in
-                ListView(
-                    item,
-                    title: "authenticated.search.teachers",
-                    page: self.$model.teachers.page
-                ) { item in
-                    Text(item.print)
-                        .foregroundColor(.white)
-                        .eraseToAnyView()
+            APIResultView(result: self.$model.teachers.items, empty: { Text("") }) { item in
+                ListView(item, title: "authenticated.search.teachers", page: self.$model.teachers.page) { item in
+                    Text(item.print).foregroundColor(.defaultColor).eraseToAnyView()
                 } navigation: { item in
-                    ScheduleView(accountId: item.id)
-                        .navigationTitle(item.print)
-                        .eraseToAnyView()
+                    ScheduleComponentView(accountId: item.id, mode: .teacher).navigationTitle(item.print).eraseToAnyView()
                 } navigationContent: { item in
-                    Text(item.print)
-                        .foregroundColor(.generalTextColor)
-                        .eraseToAnyView()
+                    Text(item.print).foregroundColor(.invertedDefaultColor).eraseToAnyView()
                 }
             }
-            APIResultView(
-                status: self.$model.groups.items,
-                title: "authenticated.search.groups"
-            ) { item in
-                ListView(
-                    item,
-                    title: "authenticated.search.groups",
-                    page: self.$model.groups.page
-                ) { item in
-                    Text(item.print!)
-                        .foregroundColor(.white)
-                        .eraseToAnyView()
+            
+            APIResultView(result: self.$model.groups.items, empty: { Text("") }) { item in
+                ListView(item, title: "authenticated.search.groups", page: self.$model.groups.page) { item in
+                    Text(item.print!).foregroundColor(.defaultColor).eraseToAnyView()
                 } navigation: { item in
-                    ScheduleView(groupId: item.id)
-                        .navigationTitle(item.print!)
-                        .eraseToAnyView()
+                    ScheduleComponentView(groupId: item.id, mode: .student).navigationTitle(item.print!).eraseToAnyView()
                 } navigationContent: { item in
-                    Text(item.print!)
-                        .foregroundColor(.generalTextColor)
-                        .eraseToAnyView()
+                    Text(item.print!).foregroundColor(.invertedDefaultColor).eraseToAnyView()
                 }
             }
-        }.add(self.model.searchBar)
+        }
+        .add(self.model.searchBar)
+    }
+}
+
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
     }
 }

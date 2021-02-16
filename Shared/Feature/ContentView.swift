@@ -1,23 +1,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State
-    private var selection: NavigationItem = .home
+    @ObservedObject private var state: CollegeSchedule.ViewModel = .init()
+    @State private var selection: NavigationItem = .home
     
     var body: some View {
         TabView(selection: self.$selection) {
-            ForEach(NavigationItem.allCases, id: \.self) { item in
+            ForEach(NavigationItem.allCases.filter { $0 != .schedule }, id: \.self) { item in
                 NavigationView {
                     item.view
-                        .navigationTitle(
-                            LocalizedStringKey(item.title)
-                        )
+                        .navigationTitle(LocalizedStringKey(item.title))
+                        .navigationBarTitleDisplayMode(.inline)
                 }
                 .tabItem {
-                    Label(
-                        LocalizedStringKey(item.title),
-                        systemImage: item.icon
-                    )
+                    Label(LocalizedStringKey(item.title), systemImage: item.icon)
                 }
                 .tag(item)
             }

@@ -1,144 +1,103 @@
 import SwiftUI
 import Combine
 
-extension ScheduleView {
+extension ScheduleComponentView {
+    struct ScheduleViewDayResult: Hashable {
+        let day: Int
+        let header: String
+        let today: Bool
+        let items: [ScheduleSubjectEntity]
+    }
+    
     class ViewModel: BaseViewModel, ObservableObject {
         @Environment(\.scheduleSubjectService)
         private var subjectService: ScheduleSubjectService
         
-        @Environment(\.scheduleTimeSubjectService)
-        private var customTimeSubjectService: ScheduleTimeSubjectService
+        @Published var first: APIResult<[ScheduleViewDayResult]> = .loading
+        @Published var second: APIResult<[ScheduleViewDayResult]> = .loading
         
-        @Published
-        var time: APIResult<ScheduleTimeSubject> = .loading
+        @Published var selection: Int = 0
         
-        @Published
-        var lessonsTime: ScheduleItemLessons =
-            ScheduleItemLessons(
-                item: [],
-                weekdays: ScheduleTimeSubject(
-                    weekdays: [],
-                    weekends: [])
-            )
-        
-        @Published
-        var selection: Int = 0
-        
+        private var fetched: Bool = false
         private var groupId: Int? = nil
         private var accountId: Int? = nil
-        private let year: Int = Calendar.current.component(.year, from: Date())
-        private let week: Int = Calendar.current.component(.weekOfYear,from: Date())
         
-        init(
-            accountId: Int? = nil,
-            groupId: Int? = nil
-        ) {
+        private lazy var date: Date = {
+            Date()
+        }()
+        
+        private lazy var calendar: Date = {
+            Calendar(identifier: .gregorian).dateComponents(
+                [.calendar, .yearForWeekOfYear, .weekOfYear],
+                from: Date()
+            ).date!
+        }()
+        
+        private lazy var year: Int = {
+            Calendar.current.component(.year, from: self.date)
+        }()
+        
+        private lazy var week: Int = {
+            Calendar.current.component(.weekOfYear, from: self.date)
+        }()
+        
+        private lazy var day: Int = {
+            Calendar.current.component(.day, from: self.date)
+        }()
+        
+        init(accountId: Int? = nil, groupId: Int? = nil) {
             self.accountId = accountId
             self.groupId = groupId
-            
+
             super.init()
-            
-            self.performGetOperation(
-                networkCall: self.customTimeSubjectService.get()
-            )
+        }
+        
+        func fetch() {
+            self.fetch(to: \.first, week: 0)
+            self.fetch(to: \.second, week: 1)
+        }
+
+        private func fetch(
+            to keyPath: ReferenceWritableKeyPath<ScheduleComponentView.ViewModel, APIResult<[ScheduleViewDayResult]>>,
+            week: Int
+        ) {
+            self.performGetOperation(networkCall: self.subjectService.get(
+                year: self.year,
+                week: self.week + week,
+                accountId: self.accountId,
+                groupId: self.groupId
+            ))
             .subscribe(on: Scheduler.background)
             .receive(on: Scheduler.main)
-            .sink { result in
+            .map { result -> APIResult<[ScheduleViewDayResult]> in
                 if case let .success(content) = result {
-                    self.lessonsTime.weekdays = content
+                    if (content.items.isEmpty) {
+                        return APIResult<[ScheduleViewDayResult]>.empty
+                    }
+                    
+                    return APIResult.success(
+                        Dictionary(grouping: content.items, by: { $0.day })
+                            .map { key, value in
+                                let date = self.calendar.advanced(by: .init(60 * 60 * 24 * (week * 7 + key)))
+                                                        
+                                return ScheduleViewDayResult(
+                                    day: key,
+                                    header: DateFormatter.WEEK_DAY_FORMATTER.string(from: date),
+                                    today: Calendar.current.component(.day, from: date) == self.day,
+                                    items: value.sorted(by: { $0.sort < $1.sort })
+                                )
+                            }
+                    )
+                } else if case let .error(content) = result {
+                    return APIResult<[ScheduleViewDayResult]>.error(content)
+                } else if case .loading = result {
+                    return APIResult<[ScheduleViewDayResult]>.loading
+                } else {
+                    return APIResult<[ScheduleViewDayResult]>.empty
                 }
             }
+            .assign(to: keyPath, on: self)
             .store(in: &self.bag)
-            
-            self.$selection
-                .subscribe(on: Scheduler.background)
-                .receive(on: Scheduler.main)
-                .flatMap { result -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> in
-                    return self.performGetOperation(
-                        networkCall: self.subjectService.get(
-                            groupId: self.groupId,
-                            year: self.week == 52 && self.selection == 1
-                                ? self.year + 1
-                                : self.year,
-                            week: self.week == 52 && self.selection == 1
-                                ? 1
-                                : self.week + self.selection,
-                            accountId: self.accountId
-                        )
-                    )
-                }
-                .sink { result in
-                    if case let .success(content) = result {
-                        self.lessonsTime.item = content.items
-                    }
-                }
-                .store(in: &self.bag)
-        }
-        
-        private func formatter(_ date: Date) ->  String {
-            DateFormatter.WEEK_DAY_FORMATTER.string(from: date)
-        }
-        
-        func weekDate(_ date: Date) -> [WeekDay] {
-            let calendar = Calendar.init(identifier: .gregorian)
-            let dayOfWeek = calendar.component(.weekday, from: date) - 1
-            let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: date)!
-            return (weekdays.lowerBound ..< weekdays.upperBound - 1)
-                .compactMap {
-                    if self.formatter(
-                        calendar
-                            .date(
-                                byAdding: .day,
-                                value: $0 - dayOfWeek,
-                                to: date
-                            )!
-                    ) == self.formatter(Date.YESTERDAY) {
-                        return WeekDay(
-                            id: $0,
-                            name: "authenticated.schedule.yesterday"
-                        )
-                    }
-                    
-                    if self.formatter(
-                        calendar
-                            .date(
-                                byAdding: .day,
-                                value: $0 - dayOfWeek,
-                                to: date
-                            )!
-                    ) == self.formatter(Date()) {
-                        return WeekDay(
-                            id: $0,
-                            name: "authenticated.schedule.today"
-                        )
-                    }
-                    
-                    if self.formatter(
-                        calendar
-                            .date(
-                                byAdding: .day,
-                                value: $0 - dayOfWeek,
-                                to: date
-                            )!
-                    ) == self.formatter(Date.TOMORROW) {
-                        return WeekDay(
-                            id: $0,
-                            name: "authenticated.schedule.tomorrow"
-                        )
-                    }
-                    
-                    return WeekDay(
-                        id: $0,
-                        name: DateFormatter.WEEK_DAY_FORMATTER.string(
-                            from: calendar
-                                .date(
-                                    byAdding: .day,
-                                    value: $0 - dayOfWeek,
-                                    to: date
-                                )!
-                        )
-                    )
-                }
         }
     }
 }

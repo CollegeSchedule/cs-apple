@@ -4,10 +4,10 @@ import SwiftUI
 
 protocol ScheduleSubjectServiceType {
     func get(
-        groupId: Int?,
         year: Int,
         week: Int,
-        accountId: Int?
+        accountId: Int?,
+        groupId: Int?
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never>
 }
 
@@ -16,10 +16,10 @@ final class ScheduleSubjectService: ScheduleSubjectServiceType {
     var agent: Agent
     
     func get(
-        groupId: Int? = nil,
         year: Int,
         week: Int,
-        accountId: Int? = nil
+        accountId: Int? = nil,
+        groupId: Int? = nil
     ) -> AnyPublisher<APIResult<CollectionMetaResponse<ScheduleSubjectEntity>>, Never> {
         self.agent.run(
             "/schedule/subject/\(year)/\(week)/",

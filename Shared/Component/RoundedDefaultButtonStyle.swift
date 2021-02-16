@@ -2,27 +2,17 @@ import SwiftUI
 
 struct RoundedDefaultButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .font(.system(size: 20, weight: .regular, design: .rounded))
+        configuration.label
+            .font(.system(size: 20, weight: .semibold, design: .default))
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
-            .foregroundColor(.white)
-            .frame(maxWidth: 360, alignment: .center)
-            .foregroundColor(
-                configuration.isPressed
-                    ? Color.white.opacity(0.5)
-                    : Color.white
-            )
+            .foregroundColor(configuration.isPressed ? Color.defaultColor.opacity(0.5) : Color.defaultColor)
+            .frame(maxWidth: 360, maxHeight: 44, alignment: .center)
             .listRowBackground(
-                configuration.isPressed
-                    ? Color.accentColor.opacity(0.5)
-                    : Color.accentColor
+                configuration.isPressed ? Color.invertedDefaultColor.opacity(0.5) : Color.invertedDefaultColor
             )
             .background(
-                configuration.isPressed
-                    ? Color.accentColor.opacity(0.5)
-                    : Color.accentColor
+                configuration.isPressed ? Color.invertedDefaultColor.opacity(0.5) : Color.invertedDefaultColor
             )
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }

@@ -66,19 +66,13 @@ struct ListView<T: Hashable&Codable, Content: View>: View {
                         ),
                         spacing: 0
                     ) {
-                        ForEach(self.data.filter { result in
-                            result.id < 30
-                        },
-                        id: \.hashValue
-                        ) { item in
+                        ForEach(self.data.filter { $0.id < 30 }, id: \.hashValue) { item in
                             NavigationLink(destination: self.navigation(item.item)) {
                                 self.content(item.item)
+                                    .foregroundColor(.invertedDefaultColor)
                                     .frame(width: 170)
                                     .padding(.vertical)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .foregroundColor(.accentColor)
-                                    )
+                                    .background(RoundedRectangle(cornerRadius: 12).foregroundColor(.accentColor))
                                     .padding(.horizontal)
                             }
                         }

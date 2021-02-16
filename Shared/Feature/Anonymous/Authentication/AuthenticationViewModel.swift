@@ -8,14 +8,26 @@ extension AuthenticationView {
         private var service: AuthenticationService
         
         // MARK: - Input
+
+        #if targetEnvironment(simulator) || DEBUG
         @Published
-		var mail: String = "test@whywelive.me"
-		
+        var mail: String = ""
+        
         @Published
-		var password: String = "fucktest"
-		
+        var password: String = ""
+        #else
         @Published
-		var accountCode: String = ""
+        var mail: String = ""
+        
+        @Published
+        var password: String = ""
+        #endif
+        
+        @Published
+        var passwordConfirm: String = ""
+        
+        @Published
+        var accountCode: String = ""
 		
         // MARK: - Output
 		// Используется для валидности введенных данных
@@ -43,6 +55,15 @@ extension AuthenticationView {
         
         private var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
             self.$password
+                .debounce(for: 0.2, scheduler: Scheduler.main)
+                .map { result in
+                    result.count >= 8
+                }
+                .eraseToAnyPublisher()
+        }
+        
+        private var isPasswordConfirmValidPublisher: AnyPublisher<Bool, Never> {
+            self.$passwordConfirm
                 .debounce(for: 0.2, scheduler: Scheduler.main)
                 .map { result in
                     result.count >= 8
@@ -86,16 +107,17 @@ extension AuthenticationView {
         override init() {
             super.init()
             
-            Publishers.CombineLatest(
+            Publishers.CombineLatest3(
                 self.isMailValidPublisher,
-                self.isPasswordValidPublisher
+                self.isPasswordValidPublisher,
+                self.isPasswordConfirmValidPublisher
             )
-            .map { (mail, password) in
-                guard case .success = self.account else {
+            .map { (mail, password, passwordConfirm) in
+                if case let .success(content) = self.account, !content.active {
+                    return mail && password && passwordConfirm
+                } else {
                     return mail && password
                 }
-                
-                return password
             }
             .assign(to: \.self.isValid, on: self)
             .store(in: &self.bag)
@@ -124,7 +146,7 @@ extension AuthenticationView {
                     
                     if content.active {
                         return self.service.login(
-                            token: self.accountCode,
+                            token: self.mail,
                             password: self.password
                         )
                     } else {

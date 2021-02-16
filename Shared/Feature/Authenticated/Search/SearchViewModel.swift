@@ -69,7 +69,6 @@ extension SearchView {
                     
                     self.teachers.items = .success(teachers.items.enumerated().map { (index, item) in
                         ListViewItem(id: index, item: item)
-                        
                     })
                     
                     self.groups.items = .success(groups.items.enumerated().map { (index, item) in

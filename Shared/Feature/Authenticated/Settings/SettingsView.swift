@@ -5,9 +5,6 @@ struct SettingsView: View {
     private var model: Agent
     
     @State
-    private var isActive: Bool = false
-    
-    @State
     private var sections: [SettingsSection] = [
         .init(
             header: "authenticated.settings.app",
@@ -41,12 +38,13 @@ struct SettingsView: View {
                     color: .blue,
                     link: "https://collegeschedule.ru:2096"
                 ),
+                
                 .init(
                     icon: "house.fill",
                     title: "authenticated.settings.about",
                     color: .pink,
                     view: SettingsAboutAppView().eraseToAnyView()
-                )
+                ),
             ]
         )
     ]
@@ -60,29 +58,8 @@ struct SettingsView: View {
                     }
                 }
             }
-            Section {
-                Button(action: {
-                    self.isActive = true
-                }) {
-                    Label(LocalizedStringKey("authenticated.settings.log_out"), image: "globe")
-                        .foregroundColor(.red)
-                        .labelStyle(TitleOnlyLabelStyle())
-                }
-            }
         }
         .listStyle(InsetGroupedListStyle())
-        .alert(isPresented: self.$isActive, content: {
-            Alert(
-                title: Text(LocalizedStringKey("authenticated.settings.log_out")),
-                message: Text(LocalizedStringKey("authenticated.settings.message_log_out")),
-                primaryButton: .cancel(),
-                secondaryButton: .destructive(Text(LocalizedStringKey("authenticated.settings.log_out")),
-                    action: {
-                        AgentKey.defaultValue.isAuthenticated = false            
-                    }
-                )
-            )
-        })
     }
     
     private func item(_ item: SettingsSection.SettingsItem) -> AnyView {

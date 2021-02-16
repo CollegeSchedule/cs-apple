@@ -3,6 +3,8 @@ import Combine
 import SwiftUI
 
 private var cancellableSet: Set<AnyCancellable> = []
+private var decoder: JSONDecoder = JSONDecoder()
+private var encoder: JSONEncoder = JSONEncoder()
 
 extension Published where Value: Codable {
     init(
@@ -11,7 +13,7 @@ extension Published where Value: Codable {
         store: UserDefaults = .standard
     ) {
         if let data = store.data(forKey: key),
-           let value = try? JSONDecoder().decode(Value.self, from: data) {
+           let value = try? decoder.decode(Value.self, from: data) {
             self.init(initialValue: value)
         } else {
             self.init(initialValue: defaultValue)
@@ -19,10 +21,10 @@ extension Published where Value: Codable {
 
         projectedValue
             .sink { newValue in
-                let data = try? JSONEncoder().encode(newValue)
+                let data = try? encoder.encode(newValue)
                 store.set(data, forKey: key)
                 store.synchronize()
             }
             .store(in: &cancellableSet)
-  }
+    }
 }

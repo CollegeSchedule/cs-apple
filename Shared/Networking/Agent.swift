@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import SPAlert
 
 class Agent: ObservableObject {
     // MARK: - URLSession
@@ -66,54 +67,42 @@ class Agent: ObservableObject {
         )
                 
         if method != .get {
-            request.httpBody = try! JSONSerialization.data(
-                withJSONObject: params.compactMapValues { $0 }
-            )
+            request.httpBody = try! JSONSerialization.data(withJSONObject: params.compactMapValues { $0 })
         }
-        print("Access: \(self.access)")
+
         return self.request(request)
     }
     
     private func request<T: Codable>(
         _ request: URLRequest
     ) -> AnyPublisher<APIResult<T>, Never> {
+        print("\(request.httpMethod!) | \(request.debugDescription)")
+        
         return self.session
-            .dataTaskPublisher(
-                for: request
-            )
-            .map {
-                return $0.data
-            }
+            .dataTaskPublisher(for: request)
+            .map { $0.data }
             .decode(type: APIResponse<T>.self, decoder: JSONDecoder())
             .flatMap { result -> AnyPublisher<APIResult<T>, Never> in
-                print("\(request.httpMethod!.description) \(request.description)")
-                
                 guard let data = result.data, result.status else {
-                    guard result.error!.code == 4 else {
-                        return Just(APIResult.error(result.error!))
-                            .eraseToAnyPublisher()
+                    guard result.error!.code == 4,
+                          !self.refresh.isEmpty else {
+                        return Just(APIResult.error(result.error!)).eraseToAnyPublisher()
                     }
                     
                     guard result.error!.code == 4,
-                          request.description.contains("/authentication/token/")
-                    else {
-                        return self.authenticationService
-                            .refreshToken(token: self.refresh)
+                          request.description.contains("/authentication/token/"),
+                          self.refresh.isEmpty else {
+                        return self.authenticationService.refreshToken(token: self.refresh)
                             .flatMap { (
                                 result: APIResult<AuthenticationEntity>
                             ) -> AnyPublisher<APIResult<T>, Never> in
                                 if case let .success(authentication) = result {
-                                    return self.request(
-                                        request.authenticate(
-                                            token: authentication.access.token
-                                        )
-                                    )
+                                    return self.request(request.authenticate(token: authentication.access.token))
                                 }
-                                
-                                return Just(APIResult.error(.init()))
-                                    .eraseToAnyPublisher()
-                            }
-                            .eraseToAnyPublisher()
+                    
+                                // MARK: TODO: i think we should output the real one error
+                                return Just(APIResult.error(.init())).eraseToAnyPublisher()
+                            }.eraseToAnyPublisher()
                     }
                     
                     Scheduler.main.perform {
@@ -122,8 +111,7 @@ class Agent: ObservableObject {
                         self.isAuthenticated = false
                     }
                     
-                    return Just(.error(.init(code: -1)))
-                        .eraseToAnyPublisher()
+                    return Just(.error(.init(code: -1))).eraseToAnyPublisher()
                 }
                 
                 // if response succed and method is authentication
@@ -143,8 +131,20 @@ class Agent: ObservableObject {
                     .eraseToAnyPublisher()
             }
             .catch { error -> Just<APIResult<T>> in
-                print("Error \(error)")
+                print(error)
+                
                 return Just(.error(APIError()))
+            }
+            .map { result in
+                if case let .error(content) = result {
+                    print("Error \(content.message) \(request.debugDescription)")
+                    
+                    DispatchQueue.main.async {
+                        SPAlert.present(title: content.message, preset: .error, haptic: .error)
+                    }
+                }
+                
+                return result
             }
             .subscribe(on: Scheduler.background)
             .receive(on: Scheduler.main)

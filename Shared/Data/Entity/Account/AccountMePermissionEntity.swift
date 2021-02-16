@@ -1,0 +1,3 @@
+struct AccountMePermissionEntity: Codable, Hashable {
+    
+}

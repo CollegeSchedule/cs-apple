@@ -8,4 +8,14 @@ extension DateFormatter {
         
         return formatter
     }()
+    
+    static let HOUR_MINUTE_FORMATTER: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .positional
+        
+        return formatter
+    }()
 }

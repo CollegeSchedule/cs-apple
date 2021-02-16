@@ -1,43 +1,32 @@
 import SwiftUI
 
-struct APIResultView<T: Hashable, Content: View>: View {
-    @Binding
-    var status: APIResult<T>
+struct APIResultView<T: Hashable, Empty: View, Content: View>: View {
+    @Binding var result: APIResult<T>
     
-    let title: String
+    let empty: () -> Empty
     let content: (_ item: T) -> Content
     
     init(
-        status: Binding<APIResult<T>>,
-        title: String,
+        result: Binding<APIResult<T>>,
+        @ViewBuilder empty: @escaping () -> Empty,
         @ViewBuilder content: @escaping (_ item: T) -> Content
     ) {
-        self._status = status
-        self.title = title
+        self._result = result
+        self.empty = empty
         self.content = content
     }
     
     var body: some View {
-        if case .error = status {
-            Text(
-                LocalizedStringKey(
-                    "authenticated.component.api_result_view.error"
-                )
-            )
-        } else if case let .success(item) = status {
-            self.content(item)
-        } else if case .empty = status {
-            VStack{
-                TitleItemView(title: self.title)
-                Text(
-                    LocalizedStringKey(
-                        "authenticated.component.api_result_view.empty"
-                    )
-                )
-                .padding(.top)
+        VStack {
+            if case let .success(content) = self.result {
+                self.content(content)
+            } else if case .empty = self.result {
+                self.empty()
+            } else if case .loading = self.result {
+                ProgressView(NSLocalizedString("base.loading", comment: "Loading"))
+            } else {
+                Text(NSLocalizedString("base.error", comment: "Error"))
             }
-        } else if case .loading = status {
-            EmptyView()
         }
     }
 }
