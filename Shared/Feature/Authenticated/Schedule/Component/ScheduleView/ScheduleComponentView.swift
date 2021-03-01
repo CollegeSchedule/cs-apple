@@ -13,7 +13,7 @@ struct ScheduleComponentView: View {
         mode: SchedulePresentationMode,
         sheetAllowed: Bool = true
     ) {
-        self.model = .init(accountId: 2, groupId: nil)
+        self.model = .init(accountId: accountId, groupId: groupId)
         self.mode = mode
         self.sheetAllowed = sheetAllowed
     }
@@ -32,6 +32,7 @@ struct ScheduleComponentView: View {
                 }
             }.tag(1)
         }
+        .modifier(BackgroundModifier(color: .scheduleSectionListColor))
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .onAppear(perform: self.model.fetch)
     }

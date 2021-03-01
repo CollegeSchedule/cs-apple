@@ -3,7 +3,7 @@ import SwiftUI
 struct TitleItemView: View {
     var title: String
     var body: some View {
-        VStack{
+        VStack {
             Divider()
             HStack {
                 Text(LocalizedStringKey(self.title))

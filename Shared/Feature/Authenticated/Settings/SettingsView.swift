@@ -26,27 +26,33 @@ struct SettingsView: View {
                             )!
                         )
                     }
-                )
+                ),
+//                .init(
+//                    icon: "laptopcomputer",
+//                    title: "authenticated.settings.contact",
+//                    color: .blue,
+//                    link: "https://collegeschedule.ru:2096"
+//                ),
             ]
         ),
-        .init(
-            header: "authenticated.settings.tech_support",
-            items: [
-                .init(
-                    icon: "laptopcomputer",
-                    title: "authenticated.settings.contact",
-                    color: .blue,
-                    link: "https://collegeschedule.ru:2096"
-                ),
-                
-                .init(
-                    icon: "house.fill",
-                    title: "authenticated.settings.about",
-                    color: .pink,
-                    view: SettingsAboutAppView().eraseToAnyView()
-                ),
-            ]
-        )
+//        .init(
+//            header: "authenticated.settings.tech_support",
+//            items: [
+//                .init(
+//                    icon: "laptopcomputer",
+//                    title: "authenticated.settings.contact",
+//                    color: .blue,
+//                    link: "https://collegeschedule.ru:2096"
+//                ),
+//
+//                .init(
+//                    icon: "house.fill",
+//                    title: "authenticated.settings.about",
+//                    color: .pink,
+//                    view: SettingsAboutAppView().eraseToAnyView()
+//                ),
+//            ]
+//        )
     ]
     
     var body: some View {

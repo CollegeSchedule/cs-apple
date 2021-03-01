@@ -11,10 +11,10 @@ extension AuthenticationView {
 
         #if targetEnvironment(simulator) || DEBUG
         @Published
-        var mail: String = ""
+        var mail: String = "test@collegeschedule.com"
         
         @Published
-        var password: String = ""
+        var password: String = "testfuck"
         #else
         @Published
         var mail: String = ""
