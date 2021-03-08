@@ -6,7 +6,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: self.$selection) {
-            ForEach(NavigationItem.allCases.filter { $0 != .schedule }, id: \.self) { item in
+            ForEach(NavigationItem.allCases, id: \.self) { item in
                 NavigationView {
                     item.view
                         .navigationTitle(LocalizedStringKey(item.title))

@@ -2,18 +2,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-protocol EntityServiceType {
-    associatedtype Entity: Codable & Hashable
-    
-    func get(
-        offset: Int,
-        limit: Int,
-        search: String?,
-        scope: [String]
-    ) -> AnyPublisher<APIResult<CollectionMetaResponse<Entity>>, Never>
-    
-    func delete(id: Int) -> AnyPublisher<APIResult<Entity>, Never>
-}
+
 
 final class AccountService: EntityServiceType {
     @Environment(\.agent)

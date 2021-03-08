@@ -48,17 +48,11 @@ struct ProfileView: View {
                             }
                         }
                         
-                        if result?.group != nil && result?.subgroup != nil {
+                        if result?.account.group != nil {
                             HStack {
                                 Text("authenticated.home.profile.basic.field.group")
                                 Spacer()
-                                Text(result!.group!.print!).foregroundColor(.gray)
-                            }
-                            
-                            HStack {
-                                Text("authenticated.home.profile.basic.field.subgroup")
-                                Spacer()
-                                Text("\(result!.subgroup!.name)").foregroundColor(.gray)
+                                Text(result!.account.group!.print!).foregroundColor(.gray)
                             }
                         }
                     }
@@ -72,7 +66,7 @@ struct ProfileView: View {
                                     Text(result!.account.mail!).foregroundColor(.gray)
                                 }
                             }
-                        }
+                        }.disabled(loading)
                         
                         NavigationLink(destination: ProfilePasswordView()) {
                             HStack {
@@ -82,7 +76,7 @@ struct ProfileView: View {
                                     Text(self.ago).foregroundColor(.gray)
                                 }
                             }
-                        }
+                        }.disabled(loading)
                     }
                     
                     Section {

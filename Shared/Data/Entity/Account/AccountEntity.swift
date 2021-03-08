@@ -16,6 +16,7 @@ struct AccountEntity: Codable, Hashable {
 	
     let createdAt: Int?
     let label: AccountLabel?
+    let group: GroupEntity?
 }
 
 extension AccountEntity {

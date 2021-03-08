@@ -32,7 +32,6 @@ struct ScheduleComponentView: View {
                 }
             }.tag(1)
         }
-        .modifier(BackgroundModifier(color: .scheduleSectionListColor))
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .onAppear(perform: self.model.fetch)
     }

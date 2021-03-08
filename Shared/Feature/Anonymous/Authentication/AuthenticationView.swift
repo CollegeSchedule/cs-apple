@@ -12,36 +12,38 @@ struct AuthenticationView: View {
     var isKeyboardShowed: Bool = false
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            AuthenticationItemView(item: self.$model.account)
-            
-            Spacer()
-            
-            self.formView
-            
-            Button(action: self.model.login) {
-                ZStack {
-                    Text(LocalizedStringKey(self.actionText))
-                    
-                    if case APIResult.loading = self.model.status {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .black))
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+        NavigationView {
+            VStack {
+                Spacer()
+                
+                AuthenticationItemView(item: self.$model.account)
+                
+                Spacer()
+                
+                self.formView
+                
+                Button(action: self.model.login) {
+                    ZStack {
+                        Text(LocalizedStringKey(self.actionText))
+                        
+                        if case APIResult.loading = self.model.status {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
+                }.rounded().disabled(!self.model.isValid)
+                
+                Button(action: self.showCamera) {
+                    HStack {
+                        Text(LocalizedStringKey("anonymous.authentication.no_account.title")).foregroundColor(.gray)
+                        Text(LocalizedStringKey("anonymous.authentication.no_account.action"))
+                            .foregroundColor(.invertedDefaultColor)
                     }
                 }
-            }.rounded().disabled(!self.model.isValid)
-            
-            Button(action: self.showCamera) {
-                HStack {
-                    Text(LocalizedStringKey("anonymous.authentication.no_account.title")).foregroundColor(.gray)
-                    Text(LocalizedStringKey("anonymous.authentication.no_account.action"))
-                        .foregroundColor(.invertedDefaultColor)
-                }
+                .padding(.bottom, 20)
+                .padding(.top, 10)
             }
-            .padding(.bottom, 20)
-            .padding(.top, 10)
         }
         .padding(.horizontal, 20)
         .navigationBarBackButtonHidden(true)

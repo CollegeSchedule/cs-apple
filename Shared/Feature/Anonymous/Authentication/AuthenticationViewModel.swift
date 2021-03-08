@@ -156,8 +156,6 @@ extension AuthenticationView {
                             password: self.password
                         )
                     }
-                    
-                    
                 }()
             )
             .subscribe(on: Scheduler.background)

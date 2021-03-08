@@ -42,6 +42,11 @@
 		65B3DB1C25C1C85900C10FD3 /* AccountLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B3DB1B25C1C85900C10FD3 /* AccountLabel.swift */; };
 		65B9709A25BAF3C8002CC9B4 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9709925BAF3C8002CC9B4 /* UIDevice.swift */; };
 		65B9D22325BADA6B00A20834 /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9D22225BADA6B00A20834 /* RichText.swift */; };
+		65BACBD225EE5ADA008A73A8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BACBD125EE5ADA008A73A8 /* HomeViewModel.swift */; };
+		65BACBD625EE5B23008A73A8 /* NewsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BACBD525EE5B23008A73A8 /* NewsEntity.swift */; };
+		65BACBDA25EE5B67008A73A8 /* EntityServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BACBD925EE5B67008A73A8 /* EntityServiceType.swift */; };
+		65BACBDD25EE5BE6008A73A8 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BACBDC25EE5BE6008A73A8 /* NewsService.swift */; };
+		65BACBE125EE611C008A73A8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 65BACBE025EE611C008A73A8 /* MarkdownUI */; };
 		65C78C232520A9E80027DA06 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C78C222520A9E80027DA06 /* SettingsView.swift */; };
 		65C78C2B2520DF860027DA06 /* InlinePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C78C2A2520DF860027DA06 /* InlinePickerView.swift */; };
 		65CAD581251F7BBE004B354B /* AccountEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CAD580251F7BBE004B354B /* AccountEntity.swift */; };
@@ -173,6 +178,10 @@
 		65B9D1F025BA9D1000A20834 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		65B9D1F225BA9D1000A20834 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		65B9D22225BADA6B00A20834 /* RichText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
+		65BACBD125EE5ADA008A73A8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		65BACBD525EE5B23008A73A8 /* NewsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsEntity.swift; sourceTree = "<group>"; };
+		65BACBD925EE5B67008A73A8 /* EntityServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityServiceType.swift; sourceTree = "<group>"; };
+		65BACBDC25EE5BE6008A73A8 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
 		65C78C222520A9E80027DA06 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		65C78C2A2520DF860027DA06 /* InlinePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlinePickerView.swift; sourceTree = "<group>"; };
 		65CAD580251F7BBE004B354B /* AccountEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEntity.swift; sourceTree = "<group>"; };
@@ -244,6 +253,7 @@
 			files = (
 				65607C3825D80A8A008D115F /* SPAlert in Frameworks */,
 				65607C3925D80A8A008D115F /* Introspect in Frameworks */,
+				65BACBE125EE611C008A73A8 /* MarkdownUI in Frameworks */,
 				65607C3725D80A8A008D115F /* CodeScanner in Frameworks */,
 				65607C3625D80A8A008D115F /* SDWebImageSwiftUI in Frameworks */,
 			);
@@ -342,6 +352,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		65BACBD425EE5B19008A73A8 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				65BACBD525EE5B23008A73A8 /* NewsEntity.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
 		65C78C212520A9770027DA06 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +405,8 @@
 				8404D775256E100B00DA41FE /* ScheduleSubjectService.swift */,
 				84CEB675256D174D0021D9BB /* ScheduleTimeSubjectService.swift */,
 				F0EE7A3B2B5347F4676955EF /* AccountMeService.swift */,
+				65BACBD925EE5B67008A73A8 /* EntityServiceType.swift */,
+				65BACBDC25EE5BE6008A73A8 /* NewsService.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -394,6 +414,7 @@
 		65DBF95424E3C87F00B795AF /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				65BACBD425EE5B19008A73A8 /* News */,
 				8404D789256E12D200DA41FE /* Classroom */,
 				8404D781256E121500DA41FE /* Group */,
 				657E16E025D663A6005361D2 /* Subgroup */,
@@ -624,6 +645,7 @@
 			children = (
 				65F719AD25CFB66F0093DE8B /* Profile */,
 				840F7BC025401128004938BE /* HomeView.swift */,
+				65BACBD125EE5ADA008A73A8 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -690,6 +712,7 @@
 				65B9D20F25BAD43500A20834 /* CodeScanner */,
 				65B3DB1725C1BAD800C10FD3 /* SPAlert */,
 				65F719A925CED6AE0093DE8B /* Introspect */,
+				65BACBE025EE611C008A73A8 /* MarkdownUI */,
 			);
 			productName = iOS;
 			productReference = 65EFD52A24C96F9300CDAB49 /* cs-apple.app */;
@@ -724,6 +747,7 @@
 				65C90C342556905800624F28 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				65B3DB1625C1BAD800C10FD3 /* XCRemoteSwiftPackageReference "SPAlert" */,
 				65F719A825CED6AE0093DE8B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				65BACBDF25EE611C008A73A8 /* XCRemoteSwiftPackageReference "MarkdownUI" */,
 			);
 			productRefGroup = 65EFD52B24C96F9300CDAB49 /* Products */;
 			projectDirPath = "";
@@ -765,9 +789,11 @@
 				65CAD584251F7BD9004B354B /* AccountService.swift in Sources */,
 				65B9D22325BADA6B00A20834 /* RichText.swift in Sources */,
 				65FF5F1B25C3739300B15B8E /* APILoadingView.swift in Sources */,
+				65BACBD625EE5B23008A73A8 /* NewsEntity.swift in Sources */,
 				657E16E825D6CAFB005361D2 /* AccountPermissionSection.swift in Sources */,
 				8481FFC1254FDC2900554313 /* MarksSubjectView.swift in Sources */,
 				84CEB676256D174D0021D9BB /* ScheduleTimeSubjectService.swift in Sources */,
+				65BACBDA25EE5B67008A73A8 /* EntityServiceType.swift in Sources */,
 				849B3D0925303643000CA91B /* ListView.swift in Sources */,
 				84D6224C25712DEB003E7F71 /* CollegeScheduleAppState.swift in Sources */,
 				8404D783256E121F00DA41FE /* GroupEntity.swift in Sources */,
@@ -824,8 +850,10 @@
 				8485B15C254AB0F100B6FAC8 /* AccountStatusResult.swift in Sources */,
 				65DBF95E24E3C95F00B795AF /* HTTPMethod.swift in Sources */,
 				65AD9D7C24E40EBC0052BD4E /* View.swift in Sources */,
+				65BACBD225EE5ADA008A73A8 /* HomeViewModel.swift in Sources */,
 				8404D77F256E11CD00DA41FE /* SubjectEntity.swift in Sources */,
 				65A2C3BE255A859000F74C41 /* AuthenticationScanerItem.swift in Sources */,
+				65BACBDD25EE5BE6008A73A8 /* NewsService.swift in Sources */,
 				65D147B925DC19DD007F2757 /* ScheduleView.swift in Sources */,
 				65F719A525CED2700093DE8B /* SchedulePageView.swift in Sources */,
 				657E16E625D6CA6F005361D2 /* AccountMePermissionEntity.swift in Sources */,
@@ -983,7 +1011,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/cs-apple.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = YNZB3J5436;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -992,7 +1020,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.whywelive.collegeschedule.apple;
 				PRODUCT_NAME = "cs-apple";
 				SDKROOT = iphoneos;
@@ -1009,7 +1037,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/cs-apple.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = YNZB3J5436;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1018,7 +1046,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.whywelive.collegeschedule.apple;
 				PRODUCT_NAME = "cs-apple";
 				SDKROOT = iphoneos;
@@ -1068,6 +1096,14 @@
 				minimumVersion = 3.0.3;
 			};
 		};
+		65BACBDF25EE611C008A73A8 /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
+			};
+		};
 		65C90C342556905800624F28 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -1101,6 +1137,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 653569FE24D4249000152E49 /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		65BACBE025EE611C008A73A8 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65BACBDF25EE611C008A73A8 /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
 		};
 		65F719A925CED6AE0093DE8B /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
