@@ -10,15 +10,7 @@ struct CollegeSchedule: App {
     @SceneBuilder
     var body: some Scene {
         WindowGroup {
-            self.currentScene().environmentObject(self.state).environmentObject(self.settings)
+            ContentView().environmentObject(self.state).environmentObject(self.settings)
         }
-    }
-    
-    private func currentScene() -> AnyView {
-        if !self.agent.isAuthenticated {
-            return AuthenticationView().eraseToAnyView()
-        }
-        
-        return ContentView().onAppear(perform: self.state.fetch).eraseToAnyView()
     }
 }

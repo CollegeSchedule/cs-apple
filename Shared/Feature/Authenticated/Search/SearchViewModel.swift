@@ -2,141 +2,43 @@ import Foundation
 import Combine
 import SwiftUI
 
-class PaginationListData<T: Hashable&Codable>: ObservableObject {
-    @Published
-    var items: APIResult<[ListViewItem<T>]> = .loading
-    
-    @Published
-    var isOut: Bool = false
-    
-    @Published
-    var page: Int = 0
-}
-
 extension SearchView {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Environment(\.accountService)
-        private var accountService: AccountService
+        @Environment(\.accountService) private var accountService: AccountService
+        @Environment(\.groupService) private var groupService: GroupService
         
-        @Environment(\.groupService) 
-        private var groupService: GroupService
+        @Published var teachers: APIResult<CollectionMetaResponse<AccountEntity>> = .loading
+        @Published var groups: APIResult<CollectionMetaResponse<GroupEntity>> = .loading
         
-        @Published
-        var searchBar: SearchBar = .init()
-        
-        @Published
-        var teachers: PaginationListData<AccountEntity> = .init()
-        
-        @Published
-        var groups: PaginationListData<GroupEntity> = .init()
-        
-        private var countTeachers = 30
-        private var countGroups = 30
+        @Published var searchBar: SearchBar = .init()
         
         override init() {
             super.init()
             
             self.searchBar.$text
-                .subscribe(on: Scheduler.background)
-                .receive(on: Scheduler.main)
-                .flatMap {
-                    Publishers.CombineLatest(
-                        self.performGetOperation(
-                            networkCall: self.accountService.get(
-                                offset: 0,
-                                limit: 30,
-                                search: $0
-                            )
-                        ),
-                        
-                        self.performGetOperation(
-                            networkCall: self.groupService.get(
-                                offset: 0,
-                                limit: 30,
-                                search: $0
-                            )
-                        )
-                    )
-                }
+                .removeDuplicates()
+                .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+                .subscribe(on: Scheduler.main).receive(on: Scheduler.main)
                 .sink { result in
-                    guard case let .success(teachers) = result.0,
-                          case let .success(groups) = result.1 else {
-                        self.teachers.items = .empty
-                        self.groups.items = .empty
-                        
-                        return
-                    }
-                    
-                    self.teachers.items = .success(teachers.items.enumerated().map { (index, item) in
-                        ListViewItem(id: index, item: item)
-                    })
-                    
-                    self.groups.items = .success(groups.items.enumerated().map { (index, item) in
-                        ListViewItem(id: index, item: item)
-                    })
-                    self.objectWillChange.send()
+                    self.fetchTeachers(search: result)
+                    self.fetchGroups(search: result)
                 }
                 .store(in: &self.bag)
-            
-            self.teachers.$page
+        }
+        
+        private func fetchTeachers(search: String) {
+            self.performGetOperation(networkCall: self.accountService.get(offset: 0, limit: 150, search: search, scope: ["teacher"]))
                 .subscribe(on: Scheduler.background)
                 .receive(on: Scheduler.main)
-                .filter { $0 != -1 }
-                .flatMap { page -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never> in
-                    return self.performGetOperation(
-                        networkCall: self.accountService.get(
-                            offset: page * 30,
-                            limit: 30
-                        )
-                    )
-                }
-                .sink { result in
-                    guard case let .success(new) = result,
-                          case let .success(old) = self.teachers.items else {
-                        
-                        return
-                    }
-                    
-//                    if old.count < 30 {
-//                        self.teachers.isOut = true
-//                    }
-                    
-                    self.teachers.items = .success(old + new.items.map { item in
-                        self.objectWillChange.send()
-                        self.countTeachers += 1
-                        return ListViewItem(id: self.countTeachers, item: item)
-                    })
-                }
+                .assign(to: \.teachers, on: self)
                 .store(in: &self.bag)
-            
-            self.groups.$page
+        }
+        
+        private func fetchGroups(search: String) {
+            self.performGetOperation(networkCall: self.groupService.get(offset: 0, limit: 150, search: search))
                 .subscribe(on: Scheduler.background)
                 .receive(on: Scheduler.main)
-                .filter { $0 != -1 }
-                .flatMap { page -> AnyPublisher<APIResult<CollectionMetaResponse<GroupEntity>>, Never> in
-                    return self.performGetOperation(
-                        networkCall: self.groupService.get(
-                            offset: page * 30, limit: 30
-                        )
-                    )
-                }
-                .sink {
-                    guard case let .success(new) = $0,
-                          case let .success(old) = self.groups.items else {
-                        
-                        return
-                    }
-                    
-//                    if old.count < 30 {
-//                        self.groups.isOut = true
-//                    }
-                    
-                    self.groups.items = .success(old + new.items.map { item in
-                        self.objectWillChange.send()
-                        self.countGroups += 1
-                        return ListViewItem(id: self.countGroups, item: item)
-                    })
-                }
+                .assign(to: \.groups, on: self)
                 .store(in: &self.bag)
         }
     }

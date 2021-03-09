@@ -6,11 +6,8 @@ extension HomeView {
         @Environment(\.newsService)
         private var service: NewsService
         
-        @ObservedObject
-        private var model: AuthenticationView.ViewModel = .init()
-        
         @Published
-        var news: APIResult<[NewsEntity]> = .loading
+        var news: APIResult<CollectionMetaResponse<NewsEntity>> = .loading
         
         override init() {
             super.init()
@@ -18,15 +15,6 @@ extension HomeView {
             self.performGetOperation(networkCall: self.service.get())
                 .subscribe(on: Scheduler.background)
                 .receive(on: Scheduler.main)
-                .map { (content: APIResult<CollectionMetaResponse<NewsEntity>>) -> APIResult<[NewsEntity]> in
-                    if case let .success(content) = content {
-                        print("GOT \(content.items.count)")
-                        
-                        return APIResult.success(content.items)
-                    }
-                    
-                    return APIResult.loading
-                }
                 .assign(to: \.self.news, on: self)
                 .store(in: &self.bag)
         }

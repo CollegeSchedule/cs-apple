@@ -5,13 +5,26 @@ struct ScheduleView: View {
     @EnvironmentObject private var settings: CollegeSchedule.SettingsModel
     
     var body: some View {
-        APIResultView(result: self.$state.account, empty: { EmptyView() }) { account in
-            ScheduleComponentView(
-                accountId: account.account.id,
-                groupId: nil,
-                mode: account.account.label == .teacher ? .teacher : .student
+        VStack {
+            ErrorView(
+                animation: "who",
+                title: "Кто ты?",
+                description: "Здесь я могу показывать расписание определенной группы или преподавателя — тебе тогда придется указать свое имя, тыкнув на кнопку!"
             )
-        }
-        .modifier(BackgroundModifier(color: .scheduleSectionListColor))
+            
+            Spacer()
+            
+            Button(action: {}) {
+                Text("Сделать выбор")
+            }.rounded().padding(.vertical)
+            
+        }.modifier(BackgroundModifier(color: .scheduleSectionListColor)).padding()
     }
 }
+
+
+//ScheduleComponentView(
+//    accountId: account.account.id,
+//    groupId: nil,
+//    mode: account.account.label == .teacher ? .teacher : .student
+//)

@@ -4,26 +4,14 @@ import SwiftUI
 
 extension CollegeSchedule {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Environment(\.accountMeService) private var service: AccountMeService
-        
         @Published("last_version") private var version: String = "Unknown"
         @Published("last_build") private var build: String = "Unknown"
-        
-        @Published var account: APIResult<AccountMeEntity> = .loading
-        
+    
         override init() {
             super.init()
             
             self.version = UIApplication.appVersion ?? "Unknown"
             self.build = UIApplication.appBuild ?? "Unknown"
-        }
-        
-        func fetch() {
-            self.performGetOperation(networkCall: self.service.get())
-                .subscribe(on: Scheduler.background)
-                .receive(on: Scheduler.main)
-                .assign(to: \.account, on: self)
-                .store(in: &self.bag)
         }
     }
     

@@ -2,12 +2,18 @@ import Foundation
 import Combine
 import SwiftUI
 
-
-
 final class AccountService: EntityServiceType {
     @Environment(\.agent)
     var agent: Agent
 
+    func get(
+        offset: Int = 0,
+        limit: Int = 30,
+        search: String? = nil
+    ) -> AnyPublisher<APIResult<CollectionMetaResponse<AccountEntity>>, Never> {
+        self.get(offset: offset, limit: limit, search: search, scope: [])
+    }
+    
 	func get(
 		offset: Int = 0,
 		limit: Int = 30,

@@ -7,40 +7,12 @@ class Agent: ObservableObject {
     // MARK: - URLSession
     private let session: URLSession = .shared
     
-    @Environment(\.authenticationService)
-    var authenticationService: AuthenticationService
-    
     @Environment(\.accountService)
     var accountService: AccountService
     
-    @Environment(\.accountMeService)
-    var accountMeService: AccountMeService
-    
     // MARK: - Application credentials
     private let base: URL = URL(string: "https://api.collegeschedule.ru:2096")!
-    private let token: String = "8d181a53-f87b-4377-a057-cd07c49af82f"
-    private let secret: String = "3162c1b0-e25f-4b7d-9c2d-d99096d9a984"
-    
-    // MARK: - Account credentials (temporary solution)
-    @Published("access_token")
-    private(set) var access: String = ""
-    
-    @Published("refresh_token")
-    private(set) var refresh: String = ""
-    
-    @Published
-	var isAuthenticated: Bool = false {
-		didSet {
-            if !self.isAuthenticated {
-                self.access = ""
-                self.refresh = ""
-            }
-		}
-	}
-    
-    init() {
-        self.isAuthenticated = !self.access.isEmpty && !self.refresh.isEmpty
-    }
+    private let token: String = "f14eed27-87ec-42e3-981f-a21c575fd85e"
     
     func run<T: Codable>(
         _ path: String,
@@ -49,21 +21,15 @@ class Agent: ObservableObject {
         params: [String: Any?] = [:],
         headers: [String: Any] = [:],
         
-        decoder: JSONDecoder = JSONDecoder(),
-        type: AuthenticationType = .account
+        decoder: JSONDecoder = JSONDecoder()
     ) -> AnyPublisher<APIResult<T>, Never> {
         var request = URLRequest.init(
             self.base.appendingPathComponent(path),
             method: method,
             params: params,
-            headers: ((type == .account)
-                        ? [
-                            "accessToken": self.access
-                        ] : [
-                            "appToken": self.token,
-                            "appSecret": self.secret
-                        ]
-            ).merging(headers) {
+            headers: [
+                "accessToken": self.token
+            ].merging(headers) {
                 (current, _) in current
             }
         )
@@ -75,62 +41,19 @@ class Agent: ObservableObject {
         return self.request(request)
     }
     
-    private func request<T: Codable>(
-        _ request: URLRequest
-    ) -> AnyPublisher<APIResult<T>, Never> {
-        print("\(request.httpMethod!) | \(request.debugDescription)")
-        
+    private func request<T: Codable>(_ request: URLRequest) -> AnyPublisher<APIResult<T>, Never> {
         return self.session
             .dataTaskPublisher(for: request)
             .map { $0.data }
             .decode(type: APIResponse<T>.self, decoder: JSONDecoder())
             .flatMap { result -> AnyPublisher<APIResult<T>, Never> in
                 guard let data = result.data, result.status else {
-                    guard result.error!.code == 4,
-                          !request.description.contains("/authentication/token/"),
-                          !self.refresh.isEmpty else {
-                        return Just(APIResult.error(result.error!)).eraseToAnyPublisher()
-                    }
-                    
-                    return self.authenticationService.refreshToken(token: self.refresh)
-                        .flatMap { (result: APIResult<AuthenticationEntity>) -> AnyPublisher<APIResult<T>, Never> in
-                            if case let .success(content) = result {
-                                return self.request(request.authenticate(token: content.access.token))
-                            }
-                            
-                            Scheduler.main.perform {
-                                self.access = ""
-                                self.refresh = ""
-                                self.isAuthenticated = false
-                            }
-                            
-                            if case let .error(content) = result {
-                                return Just(APIResult.error(content)).eraseToAnyPublisher()
-                            } else {
-                                return Just(APIResult.error(.init())).eraseToAnyPublisher()
-                            }
-                        }
-                        .eraseToAnyPublisher()
+                    return Just(APIResult.error(result.error!)).eraseToAnyPublisher()
                 }
                 
-                // if response succed and method is authentication
-                if request.httpMethod != "GET", request.description.contains("/authentication/") {
-                    let authentication = result.data as! AuthenticationEntity
-
-                    Scheduler.main.perform {
-                        self.access = authentication.access.token
-                        self.refresh = authentication.refresh.token
-                        self.isAuthenticated = true
-                    }
-                }
-                                
                 return Just(APIResult.success(data)).eraseToAnyPublisher()
             }
-            .catch { error -> Just<APIResult<T>> in
-                print(error)
-                
-                return Just(.error(APIError()))
-            }
+            .catch { error -> Just<APIResult<T>> in Just(.error(APIError())) }
             .subscribe(on: Scheduler.background)
             .receive(on: Scheduler.main)
             .share()

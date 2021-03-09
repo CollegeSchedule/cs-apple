@@ -1,41 +1,25 @@
 import SwiftUI
 
 struct SearchView: View {
-    @ObservedObject
-    private var model: SearchView.ViewModel = .init()
+    @ObservedObject private var model: SearchView.ViewModel = .init()
     
     var body: some View {
-        ScrollView {
-            APIResultView(result: self.$model.teachers.items, empty: { Text("") }) { item in
-                ListView(item, title: "authenticated.search.teachers", page: self.$model.teachers.page) { item in
+        APIResultView2(first: self.$model.teachers, second: self.$model.groups, empty: {
+            Text("Empty")
+        }) { (teachers, groups) in
+            ScrollView {
+                ListView(teachers.items, title: "authenticated.search.teachers", divider: false) { item in
                     Text(item.print).foregroundColor(.defaultColor).eraseToAnyView()
                 } navigation: { item in
                     ScheduleComponentView(accountId: item.id, mode: .teacher).navigationTitle(item.print).eraseToAnyView()
-                } navigationContent: { item in
-                    Text(item.print).foregroundColor(.invertedDefaultColor).eraseToAnyView()
                 }
-            }
-            
-            APIResultView(result: self.$model.groups.items, empty: { Text("") }) { item in
-                ListView(item, title: "authenticated.search.groups", page: self.$model.groups.page) { item in
+                
+                ListView(groups.items, title: "authenticated.search.groups", divider: true) { item in
                     Text(item.print!).foregroundColor(.defaultColor).eraseToAnyView()
                 } navigation: { item in
                     ScheduleComponentView(groupId: item.id, mode: .student).navigationTitle(item.print!).eraseToAnyView()
-                } navigationContent: { item in
-                    Text(item.print!).foregroundColor(.invertedDefaultColor).eraseToAnyView()
                 }
             }
-        }
-        .add(self.model.searchBar)
-    }
-}
-
-struct LazyView<Content: View>: View {
-    let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
-        self.build = build
-    }
-    var body: Content {
-        build()
+        }.add(self.model.searchBar)
     }
 }

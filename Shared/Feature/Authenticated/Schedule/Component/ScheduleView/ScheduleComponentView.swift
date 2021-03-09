@@ -19,18 +19,30 @@ struct ScheduleComponentView: View {
     }
 
     var body: some View {
-        TabView(selection: self.$model.selection) {
+        TabView {
             VStack {
-                APIResultView(result: self.$model.first, empty: { Text("Расписание еще не составлено") }) { result in
+                APIResultView(result: self.$model.first, empty: {
+                    ErrorView(
+                        animation: "empty_schedule",
+                        title: "Немного позже!",
+                        description: "Мы еще не подготовили расписание на текущую неделю, извини.."
+                    )
+                }) { result in
                     SchedulePageView(data: result, mode: self.mode, sheetAllowed: self.sheetAllowed)
                 }
-            }.tag(0)
+            }
             
             VStack {
-                APIResultView(result: self.$model.second, empty: { Text("Расписание еще не составлено") }) { result in
+                APIResultView(result: self.$model.second, empty: {
+                    ErrorView(
+                        animation: "empty_schedule",
+                        title: "Немного позже!",
+                        description: "Мы еще не подготовили расписание на следующую неделю, извини.."
+                    )
+                }) { result in
                     SchedulePageView(data: result, mode: self.mode, sheetAllowed: self.sheetAllowed)
                 }
-            }.tag(1)
+            }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .onAppear(perform: self.model.fetch)

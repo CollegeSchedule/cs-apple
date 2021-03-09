@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var state: CollegeSchedule.ViewModel = .init()
-    @State private var selection: NavigationItem = .home
+    @State private var selection: NavigationItem = .search
     
     var body: some View {
         TabView(selection: self.$selection) {

@@ -18,7 +18,7 @@
 "authenticated.schedule.next" = "Следующая";
 "authenticated.schedule.current" = "Текущая";
 "authenticated.schedule.no_lessons" = "Занятий нет";
-"authenticated.search.placeholder" = "Поиск сотрудников и групп";
+"authenticated.search.placeholder" = "Поиск преподавателей и групп";
 "authenticated.search.all" = "См. Все";
 "authenticated.search.groups" = "Группы";
 "authenticated.search.teachers" = "Преподаватели";
