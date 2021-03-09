@@ -95,11 +95,13 @@ struct ScheduleLessonView: View {
             return ScheduleComponentView(accountId: self.item!.teacher.id, mode: .teacher, sheetAllowed: false)
                 .navigationTitle(self.item!.teacher.print)
                 .modifier(BackgroundModifier(color: .scheduleSheetSectionListColor))
+                .ignoresSafeArea(SafeAreaRegions.all, edges: .bottom)
                 .eraseToAnyView()
         } else {
             return ScheduleComponentView(groupId: self.item!.group.id, mode: .student, sheetAllowed: false)
                 .navigationTitle(self.item!.group.print!)
                 .modifier(BackgroundModifier(color: .scheduleSheetSectionListColor))
+                .ignoresSafeArea(SafeAreaRegions.all, edges: .bottom)
                 .eraseToAnyView()
         }
     }
