@@ -8,7 +8,7 @@ struct LottieView: UIViewRepresentable {
         let view = UIView(frame: .zero)
         
         let animationView = AnimationView()
-        let animation = Animation.named(self.content)
+        let animation = Animation.named(self.content, animationCache: LRUAnimationCache.sharedCache)
         
         animationView.animation = animation
         animationView.contentMode = .scaleAspectFit
@@ -23,6 +23,8 @@ struct LottieView: UIViewRepresentable {
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
             animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
+        
+        print("creating view")
         
         return view
     }

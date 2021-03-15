@@ -1,8 +1,10 @@
 import SwiftUI
+import SPAlert
 
 struct ScheduleComponentView: View {
-    @ObservedObject
-    private var model: ScheduleComponentView.ViewModel
+    @EnvironmentObject var settings: CollegeSchedule.SettingsModel
+    
+    @ObservedObject private var model: ScheduleComponentView.ViewModel
     
     private var mode: SchedulePresentationMode
     private var sheetAllowed: Bool
@@ -23,24 +25,24 @@ struct ScheduleComponentView: View {
             VStack {
                 APIResultView(result: self.$model.first, empty: {
                     ErrorView(
-                        animation: "empty_schedule",
+                        animation: nil,
                         title: "Немного позже!",
                         description: "Мы еще не подготовили расписание на текущую неделю, извини.."
                     )
-                }) { result in
-                    SchedulePageView(data: result, mode: self.mode, sheetAllowed: self.sheetAllowed)
+                }) { content in
+                    SchedulePageView(data: content, mode: self.mode, sheetAllowed: self.sheetAllowed)
                 }
             }
             
             VStack {
                 APIResultView(result: self.$model.second, empty: {
                     ErrorView(
-                        animation: "empty_schedule",
+                        animation: nil,
                         title: "Немного позже!",
                         description: "Мы еще не подготовили расписание на следующую неделю, извини.."
                     )
-                }) { result in
-                    SchedulePageView(data: result, mode: self.mode, sheetAllowed: self.sheetAllowed)
+                }) { content in
+                    SchedulePageView(data: content, mode: self.mode, sheetAllowed: self.sheetAllowed)
                 }
             }
         }

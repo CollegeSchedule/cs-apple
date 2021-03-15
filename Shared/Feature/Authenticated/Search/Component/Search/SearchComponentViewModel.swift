@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-extension SearchView {
+extension SearchComponentView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Environment(\.accountService) private var accountService: AccountService
         @Environment(\.groupService) private var groupService: GroupService
@@ -16,7 +16,7 @@ extension SearchView {
             super.init()
             
             self.searchBar.$text
-                .removeDuplicates()
+                //.removeDuplicates()
                 .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
                 .subscribe(on: Scheduler.main).receive(on: Scheduler.main)
                 .sink { result in

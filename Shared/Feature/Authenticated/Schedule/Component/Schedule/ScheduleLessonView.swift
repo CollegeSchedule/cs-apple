@@ -1,5 +1,4 @@
 import SwiftUI
-import Introspect
 
 struct ScheduleLessonView: View {
     @EnvironmentObject var settings: CollegeSchedule.SettingsModel

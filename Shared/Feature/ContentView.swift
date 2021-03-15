@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var state: CollegeSchedule.ViewModel = .init()
-    @State private var selection: NavigationItem = .search
+    @State var navigation: NavigationItem = .home
     
     var body: some View {
-        TabView(selection: self.$selection) {
+        TabView(selection: self.$navigation) {
             ForEach(NavigationItem.allCases, id: \.self) { item in
                 NavigationView {
                     item.view
