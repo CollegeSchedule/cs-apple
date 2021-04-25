@@ -1,4 +1,5 @@
 import SwiftUI
+import SPAlert
 
 struct ScheduleLessonView: View {
     @EnvironmentObject var settings: CollegeSchedule.SettingsModel
@@ -8,6 +9,7 @@ struct ScheduleLessonView: View {
     private var sheetAllowed: Bool
     
     @State var isPresented: Bool = false
+    @State var developerTapCount: Int = 0
     
     init(item: ScheduleSubjectEntity?, mode: SchedulePresentationMode, sheetAllowed: Bool = true) {
         self.item = item
@@ -63,6 +65,15 @@ struct ScheduleLessonView: View {
                             Text("authenticated.schedule.lesson.sheet.field.subject")
                             Spacer()
                             Text(self.item!.subject.name).foregroundColor(.gray).multilineTextAlignment(.trailing)
+                        }.applyIf(self.item!.subject.id == 58) {
+                            $0.onTapGesture {
+                                self.developerTapCount = self.developerTapCount + 1
+                                
+                                if self.developerTapCount == 10 {
+                                    SPAlert.present(title: "Теперь вы разработчик!", preset: .done)
+                                    self.settings.isDeveloper = true
+                                }
+                            }
                         }
                         
                         if self.sheetAllowed {

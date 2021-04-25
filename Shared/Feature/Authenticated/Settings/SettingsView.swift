@@ -1,11 +1,22 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.agent)
-    private var model: Agent
+    @EnvironmentObject var settings: CollegeSchedule.SettingsModel
+    @Environment(\.agent) private var model: Agent
     
     @State
     private var sections: [SettingsSection] = [
+//        .init(
+//            header: "Основное",
+//            items: [
+//                .init(
+//                    icon: "house.fill",
+//                    title: "Уведомления",
+//                    color: .green,
+//                    view: SettingsNotificationsView().eraseToAnyView()
+//                ),
+//            ]
+//        ),
         .init(
             header: "authenticated.settings.app",
             items: [
@@ -35,6 +46,7 @@ struct SettingsView: View {
 //                ),
             ]
         ),
+
 //        .init(
 //            header: "authenticated.settings.tech_support",
 //            items: [
@@ -64,6 +76,12 @@ struct SettingsView: View {
                     }
                 }
             }
+//            
+//            if self.settings.isDeveloper {
+//                Section(header: Text("Developer Mode")) {
+//                    Text("Hello, r u Developer?")
+//                }
+//            }
         }
         .listStyle(InsetGroupedListStyle())
     }

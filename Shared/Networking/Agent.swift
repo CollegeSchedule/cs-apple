@@ -12,6 +12,7 @@ class Agent: ObservableObject {
     
     // MARK: - Application credentials
     private let base: URL = URL(string: "https://api.collegeschedule.ru:2096")!
+//    private let base: URL = URL(string: "http://192.168.0.151:5000")!
     private let token: String = "f14eed27-87ec-42e3-981f-a21c575fd85e"
     
     func run<T: Codable>(

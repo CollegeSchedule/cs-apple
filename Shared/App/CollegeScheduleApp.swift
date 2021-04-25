@@ -3,8 +3,6 @@ import Combine
 
 @main
 struct CollegeSchedule: App {
-    @UIApplicationDelegateAdaptor(Self.AppDelegate.self) var appDelegate
-    
     @ObservedObject private var agent: Agent = AgentKey.defaultValue
     @ObservedObject private var state: Self.ViewModel = .init()
     @ObservedObject private var settings: Self.SettingsModel = .init()

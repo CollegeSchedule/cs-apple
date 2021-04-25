@@ -27,10 +27,15 @@ extension ScheduleComponentView {
         }()
         
         private lazy var calendar: Date = {
-            Calendar(identifier: .gregorian).dateComponents(
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.firstWeekday = 2
+            
+            let date = calendar.dateComponents(
                 [.calendar, .yearForWeekOfYear, .weekOfYear],
                 from: Date()
             ).date!
+            
+            return date
         }()
         
         private lazy var year: Int = {
